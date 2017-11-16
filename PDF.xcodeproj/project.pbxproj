@@ -8,10 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5272F4DE1FBDF39F007431A1 /* FinancialAccounting.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5272F4DD1FBDF39F007431A1 /* FinancialAccounting.pdf */; };
-		5272F4E41FBE0E22007431A1 /* PSPDFKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5272F4E51FBE0E22007431A1 /* PSPDFKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5272F4E61FBE0E3B007431A1 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
-		5272F4E71FBE0E3F007431A1 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
+		5272F4E81FBE10C3007431A1 /* PDF.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5272F4E91FBE10ED007431A1 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
+		5272F4EA1FBE10F1007431A1 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
 		527546311FBBA24800395A1F /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
 		527546361FBBA24800395A1F /* PDFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546351FBBA24800395A1F /* PDFTests.swift */; };
 		527546381FBBA24800395A1F /* PDF.h in Headers */ = {isa = PBXBuildFile; fileRef = 5275462A1FBBA24800395A1F /* PDF.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,7 +23,6 @@
 		527546681FBBA38600395A1F /* PDFExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546671FBBA38600395A1F /* PDFExampleUITests.swift */; };
 		527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546731FBBB3B700395A1F /* PDFViewController.swift */; };
 		52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
-		52D5AD6D1FBCD74800A8C000 /* PDF.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,9 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5272F4E41FBE0E22007431A1 /* PSPDFKitUI.framework in Embed Frameworks */,
-				5272F4E51FBE0E22007431A1 /* PSPDFKit.framework in Embed Frameworks */,
-				52D5AD6D1FBCD74800A8C000 /* PDF.framework in Embed Frameworks */,
+				5272F4E81FBE10C3007431A1 /* PDF.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,6 +101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5272F4E91FBE10ED007431A1 /* PSPDFKitUI.framework in Frameworks */,
+				5272F4EA1FBE10F1007431A1 /* PSPDFKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,8 +119,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */,
-				5272F4E61FBE0E3B007431A1 /* PSPDFKitUI.framework in Frameworks */,
-				5272F4E71FBE0E3F007431A1 /* PSPDFKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
