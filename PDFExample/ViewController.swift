@@ -14,12 +14,21 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
-  }
 
-  override func viewDidAppear(_ animated: Bool) {
+    // The bit of code below does NOT work
+/*
     let pdfViewController = PDFViewController(nibName: nil, bundle: nil)
     //let pdfViewController = PDFViewController()
     self.present(pdfViewController, animated: false, completion: nil)
+*/
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+
+    let pdfViewController = PDFViewController(nibName: nil, bundle: nil)
+    //let pdfViewController = PDFViewController()
+    self.present(pdfViewController, animated: false, completion: pdfViewController.presentPSPDFView)
+
   }
 
   override func didReceiveMemoryWarning() {
