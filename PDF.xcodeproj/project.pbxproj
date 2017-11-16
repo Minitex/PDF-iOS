@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5272F4DE1FBDF39F007431A1 /* FinancialAccounting.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5272F4DD1FBDF39F007431A1 /* FinancialAccounting.pdf */; };
+		5272F4E41FBE0E22007431A1 /* PSPDFKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5272F4E51FBE0E22007431A1 /* PSPDFKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5272F4E61FBE0E3B007431A1 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
+		5272F4E71FBE0E3F007431A1 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
 		527546311FBBA24800395A1F /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
 		527546361FBBA24800395A1F /* PDFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546351FBBA24800395A1F /* PDFTests.swift */; };
 		527546381FBBA24800395A1F /* PDF.h in Headers */ = {isa = PBXBuildFile; fileRef = 5275462A1FBBA24800395A1F /* PDF.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -20,10 +25,6 @@
 		527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546731FBBB3B700395A1F /* PDFViewController.swift */; };
 		52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
 		52D5AD6D1FBCD74800A8C000 /* PDF.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		52D5AD711FBCF3C000A8C000 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
-		52D5AD731FBCF3C400A8C000 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
-		52D5AD761FBCFD4D00A8C000 /* PSPDFKitUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		52D5AD771FBCFD4D00A8C000 /* PSPDFKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,25 +65,17 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5272F4E41FBE0E22007431A1 /* PSPDFKitUI.framework in Embed Frameworks */,
+				5272F4E51FBE0E22007431A1 /* PSPDFKit.framework in Embed Frameworks */,
 				52D5AD6D1FBCD74800A8C000 /* PDF.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		52D5AD751FBCFC3B00A8C000 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				52D5AD761FBCFD4D00A8C000 /* PSPDFKitUI.framework in CopyFiles */,
-				52D5AD771FBCFD4D00A8C000 /* PSPDFKit.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5272F4DD1FBDF39F007431A1 /* FinancialAccounting.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = FinancialAccounting.pdf; sourceTree = "<group>"; };
 		527546271FBBA24800395A1F /* PDF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PDF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5275462A1FBBA24800395A1F /* PDF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDF.h; sourceTree = "<group>"; };
 		5275462B1FBBA24800395A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -112,8 +105,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52D5AD711FBCF3C000A8C000 /* PSPDFKit.framework in Frameworks */,
-				52D5AD731FBCF3C400A8C000 /* PSPDFKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +121,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */,
+				5272F4E61FBE0E3B007431A1 /* PSPDFKitUI.framework in Frameworks */,
+				5272F4E71FBE0E3F007431A1 /* PSPDFKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +171,7 @@
 		527546291FBBA24800395A1F /* PDF */ = {
 			isa = PBXGroup;
 			children = (
+				5272F4DD1FBDF39F007431A1 /* FinancialAccounting.pdf */,
 				5275462A1FBBA24800395A1F /* PDF.h */,
 				5275462B1FBBA24800395A1F /* Info.plist */,
 				527546731FBBB3B700395A1F /* PDFViewController.swift */,
@@ -256,7 +250,6 @@
 				527546231FBBA24800395A1F /* Frameworks */,
 				527546241FBBA24800395A1F /* Headers */,
 				527546251FBBA24800395A1F /* Resources */,
-				52D5AD751FBCFC3B00A8C000 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -402,6 +395,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5272F4DE1FBDF39F007431A1 /* FinancialAccounting.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +569,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -629,6 +624,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -697,6 +693,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K97KHP3ZWG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PDFTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umn.minitex.simplye.PDFTests;
@@ -712,6 +712,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K97KHP3ZWG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PDFTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umn.minitex.simplye.PDFTests;
@@ -728,6 +732,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K97KHP3ZWG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PDFExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umn.minitex.simplye.PDFExample;
@@ -744,6 +752,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K97KHP3ZWG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PDFExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umn.minitex.simplye.PDFExample;
