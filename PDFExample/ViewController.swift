@@ -18,6 +18,7 @@ class ViewController: UIViewController {
 
   override func viewDidAppear(_ animated: Bool) {
     let pdfViewController = PDFViewController(nibName: nil, bundle: nil)
+    //let pdfViewController = PDFViewController()
     self.present(pdfViewController, animated: false, completion: nil)
   }
 
