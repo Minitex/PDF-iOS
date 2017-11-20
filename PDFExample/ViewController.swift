@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     let pdfViewController = PDFViewController(nibName: nil, bundle: nil)
     //let pdfViewController = PDFViewController()
     self.present(pdfViewController, animated: false, completion: pdfViewController.presentPSPDFView)
+    //self.present(pdfViewController, animated: false, completion: nil)
 
   }
 

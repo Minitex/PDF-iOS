@@ -13,8 +13,8 @@ public class PDFViewController: UIViewController  {
 //public class PDFViewController: PSPDFViewController {
 
   var documentName = "FinancialAccounting"
-  //var pspdfController: PSPDFViewController? = nil
-  var pspdfController: PSPDFKitViewController? = nil
+  var pspdfController: PSPDFViewController? = nil
+  //var pspdfController: PSPDFKitViewController? = nil
   var document: PSPDFDocument?
   var configuration: PSPDFConfiguration?
 
@@ -48,20 +48,27 @@ public class PDFViewController: UIViewController  {
      configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1 
       builder.backgroundColor = UIColor.lightGray
-
+      builder.useParentNavigationBar = true
     }
 
     //self.document = document
     //self.configuration = configuration
 
 
-    //let pspdfController = PSPDFViewController(document: document, configuration: configuration)
-    pspdfController = PSPDFKitViewController(document: document, configuration: configuration)
+    /*
+    let pspdfController = PSPDFViewController(document: document, configuration: configuration)
+    //pspdfController = PSPDFKitViewController(document: document, configuration: configuration)
 
+    //pspdfController.navigationItem.setRightBarButtonItems([pspdfController.thumbnailsButtonItem, pspdfController.outlineButtonItem, pspdfController.bookmarkButtonItem, pspdfController.searchButtonItem, pspdController.annotationButtonItem, activityButtonItem, settingsButtonItem], animated: false)
 
     //pspdfController = PSPDFViewController(document: document, configuration: configuration)
-    pspdfController?.view.frame = view.bounds
-    pspdfController?.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    pspdfController.view.frame = view.bounds
+    pspdfController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    view.addSubview(pspdfController.view)
+    pspdfController.didMove(toParentViewController: self)
+*/
+
+    
     /*
       view.addSubview(pspdfController.view)
       pspdfController.didMove(toParentViewController: self)
@@ -74,21 +81,32 @@ public class PDFViewController: UIViewController  {
     //self.present(pspdfController, animated: false, completion: nil)
   }
 
+  // Note: Look at ViewControllerCustomization in the Catalog for how to deal with the issue of the navigation
+  // bar disappearing
   public func presentPSPDFView() {
     //let pspdfController = PSPDFViewController(document: document, configuration: configuration)
     //let pspdfController = PSPDFKitViewController(document: document, configuration: configuration)
 
-    pspdfController = PSPDFKitViewController(document: document, configuration: configuration)
+    pspdfController = PSPDFViewController(document: document, configuration: configuration)
+    //pspdfController = PSPDFKitViewController(document: document, configuration: configuration)
+
+    pspdfController?.navigationItem.setRightBarButtonItems([(pspdfController?.thumbnailsButtonItem)!, (pspdfController?.outlineButtonItem)!, (pspdfController?.bookmarkButtonItem)!, (pspdfController?.searchButtonItem)!, (pspdfController?.annotationButtonItem)!, (pspdfController?.activityButtonItem)!, (pspdfController?.settingsButtonItem)!], animated: false)
 
 
     //pspdfController = PSPDFViewController(document: document, configuration: configuration)
-    pspdfController?.view.frame = view.bounds
-    pspdfController?.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    self.addChildViewController(pspdfController!)
+
+    //pspdfController?.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     //pspdfController.view.frame = view.bounds
     //pspdfController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     view.addSubview((pspdfController?.view)!)
+    let bounds = CGRect(x: view.bounds.origin.x, y: view.bounds.origin.y + 200, width: view.bounds.width, height: view.bounds.height * 0.80)
+    //pspdfController?.view.frame = bounds
+    pspdfController?.view.frame = view.bounds
     pspdfController?.didMove(toParentViewController: self)
 
+    ///var topViewController = UIApplication.shared.keyWindow?.rootViewController
+    //topViewController?.present(pspdfController!, animated: false, completion: nil)
   }
 }
 

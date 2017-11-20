@@ -249,6 +249,7 @@
 				527546231FBBA24800395A1F /* Frameworks */,
 				527546241FBBA24800395A1F /* Headers */,
 				527546251FBBA24800395A1F /* Resources */,
+				52802F1A1FC33D6900339477 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -430,6 +431,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		52802F1A1FC33D6900339477 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKitUI.framework",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/PSPDFKit.framework",
+				"$(DERIVED_FILE_DIR)/PSPDFKitUI.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		527546221FBBA24800395A1F /* Sources */ = {
