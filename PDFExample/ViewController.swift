@@ -10,33 +10,14 @@ import UIKit
 
 class ViewController: UIViewController {
 
-  // viewDidLoad will not work for us
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+  @IBAction func openPDF(_ sender: Any) {
+    print("pressed button!")
 
-    // The bit of code below does NOT work
-/*
-    let pdfViewController = PDFViewController(nibName: nil, bundle: nil)
-    //let pdfViewController = PDFViewController()
-    self.present(pdfViewController, animated: false, completion: nil)
-*/
+    let bundle = Bundle(identifier: "edu.umn.minitex.simplye.PDF")
+    let sb = UIStoryboard(name: "PDF", bundle: bundle)
+
+    let pdfViewController = sb.instantiateViewController(withIdentifier: "PDF") as! PDFViewController
+    self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
-
-  override func viewDidAppear(_ animated: Bool) {
-
-    let pdfViewController = PDFViewController(nibName: nil, bundle: nil)
-    //let pdfViewController = PDFViewController()
-    self.present(pdfViewController, animated: false, completion: pdfViewController.presentPSPDFView)
-    //self.present(pdfViewController, animated: false, completion: nil)
-
-  }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-
-
 }
 

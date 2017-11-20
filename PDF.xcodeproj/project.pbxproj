@@ -11,7 +11,6 @@
 		5272F4E81FBE10C3007431A1 /* PDF.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5272F4E91FBE10ED007431A1 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
 		5272F4EA1FBE10F1007431A1 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
-		5272F4EC1FBE1FD0007431A1 /* PSPDFKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5272F4EB1FBE1FD0007431A1 /* PSPDFKitViewController.swift */; };
 		527546311FBBA24800395A1F /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
 		527546361FBBA24800395A1F /* PDFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546351FBBA24800395A1F /* PDFTests.swift */; };
 		527546381FBBA24800395A1F /* PDF.h in Headers */ = {isa = PBXBuildFile; fileRef = 5275462A1FBBA24800395A1F /* PDF.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,6 +22,7 @@
 		5275465D1FBBA38600395A1F /* PDFExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5275465C1FBBA38600395A1F /* PDFExampleTests.swift */; };
 		527546681FBBA38600395A1F /* PDFExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546671FBBA38600395A1F /* PDFExampleUITests.swift */; };
 		527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546731FBBB3B700395A1F /* PDFViewController.swift */; };
+		52802F1E1FC3676F00339477 /* PDF.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52802F1D1FC3676F00339477 /* PDF.storyboard */; };
 		52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,7 +73,6 @@
 
 /* Begin PBXFileReference section */
 		5272F4DD1FBDF39F007431A1 /* FinancialAccounting.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = FinancialAccounting.pdf; sourceTree = "<group>"; };
-		5272F4EB1FBE1FD0007431A1 /* PSPDFKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSPDFKitViewController.swift; sourceTree = "<group>"; };
 		527546271FBBA24800395A1F /* PDF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PDF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5275462A1FBBA24800395A1F /* PDF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDF.h; sourceTree = "<group>"; };
 		5275462B1FBBA24800395A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,6 +93,7 @@
 		527546671FBBA38600395A1F /* PDFExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFExampleUITests.swift; sourceTree = "<group>"; };
 		527546691FBBA38600395A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		527546731FBBB3B700395A1F /* PDFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
+		52802F1D1FC3676F00339477 /* PDF.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PDF.storyboard; sourceTree = "<group>"; };
 		52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKit.framework; path = Carthage/Build/iOS/PSPDFKit.framework; sourceTree = "<group>"; };
 		52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKitUI.framework; path = Carthage/Build/iOS/PSPDFKitUI.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,7 +173,7 @@
 				5275462A1FBBA24800395A1F /* PDF.h */,
 				5275462B1FBBA24800395A1F /* Info.plist */,
 				527546731FBBB3B700395A1F /* PDFViewController.swift */,
-				5272F4EB1FBE1FD0007431A1 /* PSPDFKitViewController.swift */,
+				52802F1D1FC3676F00339477 /* PDF.storyboard */,
 			);
 			path = PDF;
 			sourceTree = "<group>";
@@ -396,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5272F4DE1FBDF39F007431A1 /* FinancialAccounting.pdf in Resources */,
+				52802F1E1FC3676F00339477 /* PDF.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,7 +459,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */,
-				5272F4EC1FBE1FD0007431A1 /* PSPDFKitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
