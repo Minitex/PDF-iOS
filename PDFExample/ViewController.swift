@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
   @IBAction func openPDF(_ sender: Any) {
     let pdfViewController = PDFViewController.sharedInstance
+    pdfViewController.licenseKey = APIKeys.PDFLicenseKey
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
