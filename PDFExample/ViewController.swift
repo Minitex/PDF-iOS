@@ -11,13 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
   @IBAction func openPDF(_ sender: Any) {
-    print("pressed button!")
-
-    let bundle = Bundle(identifier: "edu.umn.minitex.simplye.PDF")
-    let sb = UIStoryboard(name: "PDF", bundle: bundle)
-
-    let pdfViewController = sb.instantiateViewController(withIdentifier: "PDF") as! PDFViewController
+    let pdfViewController = PDFViewController.sharedInstance
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
-
