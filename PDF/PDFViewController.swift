@@ -12,12 +12,21 @@ import PSPDFKitUI
 public final class PDFViewController: PSPDFViewController {
 
   var documentName = "FinancialAccounting"
-  public var licenseKey: String?
 
-  public static let sharedInstance = PDFViewController()
+  public init(licenseKey: String) {
+    PSPDFKit.setLicenseKey(licenseKey)
 
-  private init() {
     super.init(document: nil, configuration: nil)
+
+    // we can't initialize document before calling super.init (calling self.document before init is bad),
+    // so we'll do it here
+    let fileURL = Bundle(identifier: "edu.umn.minitex.simplye.PDF")?.url(forResource: documentName, withExtension: "pdf")
+
+    self.document = PSPDFDocument(url: fileURL!)
+    self.updateConfiguration(builder: { builder in
+      builder.searchResultZoomScale = 1
+      builder.backgroundColor = UIColor.lightGray
+    })
   }
 
   @available(*, unavailable)
@@ -28,10 +37,6 @@ public final class PDFViewController: PSPDFViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
 
-    if let licensekey = licenseKey {
-      PSPDFKit.setLicenseKey(licensekey)
-    }
-
     delegate = self as PSPDFViewControllerDelegate
 
     // set up the regular menu bar
@@ -39,16 +44,6 @@ public final class PDFViewController: PSPDFViewController {
 
     // set up the menu bar for when we're in thumbnail view, but do not include the document editing button
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
-
-    let fileURL = Bundle(identifier: "edu.umn.minitex.simplye.PDF")?.url(forResource: documentName, withExtension: "pdf")
-    document = PSPDFDocument(url: fileURL!)
-
-    self.document = document
-    self.updateConfiguration(builder: { builder in
-      builder.searchResultZoomScale = 1
-      builder.backgroundColor = UIColor.lightGray
-    })
-
   }
 
 }
