@@ -10,19 +10,13 @@ import PSPDFKit
 import PSPDFKitUI
 
 public final class PDFViewController: PSPDFViewController {
-
-  var documentName = "FinancialAccounting"
-
-  public init(licenseKey: String) {
+  
+  public init(licenseKey: String, fileURL: URL) {
     PSPDFKit.setLicenseKey(licenseKey)
 
     super.init(document: nil, configuration: nil)
 
-    // we can't initialize document before calling super.init (calling self.document before init is bad),
-    // so we'll do it here
-    let fileURL = Bundle(identifier: "edu.umn.minitex.simplye.PDF")?.url(forResource: documentName, withExtension: "pdf")
-
-    self.document = PSPDFDocument(url: fileURL!)
+    self.document = PSPDFDocument(url: fileURL)
     self.updateConfiguration(builder: { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray

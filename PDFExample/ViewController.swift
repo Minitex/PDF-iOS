@@ -11,7 +11,9 @@ import UIKit
 class ViewController: UIViewController {
 
   @IBAction func openPDF(_ sender: Any) {
-    let pdfViewController = PDFViewController(licenseKey: APIKeys.PDFLicenseKey)
+    let documentName = "FinancialAccounting"
+    let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
+    let pdfViewController = PDFViewController(licenseKey: APIKeys.PDFLicenseKey, fileURL: fileURL)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
