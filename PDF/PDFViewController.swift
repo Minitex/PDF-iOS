@@ -20,7 +20,6 @@ public final class PDFViewController: PSPDFViewController {
     self.updateConfiguration(builder: { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
-      //builder.applicationActivities = [PSPDFActivityTypeOpenIn, PSPDFActivityTypeSearch, PSPDFActivityTypeBookmarks]
     })
   }
 

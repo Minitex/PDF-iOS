@@ -10,8 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
-  @IBAction func openPDF(_ sender: Any) {
+  @IBAction func openPDF1(_ sender: Any) {
     let documentName = "FinancialAccounting"
+    let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
+    let pdfViewController = PDFViewController(licenseKey: APIKeys.PDFLicenseKey, fileURL: fileURL)
+    self.navigationController?.pushViewController(pdfViewController, animated: true)
+  }
+
+  @IBAction func openPDF2(_ sender: Any) {
+    let documentName = "DataModeling"
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
     let pdfViewController = PDFViewController(licenseKey: APIKeys.PDFLicenseKey, fileURL: fileURL)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
