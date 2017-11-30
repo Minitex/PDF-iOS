@@ -20,6 +20,7 @@ public final class PDFViewController: PSPDFViewController {
     self.updateConfiguration(builder: { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
+      //builder.applicationActivities = [PSPDFActivityTypeOpenIn, PSPDFActivityTypeSearch, PSPDFActivityTypeBookmarks]
     })
   }
 
@@ -34,7 +35,7 @@ public final class PDFViewController: PSPDFViewController {
     delegate = self as PSPDFViewControllerDelegate
 
     // set up the regular menu bar
-    navigationItem.setRightBarButtonItems([thumbnailsButtonItem, outlineButtonItem, bookmarkButtonItem, searchButtonItem, annotationButtonItem, activityButtonItem, settingsButtonItem], animated: false)
+    navigationItem.setRightBarButtonItems([thumbnailsButtonItem, outlineButtonItem, bookmarkButtonItem, searchButtonItem, settingsButtonItem], animated: false)
 
     // set up the menu bar for when we're in thumbnail view, but do not include the document editing button
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
