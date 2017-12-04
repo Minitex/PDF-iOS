@@ -9,9 +9,15 @@ import UIKit
 import PSPDFKit
 import PSPDFKitUI
 
+public protocol PDFViewControllerDelegate {
+  func userNavigatedToPage(index: UInt) 
+}
+
 public final class PDFViewController: PSPDFViewController {
-  
-  public init(licenseKey: String, fileURL: URL) {
+
+  var savedLastPageRead: UInt?
+
+  public init(licenseKey: String, fileURL: URL, lastPageRead: UInt = 0) {
     PSPDFKit.setLicenseKey(licenseKey)
 
     super.init(document: nil, configuration: nil)
@@ -21,6 +27,9 @@ public final class PDFViewController: PSPDFViewController {
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
     })
+
+    // go to lastPageRead
+    self.pageIndex = lastPageRead
   }
 
   @available(*, unavailable)
@@ -45,5 +54,11 @@ public final class PDFViewController: PSPDFViewController {
 extension PDFViewController: PSPDFViewControllerDelegate {
   func pdfViewController(_ pdfController: PSPDFViewController, didConfigurePageView pageView: PSPDFPageView) {
     print("Page loaded: %@", pageView)
+  }
+
+  public func pdfViewController(_ pdfController: PSPDFViewController, willBeginDisplaying pageView: PSPDFPageView, forPageAt pageIndex: Int) {
+
+    savedLastPageRead = UInt(pageIndex)
+    print("willBeginDisplaying::pageIndex loaded:", pageIndex)
   }
 }
