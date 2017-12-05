@@ -25,6 +25,8 @@
 		52802F1E1FC3676F00339477 /* PDF.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52802F1D1FC3676F00339477 /* PDF.storyboard */; };
 		5282D3961FCF306500A392C5 /* FinancialAccounting.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */; };
 		52B47AD81FC4C1CD00D7EA12 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */; };
+		52B6B1211FD719CB00AFA35B /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6B1201FD719CB00AFA35B /* Book.swift */; };
+		52B6B1231FD7303300AFA35B /* Books.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B6B1221FD7303300AFA35B /* Books.plist */; };
 		52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +100,8 @@
 		52802F1D1FC3676F00339477 /* PDF.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PDF.storyboard; sourceTree = "<group>"; };
 		5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = FinancialAccounting.pdf; sourceTree = "<group>"; };
 		52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		52B6B1201FD719CB00AFA35B /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		52B6B1221FD7303300AFA35B /* Books.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Books.plist; sourceTree = "<group>"; };
 		52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKit.framework; path = Carthage/Build/iOS/PSPDFKit.framework; sourceTree = "<group>"; };
 		52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKitUI.framework; path = Carthage/Build/iOS/PSPDFKitUI.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -193,8 +197,7 @@
 		527546461FBBA38500395A1F /* PDFExample */ = {
 			isa = PBXGroup;
 			children = (
-				52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */,
-				5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */,
+				52D4AD5F1FD6155D006DC698 /* Books */,
 				527546471FBBA38500395A1F /* AppDelegate.swift */,
 				527546491FBBA38500395A1F /* ViewController.swift */,
 				5275464B1FBBA38500395A1F /* Main.storyboard */,
@@ -202,6 +205,8 @@
 				527546501FBBA38500395A1F /* LaunchScreen.storyboard */,
 				527546531FBBA38500395A1F /* Info.plist */,
 				52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */,
+				52B6B1201FD719CB00AFA35B /* Book.swift */,
+				52B6B1221FD7303300AFA35B /* Books.plist */,
 			);
 			path = PDFExample;
 			sourceTree = "<group>";
@@ -222,6 +227,15 @@
 				527546691FBBA38600395A1F /* Info.plist */,
 			);
 			path = PDFExampleUITests;
+			sourceTree = "<group>";
+		};
+		52D4AD5F1FD6155D006DC698 /* Books */ = {
+			isa = PBXGroup;
+			children = (
+				5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */,
+				52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */,
+			);
+			path = Books;
 			sourceTree = "<group>";
 		};
 		52D5AD671FBCCA4400A8C000 /* Frameworks */ = {
@@ -419,6 +433,7 @@
 				527546521FBBA38500395A1F /* LaunchScreen.storyboard in Resources */,
 				5275464F1FBBA38500395A1F /* Assets.xcassets in Resources */,
 				5275464D1FBBA38500395A1F /* Main.storyboard in Resources */,
+				52B6B1231FD7303300AFA35B /* Books.plist in Resources */,
 				5282D3961FCF306500A392C5 /* FinancialAccounting.pdf in Resources */,
 				52690F0E1FD07F3B004CDD6C /* DataModeling.pdf in Resources */,
 			);
@@ -481,6 +496,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52B6B1211FD719CB00AFA35B /* Book.swift in Sources */,
 				52B47AD81FC4C1CD00D7EA12 /* APIKeys.swift in Sources */,
 				5275464A1FBBA38500395A1F /* ViewController.swift in Sources */,
 				527546481FBBA38500395A1F /* AppDelegate.swift in Sources */,

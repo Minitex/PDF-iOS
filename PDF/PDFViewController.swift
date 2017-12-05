@@ -10,25 +10,29 @@ import PSPDFKit
 import PSPDFKitUI
 
 public protocol PDFViewControllerDelegate {
-  func userNavigatedToPage(index: UInt) 
+  func userNavigatedToPage(pageNumber: UInt, forBookId: String)
 }
 
 public final class PDFViewController: PSPDFViewController {
 
-  var savedLastPageRead: UInt?
+  var bookId: String?
+  var pdfModuleDelegate: PDFViewControllerDelegate?
 
-  public init(licenseKey: String, fileURL: URL, lastPageRead: UInt = 0) {
+  public init(licenseKey: String, bookId: String, fileURL: URL, lastPageRead: UInt = 0, delegate: PDFViewControllerDelegate) {
+
     PSPDFKit.setLicenseKey(licenseKey)
 
-    super.init(document: nil, configuration: nil)
-
-    self.document = PSPDFDocument(url: fileURL)
-    self.updateConfiguration(builder: { builder in
+    let document = PSPDFDocument(url: fileURL)
+    let configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
-    })
+    }
 
-    // go to lastPageRead
+    super.init(document: document, configuration: configuration)
+
+    self.pdfModuleDelegate = delegate
+    self.bookId = bookId
+    // open PDF to the lastPageRead
     self.pageIndex = lastPageRead
   }
 
@@ -52,13 +56,9 @@ public final class PDFViewController: PSPDFViewController {
 }
 
 extension PDFViewController: PSPDFViewControllerDelegate {
-  func pdfViewController(_ pdfController: PSPDFViewController, didConfigurePageView pageView: PSPDFPageView) {
-    print("Page loaded: %@", pageView)
-  }
-
   public func pdfViewController(_ pdfController: PSPDFViewController, willBeginDisplaying pageView: PSPDFPageView, forPageAt pageIndex: Int) {
 
-    savedLastPageRead = UInt(pageIndex)
+    pdfModuleDelegate?.userNavigatedToPage(pageNumber: UInt(pageIndex), forBookId: bookId!)
     print("willBeginDisplaying::pageIndex loaded:", pageIndex)
   }
 }
