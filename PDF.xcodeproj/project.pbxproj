@@ -24,6 +24,10 @@
 		527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546731FBBB3B700395A1F /* PDFViewController.swift */; };
 		52802F1E1FC3676F00339477 /* PDF.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52802F1D1FC3676F00339477 /* PDF.storyboard */; };
 		5282D3961FCF306500A392C5 /* FinancialAccounting.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */; };
+		529958E91FD8614800995B39 /* PSPDFKitUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		529958EA1FD8614C00995B39 /* PSPDFKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		529958EE1FD870A200995B39 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
+		529958EF1FD870A800995B39 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
 		52B47AD81FC4C1CD00D7EA12 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */; };
 		52B6B1211FD719CB00AFA35B /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6B1201FD719CB00AFA35B /* Book.swift */; };
 		52B6B1231FD7303300AFA35B /* Books.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B6B1221FD7303300AFA35B /* Books.plist */; };
@@ -52,19 +56,23 @@
 			remoteGlobalIDString = 527546441FBBA38500395A1F;
 			remoteInfo = PDFExample;
 		};
-		52D5AD691FBCD1EC00A8C000 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5275461E1FBBA24800395A1F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 527546261FBBA24800395A1F;
-			remoteInfo = PDF;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		52D5AD6E1FBCD74800A8C000 /* Embed Frameworks */ = {
+		529958E81FD8613000995B39 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				529958E91FD8614800995B39 /* PSPDFKitUI.framework in CopyFiles */,
+				529958EA1FD8614C00995B39 /* PSPDFKit.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52D5AD6E1FBCD74800A8C000 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
@@ -128,6 +136,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				529958EE1FD870A200995B39 /* PSPDFKitUI.framework in Frameworks */,
+				529958EF1FD870A800995B39 /* PSPDFKit.framework in Frameworks */,
 				52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +280,7 @@
 				527546241FBBA24800395A1F /* Headers */,
 				527546251FBBA24800395A1F /* Resources */,
 				52802F1A1FC33D6900339477 /* ShellScript */,
+				529958E81FD8613000995B39 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -306,11 +317,11 @@
 				527546421FBBA38500395A1F /* Frameworks */,
 				527546431FBBA38500395A1F /* Resources */,
 				52D5AD6E1FBCD74800A8C000 /* Embed Frameworks */,
+				529958F11FD8716700995B39 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				52D5AD6A1FBCD1EC00A8C000 /* PBXTargetDependency */,
 			);
 			name = PDFExample;
 			productName = PDFExample;
@@ -466,8 +477,21 @@
 				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKitUI.framework",
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/PSPDFKit.framework",
-				"$(DERIVED_FILE_DIR)/PSPDFKitUI.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		529958F11FD8716700995B39 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKitUI.framework",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -536,11 +560,6 @@
 			isa = PBXTargetDependency;
 			target = 527546441FBBA38500395A1F /* PDFExample */;
 			targetProxy = 527546641FBBA38600395A1F /* PBXContainerItemProxy */;
-		};
-		52D5AD6A1FBCD1EC00A8C000 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 527546261FBBA24800395A1F /* PDF */;
-			targetProxy = 52D5AD691FBCD1EC00A8C000 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -782,7 +801,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = PDFExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umn.minitex.simplye.PDFExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -802,7 +821,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = PDFExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umn.minitex.simplye.PDFExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
