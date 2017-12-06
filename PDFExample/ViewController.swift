@@ -9,15 +9,35 @@ import PDF
 import UIKit
 
 class ViewController: UIViewController {
-
   var books: [Book]?
-  let booksURL: URL = Bundle.main.url(forResource: "Books", withExtension: "plist")!
+
+  static var documentDirectoryURL: URL {
+    return try! FileManager.default.url(
+      for: .documentDirectory,
+      in: .userDomainMask,
+      appropriateFor: nil,
+      create: false
+    )
+  }
+
+  let booksPlistURL: URL = URL(fileURLWithPath: "Books", relativeTo: documentDirectoryURL).appendingPathExtension("plist")
 
   required init?(coder aDecoder: NSCoder) {
-    // let's start by reading in the plist
-    // and then print the values to the console
+
+    // copy the plist from the bundle to the user's documents directory,
+    // so that it can be edited
+    let booksPlistPathInBundle: URL = Bundle.main.url(forResource: "Books", withExtension: "plist")!
+    if !FileManager.default.fileExists(atPath: booksPlistURL.absoluteString) {
+      do {
+        try FileManager.default.copyItem(at: booksPlistPathInBundle, to: booksPlistURL)
+      } catch {
+        print(error)
+      }
+    }
+
+    // pull contents of Books plist file into internal Book array
     do {
-      let data = try Data(contentsOf: booksURL)
+      let data = try Data(contentsOf: booksPlistURL)
       let decoder = PropertyListDecoder()
       books = try decoder.decode([Book].self, from: data)
       print(books ?? "no books value")
@@ -45,17 +65,20 @@ class ViewController: UIViewController {
 extension ViewController: PDFViewControllerDelegate {
   func userNavigatedToPage(pageNumber: UInt, forBookId: String) {
 
-    // save off the page for a specific book
+
     for (index, book) in (books?.enumerated())! {
       if book.title == forBookId {
+
+        // save last page read for a specific book to internal array
         books![index].lastPageRead = Int(pageNumber)
 
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
 
+        // save changes to books array to the Books.plist file
         do {
           let data = try encoder.encode(books)
-          try data.write(to: booksURL, options: .atomic)
+          try data.write(to: booksPlistURL, options: .atomic)
         }
         catch {
           print(error)
