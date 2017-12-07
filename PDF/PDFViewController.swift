@@ -9,39 +9,56 @@ import UIKit
 import PSPDFKit
 import PSPDFKitUI
 
-public class PDFViewController: PSPDFViewController {
+public protocol PDFViewControllerDelegate {
+  func userNavigatedToPage(pageNumber: UInt, forBookId: String)
+}
 
-  var documentName = "FinancialAccounting"
-  
+public final class PDFViewController: PSPDFViewController {
+
+  var bookId: String?
+  var pdfModuleDelegate: PDFViewControllerDelegate?
+
+  public init(licenseKey: String, bookId: String, fileURL: URL, lastPageRead: UInt = 0, delegate: PDFViewControllerDelegate) {
+
+    PSPDFKit.setLicenseKey(licenseKey)
+
+    let document = PSPDFDocument(url: fileURL)
+    let configuration = PSPDFConfiguration { builder in
+      builder.searchResultZoomScale = 1
+      builder.backgroundColor = UIColor.lightGray
+    }
+
+    super.init(document: document, configuration: configuration)
+
+    self.pdfModuleDelegate = delegate
+    self.bookId = bookId
+    // open PDF to the lastPageRead
+    self.pageIndex = lastPageRead
+  }
+
+  @available(*, unavailable)
+  required public init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   override public func viewDidLoad() {
     super.viewDidLoad()
 
-  PSPDFKit.setLicenseKey("ayMdJS9o1bNAIcD2RRW4EBCT8kIbBAMIQOzZ+AuONFXi3AiEMHRcpVB7tOLb0ocsbu2+EJopWzHGHWE5sYEW0yVGpQR7N18+pijQUCwd0mF9jVBARvqviQl0bNlF9neeMDJWC4M7PXkfUjshPo7d2AZcwQgq8L8v2yZEpqGgzUq8xJwBI/xjhi6gjoazNJ+XHad91vxcfF60mrYDh9mIRcgAIdnI5IHy4w7pYV6w5wx3KftFTMYbQki1h298jARu3sHhecN58Y2MjsxMvo8cDsIMBUbGr/uqI9+jydXOf/eHw+qdYxqszCjPV5myMvUyIYpYGWkVwx+APcN6Z4+58qh0qAxf9n+LuS6UtKft/4FvQE8R7hvqePFfPTuu77sIWVAWzpYaw8d+rpXkcPs7yGZTImjeaxy+IkJZP5+jYne/6zPp7mMO1ma634ErcP0H")
-
-
-    delegate = self
+    delegate = self as PSPDFViewControllerDelegate
 
     // set up the regular menu bar
-    navigationItem.setRightBarButtonItems([thumbnailsButtonItem, outlineButtonItem, bookmarkButtonItem, searchButtonItem, annotationButtonItem, activityButtonItem, settingsButtonItem], animated: false)
+    navigationItem.setRightBarButtonItems([thumbnailsButtonItem, outlineButtonItem, bookmarkButtonItem, searchButtonItem, settingsButtonItem], animated: false)
 
     // set up the menu bar for when we're in thumbnail view, but do not include the document editing button
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
-
-    let fileURL = Bundle(identifier: "edu.umn.minitex.simplye.PDF")?.url(forResource: documentName, withExtension: "pdf")
-    document = PSPDFDocument(url: fileURL!)
-
-    self.document = document
-    self.updateConfiguration(builder: { builder in
-      builder.searchResultZoomScale = 1
-      builder.backgroundColor = UIColor.lightGray
-
-      })
   }
+
 }
 
-
 extension PDFViewController: PSPDFViewControllerDelegate {
-  func pdfViewController(_ pdfController: PSPDFViewController, didConfigurePageView pageView: PSPDFPageView) {
-    print("Page loaded: %@", pageView)
+  public func pdfViewController(_ pdfController: PSPDFViewController, willBeginDisplaying pageView: PSPDFPageView, forPageAt pageIndex: Int) {
+
+    pdfModuleDelegate?.userNavigatedToPage(pageNumber: UInt(pageIndex), forBookId: bookId!)
+    print("willBeginDisplaying::pageIndex loaded:", pageIndex)
   }
 }
