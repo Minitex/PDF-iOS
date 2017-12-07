@@ -19,15 +19,19 @@ In either the openPDF1 or openPDF2 functions, you will
 (using openPDF1 as an example):
 
 1. Get the title of the PDF book you want to open.
+
 let documentName = books![0].title
 
 2. Get the file handle for the PDF book to open.
-let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
+
+`let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!`
 
 3. Instantiate the ViewController from the PDF module to render the PDF.
-let pdfViewController = PDFViewController(licenseKey: APIKeys.PDFLicenseKey, bookId: documentName, fileURL: fileURL, lastPageRead: UInt(books![0].lastPageRead), delegate: self)
+
+`let pdfViewController = PDFViewController(licenseKey: APIKeys.PDFLicenseKey, bookId: documentName, fileURL: fileURL, lastPageRead: UInt(books![0].lastPageRead), delegate: self)`
 
 4. Push the ViewController onto the NavigationController stack so that it can be displayed.
-self.navigationController?.pushViewController(pdfViewController, animated: true)
+
+`self.navigationController?.pushViewController(pdfViewController, animated: true)`
 
 
