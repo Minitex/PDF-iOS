@@ -20,7 +20,7 @@ In either the openPDF1 or openPDF2 functions, you will
 
 1. Get the title of the PDF book you want to open.
 
-let documentName = books![0].title
+`let documentName = books![0].title`
 
 2. Get the file handle for the PDF book to open.
 
