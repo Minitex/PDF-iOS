@@ -59,6 +59,9 @@ extension PDFViewController: PSPDFViewControllerDelegate {
   public func pdfViewController(_ pdfController: PSPDFViewController, willBeginDisplaying pageView: PSPDFPageView, forPageAt pageIndex: Int) {
 
     pdfModuleDelegate?.userNavigatedToPage(pageNumber: UInt(pageIndex), forBookId: bookId!)
-    print("willBeginDisplaying::pageIndex loaded:", pageIndex)
+
+    #if DEBUG
+      print("willBeginDisplaying::pageIndex loaded:", pageIndex)
+    #endif
   }
 }

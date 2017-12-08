@@ -40,7 +40,9 @@ class ViewController: UIViewController {
       let data = try Data(contentsOf: booksPlistURL)
       let decoder = PropertyListDecoder()
       books = try decoder.decode([Book].self, from: data)
-      print(books ?? "no books value")
+      #if DEBUG
+        print(books ?? "no books value")
+      #endif
     } catch {
       print(error)
     }
