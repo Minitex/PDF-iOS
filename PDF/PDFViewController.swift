@@ -21,8 +21,9 @@ public final class PDFViewController: PSPDFViewController {
   public init(licenseKey: String, bookId: String, fileURL: URL, lastPageRead: UInt = 0, delegate: PDFViewControllerDelegate) {
 
     PSPDFKit.setLicenseKey(licenseKey)
-
     let document = PSPDFDocument(url: fileURL)
+    document.bookmarkManager?.provider = [PDFBookmarkProvider()]
+    
     let configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
