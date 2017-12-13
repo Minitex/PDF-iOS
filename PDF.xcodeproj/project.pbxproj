@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		526769941FE1CC2200FFF668 /* PDFBookmarkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */; };
 		52690F0E1FD07F3B004CDD6C /* DataModeling.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */; };
 		5272F4E81FBE10C3007431A1 /* PDF.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5272F4E91FBE10ED007431A1 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
@@ -83,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFBookmarkProvider.swift; sourceTree = "<group>"; };
 		52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = DataModeling.pdf; sourceTree = "<group>"; };
 		527546271FBBA24800395A1F /* PDF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PDF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5275462A1FBBA24800395A1F /* PDF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDF.h; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		527546291FBBA24800395A1F /* PDF */ = {
 			isa = PBXGroup;
 			children = (
+				526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */,
 				5275462A1FBBA24800395A1F /* PDF.h */,
 				5275462B1FBBA24800395A1F /* Info.plist */,
 				527546731FBBB3B700395A1F /* PDFViewController.swift */,
@@ -501,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */,
+				526769941FE1CC2200FFF668 /* PDFBookmarkProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
