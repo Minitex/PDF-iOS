@@ -10,30 +10,28 @@ import PSPDFKit
 import PSPDFKitUI
 
 public protocol PDFViewControllerDelegate {
-  func userNavigatedToPage(pageNumber: UInt, forBookId: String)
+  func userDidNavigate(page: Int)
 }
 
 public final class PDFViewController: PSPDFViewController {
 
-  var bookId: String?
   var pdfModuleDelegate: PDFViewControllerDelegate?
 
-  public init(licenseKey: String, bookId: String, fileURL: URL, lastPageRead: UInt = 0, delegate: PDFViewControllerDelegate) {
+  public init(documentURL: URL, openToPage page: UInt = 0, PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
 
-    PSPDFKit.setLicenseKey(licenseKey)
+    PSPDFKit.setLicenseKey(PSPDFKitLicense)
 
-    let document = PSPDFDocument(url: fileURL)
+    let document = PSPDFDocument(url: documentURL)
     let configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
     }
 
     super.init(document: document, configuration: configuration)
+    self.delegate = self
 
     self.pdfModuleDelegate = delegate
-    self.bookId = bookId
-    // open PDF to the lastPageRead
-    self.pageIndex = lastPageRead
+    self.pageIndex = page
   }
 
   @available(*, unavailable)
@@ -44,21 +42,15 @@ public final class PDFViewController: PSPDFViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
 
-    delegate = self as PSPDFViewControllerDelegate
-
-    // set up the regular menu bar
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem, outlineButtonItem, bookmarkButtonItem, searchButtonItem, settingsButtonItem], animated: false)
-
-    // set up the menu bar for when we're in thumbnail view, but do not include the document editing button
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
   }
-
 }
 
 extension PDFViewController: PSPDFViewControllerDelegate {
   public func pdfViewController(_ pdfController: PSPDFViewController, willBeginDisplaying pageView: PSPDFPageView, forPageAt pageIndex: Int) {
 
-    pdfModuleDelegate?.userNavigatedToPage(pageNumber: UInt(pageIndex), forBookId: bookId!)
+    pdfModuleDelegate?.userDidNavigate(page: pageIndex)
 
     #if DEBUG
       print("willBeginDisplaying::pageIndex loaded:", pageIndex)

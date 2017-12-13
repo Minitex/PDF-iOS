@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
   var books: [Book]?
+  var currentBook: String?
 
   static var documentDirectoryURL: URL {
     return try! FileManager.default.url(
@@ -51,28 +52,30 @@ class ViewController: UIViewController {
 
   @IBAction func openPDF1(_ sender: Any) {
     let documentName = books![0].title
+    currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController(licenseKey: APIKeys.PDFLicenseKey, bookId: documentName, fileURL: fileURL, lastPageRead: UInt(books![0].lastPageRead), delegate: self)
+    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: UInt(books![0].lastPageRead), PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 
   @IBAction func openPDF2(_ sender: Any) {
     let documentName = books![1].title
+    currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController(licenseKey: APIKeys.PDFLicenseKey, bookId: documentName, fileURL: fileURL, lastPageRead: UInt(books![1].lastPageRead), delegate: self)
+    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: UInt(books![1].lastPageRead), PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
 
 extension ViewController: PDFViewControllerDelegate {
-  func userNavigatedToPage(pageNumber: UInt, forBookId: String) {
 
+  func userDidNavigate(page: Int) {
 
     for (index, book) in (books?.enumerated())! {
-      if book.title == forBookId {
+      if book.title == self.currentBook {
 
         // save last page read for a specific book to internal array
-        books![index].lastPageRead = Int(pageNumber)
+        books![index].lastPageRead = page
 
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
