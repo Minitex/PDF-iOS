@@ -190,11 +190,7 @@
 				5275462A1FBBA24800395A1F /* PDF.h */,
 				5275462B1FBBA24800395A1F /* Info.plist */,
 				527546731FBBB3B700395A1F /* PDFViewController.swift */,
-<<<<<<< HEAD
-				52802F1D1FC3676F00339477 /* PDF.storyboard */,
 				5267CCE51FE07C9600601185 /* PDFBookmarkProvider.swift */,
-=======
->>>>>>> 692c2b8ba43cfaf72b6f78a3cc91240b4d46bf21
 			);
 			path = PDF;
 			sourceTree = "<group>";
