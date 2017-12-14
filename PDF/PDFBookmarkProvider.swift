@@ -16,6 +16,20 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     bookmarks = []
   }
 
+  init(pages: [UInt] = []) {
+    bookmarks = []
+    if pages.count > 0 {
+      for page in pages {
+        bookmarks.append(PSPDFBookmark(pageIndex: page))
+      }
+    }
+  }
+  
+  // we want to pass the delegate in here, so the delegate / host app
+  // can save off bookmarks as needed
+
+  // or do we want to pass in a closure / function pointer?
+  
   func add(_ bookmark: PSPDFBookmark) -> Bool {
     print("PDFBookmarkProvider, add called")
     print("value of bookmark: \(bookmark)")

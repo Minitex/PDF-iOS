@@ -7,12 +7,20 @@
 		<string>FinancialAccounting</string>
 		<key>lastPageRead</key>
 		<integer>0</integer>
+		<key>bookmarks</key>
+		<array>
+			<integer>0</integer>
+		</array>
 	</dict>
 	<dict>
 		<key>title</key>
 		<string>DataModeling</string>
 		<key>lastPageRead</key>
 		<integer>0</integer>
+		<key>bookmarks</key>
+		<array>
+			<integer>0</integer>
+		</array>
 	</dict>
 </array>
 </plist>
