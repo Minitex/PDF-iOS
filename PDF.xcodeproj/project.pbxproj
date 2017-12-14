@@ -187,9 +187,9 @@
 		527546291FBBA24800395A1F /* PDF */ = {
 			isa = PBXGroup;
 			children = (
-				526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */,
 				5275462A1FBBA24800395A1F /* PDF.h */,
 				5275462B1FBBA24800395A1F /* Info.plist */,
+				526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */,
 				527546731FBBB3B700395A1F /* PDFViewController.swift */,
 			);
 			path = PDF;
