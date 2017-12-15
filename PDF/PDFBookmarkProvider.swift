@@ -11,24 +11,28 @@ import PSPDFKit
 class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
 
   var bookmarks: [PSPDFBookmark]
+  var pdfViewControllerDelegate: PDFViewControllerDelegate
 
-  override init() {
-    bookmarks = []
+  var pageNumbers: [UInt] {
+    var pageNumbers: [UInt] = []
+    if bookmarks.count > 0 {
+      for index in 0..<bookmarks.count {
+        let pageNumber = bookmarks[index].pageIndex
+        pageNumbers.append(pageNumber)
+      }
+    }
+    return pageNumbers
   }
 
-  init(pages: [UInt] = []) {
-    bookmarks = []
+  init(pages: [UInt] = [], pdfViewControllerDelegate: PDFViewControllerDelegate) {
+    self.bookmarks = []
+    self.pdfViewControllerDelegate = pdfViewControllerDelegate
     if pages.count > 0 {
       for page in pages {
-        bookmarks.append(PSPDFBookmark(pageIndex: page))
+        self.bookmarks.append(PSPDFBookmark(pageIndex: page))
       }
     }
   }
-  
-  // we want to pass the delegate in here, so the delegate / host app
-  // can save off bookmarks as needed
-
-  // or do we want to pass in a closure / function pointer?
   
   func add(_ bookmark: PSPDFBookmark) -> Bool {
     print("PDFBookmarkProvider, add called")
@@ -41,6 +45,8 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     else {
       bookmarks[index!] = bookmark
     }
+    print("PDFBookmarkProvider: pageNumbers are: \(pageNumbers)")
+    pdfViewControllerDelegate.saveBookmarks(pageNumbers: pageNumbers)
     return true
   }
 
@@ -51,13 +57,14 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     let index = bookmarks.index(of: bookmark)
     if bookmarks.contains(bookmark) {
       bookmarks.remove(at: index!)
-      return true
-    } else {
-      return false
     }
+    print("PDFBookmarkProvider: pageNumbers are: \(pageNumbers)")
+    pdfViewControllerDelegate.saveBookmarks(pageNumbers: pageNumbers)
+    return true
   }
 
   func save() {
     print("PDFBookmarkProvider, save called")
+    pdfViewControllerDelegate.saveBookmarks(pageNumbers: pageNumbers)
   }
 }

@@ -95,4 +95,30 @@ extension ViewController: PDFViewControllerDelegate {
     }
   }
 
+  func saveBookmarks(pageNumbers: [UInt]) {
+    
+    for (index, book) in (books?.enumerated())! {
+      if book.title == self.currentBook {
+
+        // save bookmarks for a specific book to internal array
+        books![index].bookmarks = pageNumbers
+
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+
+        // save changes to books array to the Books.plist file
+        do {
+          let data = try encoder.encode(books)
+          try data.write(to: booksPlistURL, options: .atomic)
+        }
+        catch {
+          print(error)
+        }
+
+        // once we find the right book, can stop iterating through array
+        break
+      }
+    }
+  }
+
 }

@@ -8,9 +8,7 @@
 		<key>lastPageRead</key>
 		<integer>0</integer>
 		<key>bookmarks</key>
-		<array>
-			<integer>0</integer>
-		</array>
+		<array/>
 	</dict>
 	<dict>
 		<key>title</key>
@@ -18,9 +16,7 @@
 		<key>lastPageRead</key>
 		<integer>0</integer>
 		<key>bookmarks</key>
-		<array>
-			<integer>0</integer>
-		</array>
+		<array/>
 	</dict>
 </array>
 </plist>
