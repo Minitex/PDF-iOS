@@ -23,7 +23,7 @@ public final class PDFViewController: PSPDFViewController {
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
 
     let document = PSPDFDocument(url: documentURL)
-    document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfViewControllerDelegate: delegate!)]
+    document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfModuleDelegate: delegate!)]
 
     let configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1

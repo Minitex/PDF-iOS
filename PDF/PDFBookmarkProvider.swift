@@ -11,7 +11,7 @@ import PSPDFKit
 class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
 
   var bookmarks: [PSPDFBookmark]
-  var pdfViewControllerDelegate: PDFViewControllerDelegate
+  var pdfModuleDelegate: PDFViewControllerDelegate
 
   var pageNumbers: [UInt] {
     var pageNumbers: [UInt] = []
@@ -24,9 +24,9 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     return pageNumbers
   }
 
-  init(pages: [UInt] = [], pdfViewControllerDelegate: PDFViewControllerDelegate) {
+  init(pages: [UInt] = [], pdfModuleDelegate: PDFViewControllerDelegate) {
     self.bookmarks = []
-    self.pdfViewControllerDelegate = pdfViewControllerDelegate
+    self.pdfModuleDelegate = pdfModuleDelegate
     if pages.count > 0 {
       for page in pages {
         self.bookmarks.append(PSPDFBookmark(pageIndex: page))
@@ -35,9 +35,6 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
   }
   
   func add(_ bookmark: PSPDFBookmark) -> Bool {
-    print("PDFBookmarkProvider, add called")
-    print("value of bookmark: \(bookmark)")
-
     let index = bookmarks.index(of: bookmark)
     if index == nil {
       bookmarks.append(bookmark)
@@ -45,26 +42,20 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     else {
       bookmarks[index!] = bookmark
     }
-    print("PDFBookmarkProvider: pageNumbers are: \(pageNumbers)")
-    pdfViewControllerDelegate.saveBookmarks(pageNumbers: pageNumbers)
+    pdfModuleDelegate.saveBookmarks(pageNumbers: pageNumbers)
     return true
   }
 
   func remove(_ bookmark: PSPDFBookmark) -> Bool {
-    print("PDFBookmarkProvider, remove called")
-    print("value of bookmark: \(bookmark)")
-
     let index = bookmarks.index(of: bookmark)
     if bookmarks.contains(bookmark) {
       bookmarks.remove(at: index!)
     }
-    print("PDFBookmarkProvider: pageNumbers are: \(pageNumbers)")
-    pdfViewControllerDelegate.saveBookmarks(pageNumbers: pageNumbers)
+    pdfModuleDelegate.saveBookmarks(pageNumbers: pageNumbers)
     return true
   }
 
   func save() {
-    print("PDFBookmarkProvider, save called")
-    pdfViewControllerDelegate.saveBookmarks(pageNumbers: pageNumbers)
+    pdfModuleDelegate.saveBookmarks(pageNumbers: pageNumbers)
   }
 }
