@@ -10,6 +10,7 @@ import Foundation
 
 public struct Book : Codable {
   public var title: String
-  public var lastPageRead: Int
+  public var lastPageRead: UInt
+  public var bookmarks: [UInt]
 }
 

@@ -11,17 +11,20 @@ import PSPDFKitUI
 
 public protocol PDFViewControllerDelegate {
   func userDidNavigate(page: Int)
+  func saveBookmarks(pageNumbers: [UInt])
 }
 
 public final class PDFViewController: PSPDFViewController {
 
   var pdfModuleDelegate: PDFViewControllerDelegate?
 
-  public init(documentURL: URL, openToPage page: UInt = 0, PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
+  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [], PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
 
     let document = PSPDFDocument(url: documentURL)
+    document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfModuleDelegate: delegate!)]
+
     let configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
