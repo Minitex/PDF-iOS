@@ -32,6 +32,10 @@
 		52B6B1211FD719CB00AFA35B /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6B1201FD719CB00AFA35B /* Book.swift */; };
 		52B6B1231FD7303300AFA35B /* Books.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B6B1221FD7303300AFA35B /* Books.plist */; };
 		52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
+		52E52AB71FEC5CDD00487252 /* PSPDFKitUI.framework in Carthage Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		52E52AB81FEC5CDD00487252 /* PSPDFKit.framework in Carthage Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		52E52AB91FEC5CFE00487252 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
+		52E52ABA1FEC5D0300487252 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +83,18 @@
 				5272F4E81FBE10C3007431A1 /* PDF.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52E52AB61FEC5CB500487252 /* Carthage Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				52E52AB71FEC5CDD00487252 /* PSPDFKitUI.framework in Carthage Copy Frameworks */,
+				52E52AB81FEC5CDD00487252 /* PSPDFKit.framework in Carthage Copy Frameworks */,
+			);
+			name = "Carthage Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -129,6 +145,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				527546311FBBA24800395A1F /* PDF.framework in Frameworks */,
+				52E52AB91FEC5CFE00487252 /* PSPDFKitUI.framework in Frameworks */,
+				52E52ABA1FEC5D0300487252 /* PSPDFKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +316,7 @@
 				5275462C1FBBA24800395A1F /* Sources */,
 				5275462D1FBBA24800395A1F /* Frameworks */,
 				5275462E1FBBA24800395A1F /* Resources */,
+				52E52AB61FEC5CB500487252 /* Carthage Copy Frameworks */,
 			);
 			buildRules = (
 			);
