@@ -14,9 +14,7 @@ class PDFExampleUITests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-
     continueAfterFailure = false
-
     app = XCUIApplication()
     app.launch()
   }
@@ -26,41 +24,46 @@ class PDFExampleUITests: XCTestCase {
     super.tearDown()
   }
 
-  // test if we're on a certain page or not
-  func testExample() {
+  func testGoToPage() {
     app.buttons["Read Financial Accounting"].tap()
+    app.navigationBars["PDF.PDFView"].buttons["Outline"].tap()
 
-    let pdfPdfviewNavigationBar = app.navigationBars["PDF.PDFView"]
-    let bookmarksButton = pdfPdfviewNavigationBar.buttons["Bookmarks"]
-    bookmarksButton.swipeLeft()
-
-    bookmarksButton.tap()
-    pdfPdfviewNavigationBar.buttons["Thumbnails"].tap()
-    app/*@START_MENU_TOKEN@*/.collectionViews["Thumbnail Collection"].cells["Page 380"]/*[[".otherElements[\"PDF View\"].collectionViews[\"Thumbnail Collection\"]",".cells[\"Page 380,  Bookmarked\"]",".cells[\"Page 380\"]",".collectionViews[\"Thumbnail Collection\"]"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.tap()
-
-    XCTAssertFalse(app/*@START_MENU_TOKEN@*/.collectionViews["Thumbnail Collection"].cells["Page 380"]/*[[".otherElements[\"PDF View\"].collectionViews[\"Thumbnail Collection\"]",".cells[\"Page 380,  Bookmarked\"]",".cells[\"Page 380\"]",".collectionViews[\"Thumbnail Collection\"]"],[[[-1,3,1],[-1,0,1]],[[-1,2],[-1,1]]],[0,0]]@END_MENU_TOKEN@*/.exists, "This page exists")
-    bookmarksButton.tap()
+    app.tables["Outline Menu"]/*@START_MENU_TOKEN@*/.staticTexts["Publisher Information"]/*[[".cells.staticTexts[\"Publisher Information\"]",".staticTexts[\"Publisher Information\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+    //app/*@START_MENU_TOKEN@*/.staticTexts["10 of 620"]/*[[".otherElements[\"PDF View\"]",".otherElements[\"User Interface View\"].staticTexts[\"10 of 620\"]",".staticTexts[\"10 of 620\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+    XCTAssertTrue(app.staticTexts["10 of 620"].exists, "Currently on this page")
   }
 
-  // test if we're on a certain page or not
-  func test2Example() {
-
+  func testLastPageRead() {
     app.buttons["Read Financial Accounting"].tap()
-
-    let pdfPdfviewNavigationBar = app.navigationBars["PDF.PDFView"]
-    let thumbnailsButton = pdfPdfviewNavigationBar.buttons["Thumbnails"]
-    thumbnailsButton.tap()
-
-    let thumbnailCollectionCollectionView = app/*@START_MENU_TOKEN@*/.collectionViews["Thumbnail Collection"]/*[[".otherElements[\"PDF View\"].collectionViews[\"Thumbnail Collection\"]",".collectionViews[\"Thumbnail Collection\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
-    thumbnailCollectionCollectionView.cells["Page 367"].tap()
-    app/*@START_MENU_TOKEN@*/.staticTexts["367 of 620"]/*[[".otherElements[\"PDF View\"]",".otherElements[\"User Interface View\"].staticTexts[\"367 of 620\"]",".staticTexts[\"367 of 620\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
-    XCTAssertTrue(app.staticTexts["367 of 620"].exists, "Currently on this page")
-
-   // pdfPdfviewNavigationBar.buttons["Bookmarks"].tap()
-   // thumbnailsButton.tap()
-   // thumbnailCollectionCollectionView/*@START_MENU_TOKEN@*/.cells["Page 367"]/*[[".cells[\"Page 367,  Bookmarked\"]",".cells[\"Page 367\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+    XCTAssertTrue(app.staticTexts["10 of 620"].exists, "Currently on this page")
   }
 
-  // Next, how do we test that the bookmark icon is "on" for a page?
+  func testAddBookmark() {
+    app.buttons["Read Financial Accounting"].tap()
+    let outlineButton = app.navigationBars.buttons["Outline"]
+    outlineButton.tap()
+    app.navigationBars["Outline"].buttons["Bookmarks"].tap()
+
+    app.toolbars.buttons["Add"].tap()
+    // Assert that what was tapped was added to the Bookmarks table of contents
+
+  }
+
+  func testRemoveBookmark() {
+    app.buttons["Read Financial Accounting"].tap()
+    let outlineButton = app.navigationBars.buttons["Outline"]
+    outlineButton.tap()
+    app.navigationBars["Outline"].buttons["Bookmarks"].tap()
+
+    let cell = app.tables.cells.element(boundBy: 0)
+    let cellLabel = cell.label
+    cell.swipeLeft()
+    app.tables.buttons["Delete"].tap()
+    // Assert that the row was indeed removed
+  }
+
+  func testAddAndRemoveBookmark() {
+
+  }
 
 }
