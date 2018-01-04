@@ -35,21 +35,67 @@ class PDFExampleUITests: XCTestCase {
 
   func testLastPageRead() {
     app.buttons["Read Financial Accounting"].tap()
+    app.navigationBars["PDF.PDFView"].buttons["Outline"].tap()
+
+    app.tables["Outline Menu"]/*@START_MENU_TOKEN@*/.staticTexts["Publisher Information"]/*[[".cells.staticTexts[\"Publisher Information\"]",".staticTexts[\"Publisher Information\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+
+    XCUIDevice.shared.press(XCUIDevice.Button.home)
+    XCUIApplication().terminate()
+    XCUIApplication().launch()
+
+    app.buttons["Read Financial Accounting"].tap()
     XCTAssertTrue(app.staticTexts["10 of 620"].exists, "Currently on this page")
   }
 
-  func testAddBookmark() {
+  // this test only works if the bookmark doesn't already exist
+  // if the bookmark already exists, the test fails
+  /*
+  func testAddOneBookmark() {
+    app.buttons["Read Financial Accounting"].tap()
+
+    // before going to the outline, grab the current page number
+    // How to do that??
+
+    let outlineButton = app.navigationBars.buttons["Outline"]
+    outlineButton.tap()
+    app.navigationBars["Outline"].buttons["Bookmarks"].tap()
+
+    // get current number of rows in table
+    let numRows = app.cells.count
+
+    app.toolbars.buttons["Add"].tap()
+    // Assert that what was tapped was added to the Bookmarks table of contents
+    // check that the number of rows was increased by 1
+
+    // we should try checking to see if that page number exists in the list, whether it already exists or
+    // is recently added, the assertion below is not robust
+    XCTAssertTrue(app.cells.count == numRows + 1, "added additional row")
+  }
+ */
+
+  func testAddCorrectBookmark() {
+
+  }
+
+  func testRemoveBookmark() {
     app.buttons["Read Financial Accounting"].tap()
     let outlineButton = app.navigationBars.buttons["Outline"]
     outlineButton.tap()
     app.navigationBars["Outline"].buttons["Bookmarks"].tap()
 
-    app.toolbars.buttons["Add"].tap()
-    // Assert that what was tapped was added to the Bookmarks table of contents
-
+    if (app.tables.cells.count > 0) {
+      let cell = app.tables.cells.element(boundBy: 0)
+      let cellLabel = app.tables.staticTexts.element(boundBy: 0).label
+      cell.swipeLeft()
+      app.tables.buttons["Delete"].tap()
+      // Assert that the row was indeed removed
+      XCTAssertFalse(app.tables.staticTexts[cellLabel].exists, "bookmark removed")
+    }
   }
 
-  func testRemoveBookmark() {
+  /*
+  // add and immediately remove that same bookmark
+  func testAddAndRemoveBookmark() {
     app.buttons["Read Financial Accounting"].tap()
     let outlineButton = app.navigationBars.buttons["Outline"]
     outlineButton.tap()
@@ -60,9 +106,18 @@ class PDFExampleUITests: XCTestCase {
     cell.swipeLeft()
     app.tables.buttons["Delete"].tap()
     // Assert that the row was indeed removed
-  }
 
-  func testAddAndRemoveBookmark() {
+  }
+ */
+
+  func testOpenCloseOpenApp() {
+
+    let app = XCUIApplication()
+    app.buttons["Read Financial Accounting"].tap()
+
+    XCUIDevice.shared.press(XCUIDevice.Button.home)
+    XCUIApplication().terminate()
+    XCUIApplication().launch()
 
   }
 
