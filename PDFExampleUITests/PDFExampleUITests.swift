@@ -35,7 +35,11 @@ class PDFExampleUITests: XCTestCase {
 
   func testLastPageRead() {
     app.buttons["Read Financial Accounting"].tap()
-    app.navigationBars["PDF.PDFView"].buttons["Outline"].tap()
+    // line below is needed to work on iPad device
+    app.navigationBars["Financial Accounting"].buttons["Outline"].tap()
+
+    // line below works on simulator
+    //app.navigationBars["PDF.PDFView"].buttons["Outline"].tap()
 
     app.tables["Outline Menu"]/*@START_MENU_TOKEN@*/.staticTexts["Publisher Information"]/*[[".cells.staticTexts[\"Publisher Information\"]",".staticTexts[\"Publisher Information\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
 
@@ -44,6 +48,9 @@ class PDFExampleUITests: XCTestCase {
     XCUIApplication().launch()
 
     app.buttons["Read Financial Accounting"].tap()
+    // line below is needed to work on iPad device
+    let pdfPageViewElement = app/*@START_MENU_TOKEN@*/.scrollViews["PDF Culling View"].otherElements.collectionViews.children(matching: .cell).matching(identifier: "PDF Spread Cell Scroll View").element(boundBy: 1).scrollViews.otherElements.otherElements["PDF Page View"]/*[[".otherElements[\"PDF View\"]",".otherElements[\"PDF Document View\"].scrollViews[\"PDF Culling View\"].otherElements.collectionViews.children(matching: .cell).matching(identifier: \"PDF Spread Cell Scroll View\").element(boundBy: 1).scrollViews.otherElements",".otherElements[\"PDF Spread View\"].otherElements[\"PDF Page View\"]",".otherElements[\"PDF Page View\"]",".scrollViews[\"PDF Culling View\"].otherElements.collectionViews.children(matching: .cell).matching(identifier: \"PDF Spread Cell Scroll View\").element(boundBy: 1).scrollViews.otherElements"],[[[-1,4,2],[-1,1,2],[-1,0,1]],[[-1,4,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/
+    pdfPageViewElement.tap()
     XCTAssertTrue(app.staticTexts["10 of 620"].exists, "Currently on this page")
   }
 
