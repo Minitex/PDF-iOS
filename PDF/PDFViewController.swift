@@ -21,13 +21,18 @@ public final class PDFViewController: PSPDFViewController {
   public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [], PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
-
     let document = PSPDFDocument(url: documentURL)
+
+    document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
+      documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(documentProvider: documentProvider)]
+    }
+    document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
     document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfModuleDelegate: delegate!)]
 
     let configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
+      //builder.editableAnnotationTypes = []  // disable editing annotations for now
     }
 
     super.init(document: document, configuration: configuration)
@@ -45,7 +50,7 @@ public final class PDFViewController: PSPDFViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
 
-    navigationItem.setRightBarButtonItems([thumbnailsButtonItem, outlineButtonItem, bookmarkButtonItem, searchButtonItem, settingsButtonItem], animated: false)
+    navigationItem.setRightBarButtonItems([thumbnailsButtonItem, outlineButtonItem, bookmarkButtonItem, searchButtonItem, annotationButtonItem, settingsButtonItem], animated: false)
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
   }
 }
