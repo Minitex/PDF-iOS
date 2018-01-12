@@ -24,14 +24,16 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     print("an annotation was added!")
 
     for annotation in annotations {
+      print(annotation)
       do {
         let jsonData: Data = try annotation.generateInstantJSON()
-
-        print(jsonData)
+        let jsonDataString = String(data: jsonData, encoding: String.Encoding.utf8)
+        print(jsonDataString ?? "no string value here")
       }
       catch {
         print("Error: Generate InstantJSON!!")
       }
+
     }
     return annotations
   }
