@@ -69,6 +69,11 @@ class ViewController: UIViewController {
 
 extension ViewController: PDFViewControllerDelegate {
 
+  func saveAnnotations(annotations: Data) {
+    print("saveAnnotations called: Data is: \(annotations)")
+    print("saveAnnotations called: String of Data is: \(String(data: annotations, encoding: String.Encoding.utf8) ?? "no string value here")")
+  }
+
   func userDidNavigate(page: Int) {
 
     for (index, book) in (books?.enumerated())! {

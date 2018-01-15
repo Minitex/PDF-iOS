@@ -23,6 +23,8 @@
 		5275465D1FBBA38600395A1F /* PDFExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5275465C1FBBA38600395A1F /* PDFExampleTests.swift */; };
 		527546681FBBA38600395A1F /* PDFExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546671FBBA38600395A1F /* PDFExampleUITests.swift */; };
 		527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546731FBBB3B700395A1F /* PDFViewController.swift */; };
+		527BAF5B200D56B500E81623 /* Book1Annotations.txt in Resources */ = {isa = PBXBuildFile; fileRef = 527BAF5A200D56B500E81623 /* Book1Annotations.txt */; };
+		527BAF5D200D56D100E81623 /* Book2Annotations.txt in Resources */ = {isa = PBXBuildFile; fileRef = 527BAF5C200D56D100E81623 /* Book2Annotations.txt */; };
 		5282D3961FCF306500A392C5 /* FinancialAccounting.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */; };
 		529958E91FD8614800995B39 /* PSPDFKitUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		529958EA1FD8614C00995B39 /* PSPDFKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -107,6 +109,8 @@
 		527546671FBBA38600395A1F /* PDFExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFExampleUITests.swift; sourceTree = "<group>"; };
 		527546691FBBA38600395A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		527546731FBBB3B700395A1F /* PDFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
+		527BAF5A200D56B500E81623 /* Book1Annotations.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Book1Annotations.txt; sourceTree = "<group>"; };
+		527BAF5C200D56D100E81623 /* Book2Annotations.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Book2Annotations.txt; sourceTree = "<group>"; };
 		5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = FinancialAccounting.pdf; sourceTree = "<group>"; };
 		52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		52B6B1201FD719CB00AFA35B /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
@@ -191,8 +195,8 @@
 			children = (
 				5275462A1FBBA24800395A1F /* PDF.h */,
 				5275462B1FBBA24800395A1F /* Info.plist */,
-				526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */,
 				527546731FBBB3B700395A1F /* PDFViewController.swift */,
+				526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */,
 				52B872002007FA100054F920 /* PDFAnnotationProvider.swift */,
 			);
 			path = PDF;
@@ -220,6 +224,8 @@
 				52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */,
 				52B6B1201FD719CB00AFA35B /* Book.swift */,
 				52B6B1221FD7303300AFA35B /* Books.plist */,
+				527BAF5A200D56B500E81623 /* Book1Annotations.txt */,
+				527BAF5C200D56D100E81623 /* Book2Annotations.txt */,
 			);
 			path = PDFExample;
 			sourceTree = "<group>";
@@ -443,10 +449,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				527BAF5B200D56B500E81623 /* Book1Annotations.txt in Resources */,
 				527546521FBBA38500395A1F /* LaunchScreen.storyboard in Resources */,
 				5275464F1FBBA38500395A1F /* Assets.xcassets in Resources */,
 				5275464D1FBBA38500395A1F /* Main.storyboard in Resources */,
 				52B6B1231FD7303300AFA35B /* Books.plist in Resources */,
+				527BAF5D200D56D100E81623 /* Book2Annotations.txt in Resources */,
 				5282D3961FCF306500A392C5 /* FinancialAccounting.pdf in Resources */,
 				52690F0E1FD07F3B004CDD6C /* DataModeling.pdf in Resources */,
 			);

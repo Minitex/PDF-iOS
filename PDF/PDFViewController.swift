@@ -12,6 +12,7 @@ import PSPDFKitUI
 public protocol PDFViewControllerDelegate {
   func userDidNavigate(page: Int)
   func saveBookmarks(pageNumbers: [UInt])
+  func saveAnnotations(annotations: Data)
 }
 
 public final class PDFViewController: PSPDFViewController {
@@ -24,7 +25,7 @@ public final class PDFViewController: PSPDFViewController {
     let document = PSPDFDocument(url: documentURL)
 
     document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
-      documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(documentProvider: documentProvider)]
+      documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(documentProvider: documentProvider, pdfModuleDelegate: delegate!)]
     }
     document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
     document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfModuleDelegate: delegate!)]
