@@ -24,10 +24,12 @@ public final class PDFViewController: PSPDFViewController {
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
     let document = PSPDFDocument(url: documentURL)
 
+    document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
+    
     document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
       documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(documentProvider: documentProvider, pdfModuleDelegate: delegate!)]
     }
-    document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
+
     document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfModuleDelegate: delegate!)]
 
     let configuration = PSPDFConfiguration { builder in
@@ -36,11 +38,27 @@ public final class PDFViewController: PSPDFViewController {
       //builder.editableAnnotationTypes = []  // disable editing annotations for now
     }
 
+
     super.init(document: document, configuration: configuration)
     self.delegate = self
 
     self.pdfModuleDelegate = delegate
     self.pageIndex = page
+
+/*
+    var observer = NotificationCenter.default.addObserver(forName: .PSPDFAnnotationsAdded, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+
+      //guard self != nil else { return }
+
+      guard let pdfController = self else { return }
+
+      if pdfController.annotationStateManager.state == .ink {
+        print("from Observer: ink annotation added!")
+      }
+
+    }
+*/
+
   }
 
   @available(*, unavailable)

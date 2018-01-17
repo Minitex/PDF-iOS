@@ -26,8 +26,6 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
  */
   
   override func add(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {
-    super.add(annotations, options: options)
-
     // convert to JSON and pass it off to the host app
 
     print("an annotation was added!")
@@ -48,6 +46,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     }
 
     pdfModuleDelegate.saveAnnotations(annotations: jsonData)
+    super.add(annotations, options: options)
     return annotations
   }
 
