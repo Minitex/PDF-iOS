@@ -10,21 +10,37 @@ import PSPDFKit
 
 class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
-  // make sure there is an allAnnotations object
-  // and an page: annotations dictionary object(s)
   var pdfModuleDelegate: PDFViewControllerDelegate
 
-  init(documentProvider: PSPDFDocumentProvider, pdfModuleDelegate: PDFViewControllerDelegate) {
+  init(annotationsData: Data = Data(), documentProvider: PSPDFDocumentProvider, pdfModuleDelegate: PDFViewControllerDelegate) {
     self.pdfModuleDelegate = pdfModuleDelegate
+
+    var annotation = PSPDFAnnotation()
+    do {
+      annotation = try PSPDFAnnotation(fromInstantJSON: annotationsData, documentProvider: documentProvider)
+    }
+    catch {
+      print(error)
+    }
     super.init(documentProvider: documentProvider)
+    self.setAnnotations([annotation], append: true)
   }
 
   /*
-  override init(documentProvider: PSPDFDocumentProvider) {
-    super.init(documentProvider: documentProvider)
+  override func annotationsForPage(at pageIndex: UInt) -> [PSPDFAnnotation]? {
+
   }
  */
-  
+
+  override func remove(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {
+    super.remove(annotations, options: options)
+    return annotations
+  }
+
+  override func removeAllAnnotations(options: [String : Any] = [:]) {
+    super.removeAllAnnotations(options: options)
+  }
+
   override func add(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {
     // convert to JSON and pass it off to the host app
 

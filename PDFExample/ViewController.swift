@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     // copy the plist from the bundle to the user's documents directory,
     // so that it can be edited
     let booksPlistPathInBundle: URL = Bundle.main.url(forResource: "Books", withExtension: "plist")!
-    if !FileManager.default.fileExists(atPath: booksPlistURL.absoluteString) {
+    if !FileManager.default.fileExists(atPath: booksPlistURL.path) {
       do {
         try FileManager.default.copyItem(at: booksPlistPathInBundle, to: booksPlistURL)
       } catch {
@@ -54,7 +54,8 @@ class ViewController: UIViewController {
     let documentName = books![0].title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: books![0].lastPageRead, bookmarks: books![0].bookmarks, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+    let annotationsData = readAnnotionsData(currentTitle: documentName)
+    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: books![0].lastPageRead, bookmarks: books![0].bookmarks, annotations: annotationsData, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 
@@ -62,8 +63,20 @@ class ViewController: UIViewController {
     let documentName = books![1].title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: books![1].lastPageRead, bookmarks: books![1].bookmarks, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+    let annotationsData = readAnnotionsData(currentTitle: documentName)
+    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: books![1].lastPageRead, bookmarks: books![1].bookmarks, annotations: annotationsData, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
+  }
+
+  private func readAnnotionsData(currentTitle: String) -> Data {
+    var annotationsData = Data()
+    let fileURL: URL = URL(fileURLWithPath: currentTitle + "Annotations", relativeTo: ViewController.documentDirectoryURL).appendingPathExtension("txt")
+    if FileManager.default.fileExists(atPath: fileURL.path) {
+      annotationsData.append(try! Data(contentsOf: fileURL))
+    }
+    print("readAnnotationsData called: Data is: \(annotationsData)")
+    print("readAnnotationsData called: String of Data is: \(String(data: annotationsData, encoding: String.Encoding.utf8) ?? "no string value here")")
+    return annotationsData
   }
 }
 
@@ -72,6 +85,37 @@ extension ViewController: PDFViewControllerDelegate {
   func saveAnnotations(annotations: Data) {
     print("saveAnnotations called: Data is: \(annotations)")
     print("saveAnnotations called: String of Data is: \(String(data: annotations, encoding: String.Encoding.utf8) ?? "no string value here")")
+
+    for (index, book) in (books?.enumerated())! {
+      if book.title == self.currentBook {
+
+        // create a file in the user's documents directory, if it doesn't already exist
+        // write to that file (in bytes) overwriting whatever was already there
+        let fileURL: URL = URL(fileURLWithPath: books![index].title + "Annotations", relativeTo: ViewController.documentDirectoryURL).appendingPathExtension("txt")
+
+        if !FileManager.default.fileExists(atPath: fileURL.path) {
+          FileManager.default.createFile(atPath: fileURL.path, contents: annotations, attributes: nil)
+
+          if FileManager.default.fileExists(atPath: fileURL.path) {
+            print("file created!")
+          } else {
+            print("file not created!")
+          }
+
+        } else {
+          do {
+            try annotations.write(to: fileURL)
+          }
+          catch {
+            print(error)
+          }
+        }
+
+        // once we find the right book, can stop iterating through array
+        break
+      }
+    }
+
   }
 
   func userDidNavigate(page: Int) {

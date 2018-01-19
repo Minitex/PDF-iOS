@@ -19,15 +19,16 @@ public final class PDFViewController: PSPDFViewController {
 
   var pdfModuleDelegate: PDFViewControllerDelegate?
 
-  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [], PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
+  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [], annotations annotationsData: Data = Data(), PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
     let document = PSPDFDocument(url: documentURL)
 
     document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
+    //document.annotationSaveMode = PSPDFAnnotationSaveMode.disabled
     
     document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
-      documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(documentProvider: documentProvider, pdfModuleDelegate: delegate!)]
+      documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(annotationsData: annotationsData, documentProvider: documentProvider, pdfModuleDelegate: delegate!)]
     }
 
     document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfModuleDelegate: delegate!)]
