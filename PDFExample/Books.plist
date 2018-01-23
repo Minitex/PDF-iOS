@@ -9,6 +9,8 @@
 		<integer>0</integer>
 		<key>bookmarks</key>
 		<array/>
+		<key>annotations</key>
+		<array/>
 	</dict>
 	<dict>
 		<key>title</key>
@@ -16,6 +18,8 @@
 		<key>lastPageRead</key>
 		<integer>0</integer>
 		<key>bookmarks</key>
+		<array/>
+		<key>annotations</key>
 		<array/>
 	</dict>
 </array>

@@ -12,14 +12,14 @@ import PSPDFKitUI
 public protocol PDFViewControllerDelegate {
   func userDidNavigate(page: Int)
   func saveBookmarks(pageNumbers: [UInt])
-  func saveAnnotations(annotations: Data)
+  func saveAnnotations(annotationsData: [Data])
 }
 
 public final class PDFViewController: PSPDFViewController {
 
   var pdfModuleDelegate: PDFViewControllerDelegate?
 
-  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [], annotations annotationsData: Data = Data(), PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
+  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [], annotations annotationsData: [Data] = [], PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
     let document = PSPDFDocument(url: documentURL)

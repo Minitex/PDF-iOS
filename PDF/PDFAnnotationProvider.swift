@@ -12,25 +12,34 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
   var pdfModuleDelegate: PDFViewControllerDelegate
 
-  init(annotationsData: Data = Data(), documentProvider: PSPDFDocumentProvider, pdfModuleDelegate: PDFViewControllerDelegate) {
+  init(annotationsData: [Data] = [], documentProvider: PSPDFDocumentProvider, pdfModuleDelegate: PDFViewControllerDelegate) {
     self.pdfModuleDelegate = pdfModuleDelegate
 
     var annotation = PSPDFAnnotation()
-    do {
-      annotation = try PSPDFAnnotation(fromInstantJSON: annotationsData, documentProvider: documentProvider)
-    }
-    catch {
-      print(error)
+    var annotationArray: [PSPDFAnnotation] = []
+    for data in annotationsData {
+      do {
+        annotation = try PSPDFAnnotation(fromInstantJSON: data, documentProvider: documentProvider)
+        annotationArray.append(annotation)
+      }
+      catch {
+        print(error)
+      }
     }
     super.init(documentProvider: documentProvider)
-    self.setAnnotations([annotation], append: true)
+    self.setAnnotations(annotationArray, append: false)
   }
 
-  /*
+/*
   override func annotationsForPage(at pageIndex: UInt) -> [PSPDFAnnotation]? {
 
   }
- */
+*/
+
+  // will this disable the external save? doesn't look like it
+  override func saveAnnotations(options: [String : Any]? = nil) throws {
+    // do nothing
+  }
 
   override func remove(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {
     super.remove(annotations, options: options)
@@ -42,26 +51,26 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   }
 
   override func add(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {
-    // convert to JSON and pass it off to the host app
-
     print("an annotation was added!")
 
-    var jsonData = Data()
+    // add currently added annotation to the array of all existing annotations
+    // generate JSON for all the current annotations
+    var jsonData: [Data] = []
+    var allCurrentAnnotations: [PSPDFAnnotation] = self.allAnnotations
+    allCurrentAnnotations.append(contentsOf: annotations)
 
-    for annotation in annotations {
-      print(annotation)
+    for annotation in allCurrentAnnotations {
       do {
-        //let jsonData: Data = try annotation.generateInstantJSON()
         jsonData.append(try annotation.generateInstantJSON())
-        //let jsonDataString = String(data: jsonData, encoding: String.Encoding.utf8)
-        //print(jsonDataString ?? "no string value here")
       }
       catch {
-        print("Error: Generate InstantJSON!!")
+        print("Error: Generate InstantJSON1 !!")
       }
     }
+    
+    // pass JSON data off to the host app, or delegate
+    pdfModuleDelegate.saveAnnotations(annotationsData: jsonData)
 
-    pdfModuleDelegate.saveAnnotations(annotations: jsonData)
     super.add(annotations, options: options)
     return annotations
   }
