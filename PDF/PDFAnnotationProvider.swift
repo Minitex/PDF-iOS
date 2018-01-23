@@ -30,24 +30,37 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     self.setAnnotations(annotationArray, append: false)
   }
 
-/*
-  override func annotationsForPage(at pageIndex: UInt) -> [PSPDFAnnotation]? {
-
-  }
-*/
-
-  // will this disable the external save? doesn't look like it
+  // will this disable the save to external file? hope so
   override func saveAnnotations(options: [String : Any]? = nil) throws {
     // do nothing
   }
 
   override func remove(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {
+    // remove the annotation from the internal annotations
+    // and then pass the updated annotations list to the host app / delegate
     super.remove(annotations, options: options)
+
+    var jsonData: [Data] = []
+    for annotation in self.allAnnotations {
+      do {
+        jsonData.append(try annotation.generateInstantJSON())
+      }
+      catch {
+        print("Error: Generate InstantJSON1 !!")
+      }
+    }
+
+    // pass JSON data off to the host app, or delegate
+    pdfModuleDelegate.saveAnnotations(annotationsData: jsonData)
+
     return annotations
   }
 
   override func removeAllAnnotations(options: [String : Any] = [:]) {
     super.removeAllAnnotations(options: options)
+
+    // pass JSON data off to the host app, or delegate
+    pdfModuleDelegate.saveAnnotations(annotationsData: [])
   }
 
   override func add(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {

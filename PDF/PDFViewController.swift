@@ -25,7 +25,6 @@ public final class PDFViewController: PSPDFViewController {
     let document = PSPDFDocument(url: documentURL)
 
     document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
-    //document.annotationSaveMode = PSPDFAnnotationSaveMode.disabled
     
     document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
       documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(annotationsData: annotationsData, documentProvider: documentProvider, pdfModuleDelegate: delegate!)]
