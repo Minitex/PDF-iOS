@@ -70,10 +70,13 @@ class ViewController: UIViewController {
 extension ViewController: PDFViewControllerDelegate {
 
   func saveAnnotations(annotationsData: [Data]) {
+
+    print("saveAnnotations called!")
     for annotation in annotationsData {
       print("saveAnnotations called: Data is: \(annotation)")
       print("saveAnnotations called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
     }
+    print("\n")
 
     for (index, book) in (books?.enumerated())! {
       if book.title == self.currentBook {

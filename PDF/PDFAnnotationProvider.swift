@@ -23,7 +23,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
         annotationArray.append(annotation)
       }
       catch {
-        print(error)
+        print("Error reloading annotation: \(error)")
       }
     }
     super.init(documentProvider: documentProvider)
@@ -46,7 +46,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
         jsonData.append(try annotation.generateInstantJSON())
       }
       catch {
-        print("Error: Generate InstantJSON1 !!")
+        print("Error: Generating InstantJSON !!")
       }
     }
 
@@ -64,8 +64,6 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   }
 
   override func add(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {
-    print("an annotation was added!")
-
     // add currently added annotation to the array of all existing annotations
     // generate JSON for all the current annotations
     var jsonData: [Data] = []
@@ -77,7 +75,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
         jsonData.append(try annotation.generateInstantJSON())
       }
       catch {
-        print("Error: Generate InstantJSON1 !!")
+        print("Error: Generating InstantJSON !!")
       }
     }
     
