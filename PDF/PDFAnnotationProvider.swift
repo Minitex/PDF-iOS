@@ -15,6 +15,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   init(annotationsData: [Data] = [], documentProvider: PSPDFDocumentProvider, pdfModuleDelegate: PDFViewControllerDelegate) {
     self.pdfModuleDelegate = pdfModuleDelegate
 
+    // reload annotations into the document
     var annotation = PSPDFAnnotation()
     var annotationArray: [PSPDFAnnotation] = []
     for data in annotationsData {
@@ -31,6 +32,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   }
 
   private func saveAnnotationsExternally(annotations: [PSPDFAnnotation]) {
+    // generate JSON for the annotations
     var jsonData: [Data] = []
     for annotation in annotations {
       do {
@@ -70,12 +72,12 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     // remove all the annotations
     // and then pass the empty annotations list to the host app / delegate
     super.removeAllAnnotations(options: options)
-    pdfModuleDelegate.saveAnnotations(annotationsData: [])
+    saveAnnotationsExternally(annotations: [])
   }
 
   override func add(_ annotations: [PSPDFAnnotation], options: [String : Any]? = nil) -> [PSPDFAnnotation]? {
-    // add currently added annotation to the array of all existing annotations
-    // generate JSON for all the current annotations
+    // add newly added annotation to the array of all existing annotations
+    // pass the updated annotations list to the host app / delegate
     var allCurrentAnnotations: [PSPDFAnnotation] = self.allAnnotations
     allCurrentAnnotations.append(contentsOf: annotations)
     saveAnnotationsExternally(annotations: allCurrentAnnotations)

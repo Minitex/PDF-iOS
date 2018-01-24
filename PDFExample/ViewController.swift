@@ -51,18 +51,19 @@ class ViewController: UIViewController {
   }
 
   @IBAction func openPDF1(_ sender: Any) {
-    let documentName = books![0].title
-    currentBook = documentName
-    let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: books![0].lastPageRead, bookmarks: books![0].bookmarks, annotations: books![0].annotations, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
-    self.navigationController?.pushViewController(pdfViewController, animated: true)
+    openPDF(bookIndex: 0)
   }
 
   @IBAction func openPDF2(_ sender: Any) {
-    let documentName = books![1].title
+    openPDF(bookIndex: 1)
+  }
+
+  private func openPDF(bookIndex: Int) {
+    let book: Book = books![bookIndex]
+    let documentName = book.title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: books![1].lastPageRead, bookmarks: books![1].bookmarks, annotations: books![1].annotations, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead, bookmarks: book.bookmarks, annotations: book.annotations, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
