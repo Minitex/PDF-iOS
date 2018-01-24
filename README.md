@@ -19,7 +19,8 @@ PDFExample/ViewController.swift
 In the openPDF function, you will:
 
 1. Grab the Book object (which contains previously saved settings and/or metadata for a PDF book, if they exist) for the PDF book you want to open.
-`let book: Book = books![bookIndex]
+
+`let book: Book = books![bookIndex]`
 
 2. Get the title of the PDF book you want to open.
 
