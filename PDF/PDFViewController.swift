@@ -70,7 +70,15 @@ public final class PDFViewController: PSPDFViewController {
     super.viewDidLoad()
 
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem, outlineButtonItem, bookmarkButtonItem, searchButtonItem, annotationButtonItem, settingsButtonItem], animated: false)
+
+    // remove edit icon while in thumbnail view
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
+
+    // remove the image and the signature annotations from the annotation toolbar
+    var annotatationTypes = configuration.editableAnnotationTypes
+    annotatationTypes.remove(PSPDFAnnotationString.image)
+    annotatationTypes.remove(PSPDFAnnotationString.signature)
+    annotationToolbarController?.annotationToolbar.editableAnnotationTypes = annotatationTypes
   }
 }
 
