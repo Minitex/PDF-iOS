@@ -16,26 +16,29 @@ To pull in every PSPDFKit framework update after that, run
 To integrate your app with the PDF-iOS module, take a look at:
 PDFExample/ViewController.swift
 
-In either the openPDF1 or openPDF2 functions, you will
-(using openPDF1 as an example):
+In the openPDF function, you will:
 
-1. Get the title of the PDF book you want to open.
+1. Grab the Book object (which contains previously saved settings and/or metadata for a PDF book, if they exist) for the PDF book you want to open.
 
-`let documentName = books![0].title`
+`let book: Book = books![bookIndex]`
 
-2. Make that title the soon to be currently open book
+2. Get the title of the PDF book you want to open.
+
+`let documentName = book.title`
+
+3. Make that title the soon to be currently open book.
 
 `currentBook = documentName`
 
-3. Get the file handle for the PDF book to open.
+4. Get the file handle for the PDF book to open.
 
 `let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!`
 
-4. Instantiate the ViewController from the PDF module to render the PDF.
+5. Instantiate the ViewController from the PDF module to render the PDF.
 
 `let pdfViewController = PDFViewController.init(...)`
 
-5. Push the ViewController onto the NavigationController stack so that it can be displayed.
+6. Push the ViewController onto the NavigationController stack so that it can be displayed.
 
 `self.navigationController?.pushViewController(pdfViewController, animated: true)`
 

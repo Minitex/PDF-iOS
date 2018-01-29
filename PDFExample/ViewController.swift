@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     // copy the plist from the bundle to the user's documents directory,
     // so that it can be edited
     let booksPlistPathInBundle: URL = Bundle.main.url(forResource: "Books", withExtension: "plist")!
-    if !FileManager.default.fileExists(atPath: booksPlistURL.absoluteString) {
+    if !FileManager.default.fileExists(atPath: booksPlistURL.path) {
       do {
         try FileManager.default.copyItem(at: booksPlistPathInBundle, to: booksPlistURL)
       } catch {
@@ -51,23 +51,58 @@ class ViewController: UIViewController {
   }
 
   @IBAction func openPDF1(_ sender: Any) {
-    let documentName = books![0].title
-    currentBook = documentName
-    let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: books![0].lastPageRead, bookmarks: books![0].bookmarks, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
-    self.navigationController?.pushViewController(pdfViewController, animated: true)
+    openPDF(bookIndex: 0)
   }
 
   @IBAction func openPDF2(_ sender: Any) {
-    let documentName = books![1].title
+    openPDF(bookIndex: 1)
+  }
+
+  private func openPDF(bookIndex: Int) {
+    let book: Book = books![bookIndex]
+    let documentName = book.title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: books![1].lastPageRead, bookmarks: books![1].bookmarks, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead, bookmarks: book.bookmarks, annotations: book.annotations, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
 
 extension ViewController: PDFViewControllerDelegate {
+
+  func saveAnnotations(annotationsData: [Data]) {
+
+    print("saveAnnotations called!")
+    for annotation in annotationsData {
+      print("saveAnnotations called: Data is: \(annotation)")
+      print("saveAnnotations called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
+    }
+    print("\n")
+
+    for (index, book) in (books?.enumerated())! {
+      if book.title == self.currentBook {
+
+        // save annotations for a specific book to internal array
+        books![index].annotations = annotationsData
+
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+
+        // save changes to books array to the Books.plist file
+        do {
+          let data = try encoder.encode(books)
+          try data.write(to: booksPlistURL, options: .atomic)
+        }
+        catch {
+          print(error)
+        }
+
+        // once we find the right book, can stop iterating through array
+        break
+      }
+    }
+
+  }
 
   func userDidNavigate(page: Int) {
 
