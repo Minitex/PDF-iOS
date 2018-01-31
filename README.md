@@ -8,10 +8,12 @@ Before running the Example App for the first time, run
 To pull in every PSPDFKit framework update after that, run
 > carthage update
 
-1. Open `PDF.xcodeproj`.
-2. Ensure the `PDFExample` target is selected.
-3. Build and run as normal.
-4. If PDFExample was installed previously and you get a .plist error while trying to run it, you may have to uninstall the PDFExample app and reinstall it, to get the updated .plist file.
+1. Run ./swiftlint-setup.sh to install a local copy of 
+[SwiftLint](https://github.com/realm/SwiftLint)
+2. Open `PDF.xcodeproj`.
+3. Ensure the `PDFExample` target is selected.
+4. Build and run as normal.
+5. If PDFExample was installed previously and you get a .plist error while trying to run it, you may have to uninstall the PDFExample app and reinstall it, to get the updated .plist file.
 
 To integrate your app with the PDF-iOS module, take a look at:
 PDFExample/ViewController.swift

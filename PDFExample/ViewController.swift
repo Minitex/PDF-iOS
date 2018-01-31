@@ -63,7 +63,9 @@ class ViewController: UIViewController {
     let documentName = book.title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead, bookmarks: book.bookmarks, annotations: book.annotations, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead,
+                                                   bookmarks: book.bookmarks, annotations: book.annotations,
+                                                   PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
