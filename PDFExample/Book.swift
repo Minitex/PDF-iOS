@@ -8,10 +8,9 @@
 
 import Foundation
 
-public struct Book : Codable {
+public struct Book: Codable {
   public var title: String
   public var lastPageRead: UInt
   public var bookmarks: [UInt]
   public var annotations: [Data]
 }
-

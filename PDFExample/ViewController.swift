@@ -21,7 +21,8 @@ class ViewController: UIViewController {
     )
   }
 
-  let booksPlistURL: URL = URL(fileURLWithPath: "Books", relativeTo: documentDirectoryURL).appendingPathExtension("plist")
+  let booksPlistURL: URL = URL(fileURLWithPath: "Books",
+                               relativeTo: documentDirectoryURL).appendingPathExtension("plist")
 
   required init?(coder aDecoder: NSCoder) {
 
@@ -77,6 +78,7 @@ extension ViewController: PDFViewControllerDelegate {
     print("saveAnnotations called!")
     for annotation in annotationsData {
       print("saveAnnotations called: Data is: \(annotation)")
+      // swiftlint:disable line_length
       print("saveAnnotations called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
     }
     print("\n")
@@ -94,8 +96,7 @@ extension ViewController: PDFViewControllerDelegate {
         do {
           let data = try encoder.encode(books)
           try data.write(to: booksPlistURL, options: .atomic)
-        }
-        catch {
+        } catch {
           print(error)
         }
 
@@ -121,8 +122,7 @@ extension ViewController: PDFViewControllerDelegate {
         do {
           let data = try encoder.encode(books)
           try data.write(to: booksPlistURL, options: .atomic)
-        }
-        catch {
+        } catch {
           print(error)
         }
 
@@ -133,7 +133,6 @@ extension ViewController: PDFViewControllerDelegate {
   }
 
   func saveBookmarks(pageNumbers: [UInt]) {
-    
     for (index, book) in (books?.enumerated())! {
       if book.title == self.currentBook {
 
@@ -147,8 +146,7 @@ extension ViewController: PDFViewControllerDelegate {
         do {
           let data = try encoder.encode(books)
           try data.write(to: booksPlistURL, options: .atomic)
-        }
-        catch {
+        } catch {
           print(error)
         }
 
