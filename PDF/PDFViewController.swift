@@ -37,7 +37,6 @@ public final class PDFViewController: PSPDFViewController {
     let configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
-      //builder.editableAnnotationTypes = []  // disable editing annotations for now
     }
 
     super.init(document: document, configuration: configuration)
@@ -45,22 +44,6 @@ public final class PDFViewController: PSPDFViewController {
 
     self.pdfModuleDelegate = delegate
     self.pageIndex = page
-
-/*
-    var observer = NotificationCenter.default.addObserver(forName: .PSPDFAnnotationsAdded, object: nil,
-     queue: OperationQueue.main) { [weak self] (notification) in
-
-      //guard self != nil else { return }
-
-      guard let pdfController = self else { return }
-
-      if pdfController.annotationStateManager.state == .ink {
-        print("from Observer: ink annotation added!")
-      }
-
-    }
-*/
-
   }
 
   @available(*, unavailable)
