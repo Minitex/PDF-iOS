@@ -60,11 +60,27 @@ public final class PDFViewController: PSPDFViewController {
     // remove edit icon while in thumbnail view
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
 
-    // remove the image and the signature annotations from the annotation toolbar
-    var annotatationTypes = configuration.editableAnnotationTypes
-    annotatationTypes.remove(PSPDFAnnotationString.image)
-    annotatationTypes.remove(PSPDFAnnotationString.signature)
-    annotationToolbarController?.annotationToolbar.editableAnnotationTypes = annotatationTypes
+    // add only the highlight, underline, and ink to the annotations toolbar
+    let highlight = PSPDFAnnotationGroupItem(type: PSPDFAnnotationString.highlight)
+    let underline = PSPDFAnnotationGroupItem(type: PSPDFAnnotationString.underline)
+    let ink       = PSPDFAnnotationGroupItem(type: PSPDFAnnotationString.ink)
+
+    // for iphone
+    let annotationCompactGroup: [PSPDFAnnotationGroup] = [PSPDFAnnotationGroup(items: [highlight]),
+                                                          PSPDFAnnotationGroup(items: [underline]),
+                                                          PSPDFAnnotationGroup(items: [ink])]
+    let annotationCompactToolbarConfiguration =
+      PSPDFAnnotationToolbarConfiguration(annotationGroups: annotationCompactGroup)
+
+    // for ipad
+    let annotationRegularGroup: [PSPDFAnnotationGroup] = [PSPDFAnnotationGroup(items: [highlight]),
+                                                          PSPDFAnnotationGroup(items: [underline]),
+                                                          PSPDFAnnotationGroup(items: [ink])]
+    let annotationRegularToolbarConfiguration =
+      PSPDFAnnotationToolbarConfiguration(annotationGroups: annotationRegularGroup)
+
+    self.annotationToolbarController?.annotationToolbar.configurations = [annotationCompactToolbarConfiguration,
+                                                                          annotationRegularToolbarConfiguration]
   }
 }
 
