@@ -57,7 +57,19 @@ extension ServerJSON {
   init(from pdfJson: PDFJSON) {
     context = "http://www.w3.org/ns/anno.jsonld"
     type = "Annotation"
-    body = Body(type: "PSPDFKitAnnotation", value: "stuff")
+
+    var annotationValue: String = "stuff"
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
+    do {
+      let pdfJSON = try decoder.decode([PDFJSON].self, from: json)
+      let pdfJSONValue = try encoder.encode(pdfJSON[0])
+      annotationValue = String(data: pdfJSONValue, encoding: .utf8)!
+    } catch {
+
+    }
+
+    body = Body(type: "PSPDFKitAnnotation", value: annotationValue)
     target = "http://circulation-manager/book"
   }
 }
@@ -75,3 +87,7 @@ let encoder = JSONEncoder()
 encoder.outputFormatting = .prettyPrinted
 let serverJSONData = try encoder.encode(serverJSON)
 print(String(data: serverJSONData, encoding: .utf8) ?? "print something")
+
+let pdfJSONPretty = try encoder.encode(pdfJSON)
+print(String(data: pdfJSONPretty, encoding: .utf8) ?? "print something")
+
