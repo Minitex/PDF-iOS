@@ -29,7 +29,6 @@ struct PDFJSON: Codable {
   var v: Int
 }
 
-
 // this is the format we plan to send to the SimplyE server
 struct ServerJSON: Codable {
   var context: String
@@ -74,7 +73,6 @@ extension ServerJSON {
   }
 }
 
-
 print("hi")
 let decoder = JSONDecoder()
 let pdfJSON = try decoder.decode([PDFJSON].self, from: json)
@@ -90,4 +88,3 @@ print(String(data: serverJSONData, encoding: .utf8) ?? "print something")
 
 let pdfJSONPretty = try encoder.encode(pdfJSON)
 print(String(data: pdfJSONPretty, encoding: .utf8) ?? "print something")
-
