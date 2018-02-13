@@ -21,7 +21,8 @@ class ViewController: UIViewController {
     )
   }
 
-  let booksPlistURL: URL = URL(fileURLWithPath: "Books", relativeTo: documentDirectoryURL).appendingPathExtension("plist")
+  let booksPlistURL: URL = URL(fileURLWithPath: "Books",
+                               relativeTo: documentDirectoryURL).appendingPathExtension("plist")
 
   required init?(coder aDecoder: NSCoder) {
 
@@ -63,7 +64,9 @@ class ViewController: UIViewController {
     let documentName = book.title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead, bookmarks: book.bookmarks, annotations: book.annotations, PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead,
+                                                   bookmarks: book.bookmarks, annotations: book.annotations,
+                                                   PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
@@ -75,30 +78,24 @@ extension ViewController: PDFViewControllerDelegate {
     print("saveAnnotations called!")
     for annotation in annotationsData {
       print("saveAnnotations called: Data is: \(annotation)")
+      // swiftlint:disable line_length
       print("saveAnnotations called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
     }
     print("\n")
 
-    for (index, book) in (books?.enumerated())! {
-      if book.title == self.currentBook {
+    for (index, book) in (books?.enumerated())! where book.title == self.currentBook {
+      // save annotations for a specific book to internal array
+      books![index].annotations = annotationsData
 
-        // save annotations for a specific book to internal array
-        books![index].annotations = annotationsData
+      let encoder = PropertyListEncoder()
+      encoder.outputFormat = .xml
 
-        let encoder = PropertyListEncoder()
-        encoder.outputFormat = .xml
-
-        // save changes to books array to the Books.plist file
-        do {
-          let data = try encoder.encode(books)
-          try data.write(to: booksPlistURL, options: .atomic)
-        }
-        catch {
-          print(error)
-        }
-
-        // once we find the right book, can stop iterating through array
-        break
+      // save changes to books array to the Books.plist file
+      do {
+        let data = try encoder.encode(books)
+        try data.write(to: booksPlistURL, options: .atomic)
+      } catch {
+        print(error)
       }
     }
 
@@ -106,54 +103,42 @@ extension ViewController: PDFViewControllerDelegate {
 
   func userDidNavigate(page: Int) {
 
-    for (index, book) in (books?.enumerated())! {
-      if book.title == self.currentBook {
+    for (index, book) in (books?.enumerated())! where book.title == self.currentBook {
+      // save last page read for a specific book to internal array
+      books![index].lastPageRead = UInt(page)
 
-        // save last page read for a specific book to internal array
-        books![index].lastPageRead = UInt(page)
+      let encoder = PropertyListEncoder()
+      encoder.outputFormat = .xml
 
-        let encoder = PropertyListEncoder()
-        encoder.outputFormat = .xml
-
-        // save changes to books array to the Books.plist file
-        do {
-          let data = try encoder.encode(books)
-          try data.write(to: booksPlistURL, options: .atomic)
-        }
-        catch {
-          print(error)
-        }
-
-        // once we find the right book, can stop iterating through array
-        break
+      // save changes to books array to the Books.plist file
+      do {
+        let data = try encoder.encode(books)
+        try data.write(to: booksPlistURL, options: .atomic)
+      } catch {
+        print(error)
       }
     }
+
   }
 
   func saveBookmarks(pageNumbers: [UInt]) {
-    
-    for (index, book) in (books?.enumerated())! {
-      if book.title == self.currentBook {
 
-        // save bookmarks for a specific book to internal array
-        books![index].bookmarks = pageNumbers
+    for (index, book) in (books?.enumerated())! where book.title == self.currentBook {
+      // save bookmarks for a specific book to internal array
+      books![index].bookmarks = pageNumbers
 
-        let encoder = PropertyListEncoder()
-        encoder.outputFormat = .xml
+      let encoder = PropertyListEncoder()
+      encoder.outputFormat = .xml
 
-        // save changes to books array to the Books.plist file
-        do {
-          let data = try encoder.encode(books)
-          try data.write(to: booksPlistURL, options: .atomic)
-        }
-        catch {
-          print(error)
-        }
-
-        // once we find the right book, can stop iterating through array
-        break
+      // save changes to books array to the Books.plist file
+      do {
+        let data = try encoder.encode(books)
+        try data.write(to: booksPlistURL, options: .atomic)
+      } catch {
+        print(error)
       }
     }
+
   }
 
 }

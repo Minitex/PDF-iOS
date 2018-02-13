@@ -11,7 +11,7 @@ import PSPDFKit
 class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
 
   var bookmarks: [PSPDFBookmark]
-  var pdfModuleDelegate: PDFViewControllerDelegate
+  weak var pdfModuleDelegate: PDFViewControllerDelegate?
 
   var pageNumbers: [UInt] {
     var pageNumbers: [UInt] = []
@@ -33,16 +33,15 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
       }
     }
   }
-  
+
   func add(_ bookmark: PSPDFBookmark) -> Bool {
     let index = bookmarks.index(of: bookmark)
     if index == nil {
       bookmarks.append(bookmark)
-    }
-    else {
+    } else {
       bookmarks[index!] = bookmark
     }
-    pdfModuleDelegate.saveBookmarks(pageNumbers: pageNumbers)
+    pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
     return true
   }
 
@@ -51,11 +50,11 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     if bookmarks.contains(bookmark) {
       bookmarks.remove(at: index!)
     }
-    pdfModuleDelegate.saveBookmarks(pageNumbers: pageNumbers)
+    pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
     return true
   }
 
   func save() {
-    pdfModuleDelegate.saveBookmarks(pageNumbers: pageNumbers)
+    pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
   }
 }
