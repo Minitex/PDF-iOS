@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		520C84F2204086A700E1F660 /* MockPDFViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520C84F1204086A700E1F660 /* MockPDFViewControllerDelegate.swift */; };
+		520C84F420408C6100E1F660 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520C84F320408C6100E1F660 /* MockData.swift */; };
+		520C84F620408CF600E1F660 /* MockAPIKeysTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520C84F520408CF600E1F660 /* MockAPIKeysTemplate.swift */; };
+		520C84F8204090C500E1F660 /* APIKeysTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520C84F7204090C500E1F660 /* APIKeysTemplate.swift */; };
+		520C84FA2040926800E1F660 /* MockAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520C84F92040926800E1F660 /* MockAPIKeys.swift */; };
 		526769941FE1CC2200FFF668 /* PDFBookmarkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */; };
 		52690F0E1FD07F3B004CDD6C /* DataModeling.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */; };
 		5272F4E81FBE10C3007431A1 /* PDF.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -85,6 +90,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		520C84F1204086A700E1F660 /* MockPDFViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPDFViewControllerDelegate.swift; sourceTree = "<group>"; };
+		520C84F320408C6100E1F660 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		520C84F520408CF600E1F660 /* MockAPIKeysTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIKeysTemplate.swift; sourceTree = "<group>"; };
+		520C84F7204090C500E1F660 /* APIKeysTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeysTemplate.swift; sourceTree = "<group>"; };
+		520C84F92040926800E1F660 /* MockAPIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIKeys.swift; sourceTree = "<group>"; };
 		526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFBookmarkProvider.swift; sourceTree = "<group>"; };
 		52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = DataModeling.pdf; sourceTree = "<group>"; };
 		527546271FBBA24800395A1F /* PDF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PDF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,6 +171,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		520C84F02040861000E1F660 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				520C84F1204086A700E1F660 /* MockPDFViewControllerDelegate.swift */,
+				520C84F320408C6100E1F660 /* MockData.swift */,
+				520C84F520408CF600E1F660 /* MockAPIKeysTemplate.swift */,
+				520C84F92040926800E1F660 /* MockAPIKeys.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
 		5275461D1FBBA24800395A1F = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +210,7 @@
 		527546291FBBA24800395A1F /* PDF */ = {
 			isa = PBXGroup;
 			children = (
+				520C84F02040861000E1F660 /* Mock */,
 				5275462A1FBBA24800395A1F /* PDF.h */,
 				5275462B1FBBA24800395A1F /* Info.plist */,
 				527546731FBBB3B700395A1F /* PDFViewController.swift */,
@@ -220,6 +242,7 @@
 				52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */,
 				52B6B1201FD719CB00AFA35B /* Book.swift */,
 				52B6B1221FD7303300AFA35B /* Books.plist */,
+				520C84F7204090C500E1F660 /* APIKeysTemplate.swift */,
 			);
 			path = PDFExample;
 			sourceTree = "<group>";
@@ -506,9 +529,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				520C84F620408CF600E1F660 /* MockAPIKeysTemplate.swift in Sources */,
+				520C84F2204086A700E1F660 /* MockPDFViewControllerDelegate.swift in Sources */,
+				520C84FA2040926800E1F660 /* MockAPIKeys.swift in Sources */,
 				52B872012007FA100054F920 /* PDFAnnotationProvider.swift in Sources */,
 				527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */,
 				526769941FE1CC2200FFF668 /* PDFBookmarkProvider.swift in Sources */,
+				520C84F420408C6100E1F660 /* MockData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,6 +555,7 @@
 				52B47AD81FC4C1CD00D7EA12 /* APIKeys.swift in Sources */,
 				5275464A1FBBA38500395A1F /* ViewController.swift in Sources */,
 				527546481FBBA38500395A1F /* AppDelegate.swift in Sources */,
+				520C84F8204090C500E1F660 /* APIKeysTemplate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

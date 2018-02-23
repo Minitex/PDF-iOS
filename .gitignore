@@ -69,3 +69,5 @@ fastlane/test_output
 # Project-specific
 
 SwiftLint/
+PDF/Mock/MockAPIKeys.swift
+PDFExample/APIKeys.swift
