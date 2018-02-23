@@ -21,4 +21,6 @@ class MockPDFViewControllerDelegate: PDFViewControllerDelegate {
     print("in MockPDFViewControllerDelegate: saveAnnotations")
   }
 
+  init() {
+  }
 }
