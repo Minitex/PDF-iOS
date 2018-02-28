@@ -113,6 +113,25 @@ class MockData: MockPDFViewControllerDelegateDelegate {
   }
 
   func persistAnnotations(annotationsData: [Data]) {
-    print("in MockData: persistAnnotations")
+    for annotation in annotationsData {
+      print("in MockData: persistAnnotations called: Data is: \(annotation)")
+      // swiftlint:disable line_length
+      print("persistAnnotations called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
+    }
+    print("\n")
+
+    book?.annotations = annotationsData
+
+    let encoder = PropertyListEncoder()
+    encoder.outputFormat = .xml
+
+    // save changes to books array to the Books.plist file
+    do {
+      let data = try encoder.encode(books)
+      try data.write(to: booksPlistURL, options: .atomic)
+    } catch {
+      print(error)
+    }
   }
+
 }

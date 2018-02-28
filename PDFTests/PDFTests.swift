@@ -45,7 +45,7 @@ class PDFTests: XCTestCase {
     XCTAssert(mockData.annotationsData == [], "annotations data is wrong")
   }
 
-  func testImportLastPageRead() {
+  func testImportDefaultLastPageRead() {
     let mockData = MockData()
     let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
     let pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
@@ -63,7 +63,8 @@ class PDFTests: XCTestCase {
   // re-opening the app)
   func testImportChangedLastPageRead() {
     let mockData: MockData? = MockData()
-    let pdfViewControllerDelegate: MockPDFViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData!)
+    let pdfViewControllerDelegate: MockPDFViewControllerDelegate =
+      MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData!)
     var pdfViewController: PDFViewController? = PDFViewController.init(documentURL: (mockData?.documentURL)!,
                                                                        openToPage: (mockData?.lastPageRead)!,
                                                                        bookmarks: (mockData?.bookmarkPages)!,
@@ -83,7 +84,7 @@ class PDFTests: XCTestCase {
                                                annotations: (mockData?.annotationsData)!,
                                                PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
                                                delegate: pdfViewControllerDelegate)
-    XCTAssert(pdfViewController?.pageIndex == UInt(12), "last page read is not correct")
+    XCTAssert(pdfViewController?.pageIndex == UInt(newPage), "last page read is not correct")
   }
 
   // because openToPage only takes in UInt, we can't pass in a negative number, but what happens
@@ -127,11 +128,7 @@ class PDFTests: XCTestCase {
     XCTAssert(pdfViewController?.pageIndex == 89, "last page read is not correct")
   }
 
-
-  // what if we add a bookmark?
-  // remove a bookmark?
-
-  func testImportBookmarks() {
+  func testImportDefaultBookmarks() {
     let mockData = MockData()
     let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
     let pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
@@ -144,9 +141,8 @@ class PDFTests: XCTestCase {
     XCTAssert((pdfViewController?.document?.bookmarks)! == [], "there should be no bookmarks")
   }
 
-
-  // here we're adding a bookmark between app "closing" and "reopening"
-  func testImportChangedBookmarks() {
+  // here we're ADDING a bookmark between app "closing" and "reopening"
+  func testImportAddedBookmarks() {
     let mockData = MockData()
     let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
     var pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
@@ -156,7 +152,6 @@ class PDFTests: XCTestCase {
                                                                        PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
                                                                        delegate: pdfViewControllerDelegate)
 
-   // XCTAssert(pageNumbers.containsSameElements(as: mockData.bookmarkPages), "the bookmarks are not the same")
     XCTAssert((pdfViewController?.document?.bookmarks)! == [], "there should be no bookmarks")
 
     // this time, we're adding a bookmark before "closing and reopening" the app
@@ -171,11 +166,122 @@ class PDFTests: XCTestCase {
                                                delegate: pdfViewControllerDelegate)
 
     XCTAssert((pdfViewController?.document?.bookmarks)! != [], "there should be a bookmark here")
-    XCTAssert((pdfViewController?.document?.bookmarkManager?.bookmarkForPage(at: 10)) != nil, "no bookmark exists for that page")
+    XCTAssert((pdfViewController?.document?.bookmarkManager?.bookmarkForPage(at: 10)) != nil,
+              "no bookmark exists for that page")
   }
 
-  func testAnnotations() {
-    
+  // test REMOVING a bookmark between app "closing" and "reopening"
+  func testImportDeletedBookmarks() {
+
+  }
+
+  func testImportDefaultAnnotations() {
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    let pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: mockData.lastPageRead,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotationsData,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+
+    XCTAssertFalse((pdfViewController?.document?.containsAnnotations)!, "there should be no annotations")
+  }
+
+  // verify that a highlight annotation was created between app "closing" and "re-opening"
+  func testImportHighlightAnnotation() {
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    var pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: mockData.lastPageRead,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotationsData,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+
+    XCTAssertFalse((pdfViewController?.document?.containsAnnotations)!, "there should be no annotations")
+
+    // Now, create a new highlight annotation
+    let annotationPage = 11
+    let highlightAnnotation = PSPDFHighlightAnnotation()
+
+    // Define where you want to place the annotation in the document (required)
+    let boundingBox = CGRect(x: 57.174533843994141, y: 320.77774047851562,
+                             width: 323.84738159179688, height: 23.301727294921875)
+    highlightAnnotation.boundingBox = boundingBox
+
+    // For highlight annotations you also need to set the rects array accordingly (required)
+    highlightAnnotation.rects = [NSValue(cgRect: boundingBox)]
+    // and which page you want the annotation to appear on (required)
+    highlightAnnotation.pageIndex = UInt(annotationPage)
+
+    // color and alpha are optional, alpha is opacity
+    highlightAnnotation.color = UIColor.yellow
+    highlightAnnotation.alpha = 1.0
+
+    // Add the newly created annotation to the document
+    pdfViewController?.document?.add([highlightAnnotation], options: nil)
+
+    pdfViewController = nil
+    pdfViewController = PDFViewController.init(documentURL: mockData.documentURL,
+                                               openToPage: mockData.lastPageRead,
+                                               bookmarks: mockData.bookmarkPages,
+                                               annotations: mockData.annotationsData,
+                                               PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                               delegate: pdfViewControllerDelegate)
+
+    XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
+    XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
+                    type: PSPDFAnnotationType.highlight)) != nil),
+                   "should be an annotation on this page")
+  }
+
+  // verify that a highlight annotation was created between app "closing" and "re-opening"
+  func testImportUnderlineAnnotation() {
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    var pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: mockData.lastPageRead,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotationsData,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+
+    XCTAssertFalse((pdfViewController?.document?.containsAnnotations)!, "there should be no annotations")
+
+    // Now, create a new highlight annotation
+    let annotationPage = 12
+    let underlineAnnotation = PSPDFUnderlineAnnotation()
+
+    // Define where you want to place the annotation in the document (required)
+    let boundingBox = CGRect(x: 60.316310882568359, y: 355.39178466796875,
+                             width: 323.4547119140625, height: 9.752716064453125)
+    underlineAnnotation.boundingBox = boundingBox
+
+    // For highlight annotations you also need to set the rects array accordingly (required)
+    underlineAnnotation.rects = [NSValue(cgRect: boundingBox)]
+    // and which page you want the annotation to appear on (required)
+    underlineAnnotation.pageIndex = UInt(annotationPage)
+
+    // color and alpha are optional, alpha is opacity
+    underlineAnnotation.color = UIColor.black
+    underlineAnnotation.alpha = 1.0
+
+    // Add the newly created annotation to the document
+    pdfViewController?.document?.add([underlineAnnotation], options: nil)
+
+    pdfViewController = nil
+    pdfViewController = PDFViewController.init(documentURL: mockData.documentURL,
+                                               openToPage: mockData.lastPageRead,
+                                               bookmarks: mockData.bookmarkPages,
+                                               annotations: mockData.annotationsData,
+                                               PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                               delegate: pdfViewControllerDelegate)
+
+    XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
+    XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
+                                                                    type: PSPDFAnnotationType.underline)) != nil),
+                  "should be an annotation on this page")
   }
 /*
   func testPerformanceExample() {
