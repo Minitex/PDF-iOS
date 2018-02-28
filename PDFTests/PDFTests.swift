@@ -5,9 +5,10 @@
 //  Created by Vui Nguyen on 11/14/17.
 //  Copyright © 2017 Minitex. All rights reserved.
 //
-
 import XCTest
 @testable import PDF
+@testable import PSPDFKit
+@testable import PSPDFKitUI
 
 class PDFTests: XCTestCase {
   // swiftlint:disable trailing_whitespace
@@ -85,12 +86,92 @@ class PDFTests: XCTestCase {
     XCTAssert(pdfViewController?.pageIndex == UInt(12), "last page read is not correct")
   }
 
-  func testInvalidLastPageRead() {
-
+  // because openToPage only takes in UInt, we can't pass in a negative number, but what happens
+  // if we pass in a number > number of pages in book? It should open the first page
+  func testMuchTooLargeLastPageRead() {
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    let pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: 1000,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotationsData,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+    XCTAssert(pdfViewController?.pageIndex == 0, "last page read is not correct")
   }
 
-  func testBookmarks() {
+  // what if we had 90 pages, so the last page index should be 89? But we pass in a page index of 90.
+  // It should open the first page
+  func testBarelyTooLargeLastPageRead() {
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    let pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: 90,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotationsData,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+    XCTAssert(pdfViewController?.pageIndex == 0, "last page read is not correct")
+  }
 
+  // what happens if we try to open exactly the last page of the book? It should still work
+  func testExactlyLastPageForLastPageRead() {
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    let pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: 89,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotationsData,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+    XCTAssert(pdfViewController?.pageIndex == 89, "last page read is not correct")
+  }
+
+
+  // what if we add a bookmark?
+  // remove a bookmark?
+
+  func testImportBookmarks() {
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    let pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: mockData.lastPageRead,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotationsData,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+
+    XCTAssert((pdfViewController?.document?.bookmarks)! == [], "there should be no bookmarks")
+  }
+
+
+  // here we're adding a bookmark between app "closing" and "reopening"
+  func testImportChangedBookmarks() {
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    var pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: mockData.lastPageRead,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotationsData,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+
+   // XCTAssert(pageNumbers.containsSameElements(as: mockData.bookmarkPages), "the bookmarks are not the same")
+    XCTAssert((pdfViewController?.document?.bookmarks)! == [], "there should be no bookmarks")
+
+    // this time, we're adding a bookmark before "closing and reopening" the app
+    pdfViewController?.document?.bookmarkManager?.provider[0].add(PSPDFBookmark(pageIndex: 10))
+
+    pdfViewController = nil
+    pdfViewController = PDFViewController.init(documentURL: mockData.documentURL,
+                                               openToPage: mockData.lastPageRead,
+                                               bookmarks: mockData.bookmarkPages,
+                                               annotations: mockData.annotationsData,
+                                               PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                               delegate: pdfViewControllerDelegate)
+
+    XCTAssert((pdfViewController?.document?.bookmarks)! != [], "there should be a bookmark here")
+    XCTAssert((pdfViewController?.document?.bookmarkManager?.bookmarkForPage(at: 10)) != nil, "no bookmark exists for that page")
   }
 
   func testAnnotations() {
@@ -105,4 +186,10 @@ class PDFTests: XCTestCase {
   }
  */
 
+}
+
+extension Array where Element: Comparable {
+  func containsSameElements(as other: [Element]) -> Bool {
+    return self.count == other.count && self.sorted() == other.sorted()
+  }
 }

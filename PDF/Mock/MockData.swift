@@ -98,8 +98,21 @@ class MockData: MockPDFViewControllerDelegateDelegate {
 
   func persistBookmarks(pageNumbers: [UInt]) {
     print("in MockData: persistBookmarks")
+    book?.bookmarks = pageNumbers
+
+    let encoder = PropertyListEncoder()
+    encoder.outputFormat = .xml
+
+    // save changes to books array to the Books.plist file
+    do {
+      let data = try encoder.encode(books)
+      try data.write(to: booksPlistURL, options: .atomic)
+    } catch {
+      print(error)
+    }
   }
 
   func persistAnnotations(annotationsData: [Data]) {
     print("in MockData: persistAnnotations")
-  }}
+  }
+}
