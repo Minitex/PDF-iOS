@@ -74,6 +74,15 @@ class MockData: MockPDFViewControllerDelegateDelegate {
     return annotationsData
   }
 
+  var annotations: [PDFAnnotation] {
+    var annotations: [PDFAnnotation] = []
+    let annotationsData = (book?.annotations)!
+    for data in annotationsData {
+      annotations.append(PDFAnnotation(JSONData: data))
+    }
+    return annotations
+  }
+
   var documentURL: URL {
     let documentName = book?.title
     let fileURL = Bundle(identifier: bundleId)?.url(forResource: documentName, withExtension: "pdf")

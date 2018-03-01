@@ -31,6 +31,26 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     self.setAnnotations(annotationArray, append: false)
   }
 
+  init(annotationObjects: [PDFAnnotation] = [], documentProvider: PSPDFDocumentProvider,
+       pdfModuleDelegate: PDFViewControllerDelegate) {
+    self.pdfModuleDelegate = pdfModuleDelegate
+
+    // reload annotations into the document
+    var annotation = PSPDFAnnotation()
+    var annotationArray: [PSPDFAnnotation] = []
+    for annotationObject in annotationObjects {
+      do {
+        annotation = try PSPDFAnnotation(fromInstantJSON: annotationObject.JSONData!,
+                                         documentProvider: documentProvider)
+        annotationArray.append(annotation)
+      } catch {
+        print("Error reloading annotation: \(error)")
+      }
+    }
+    super.init(documentProvider: documentProvider)
+    self.setAnnotations(annotationArray, append: false)
+  }
+
   private func saveAnnotationsExternally(annotations: [PSPDFAnnotation]) {
     // generate JSON for the annotations
     var jsonData: [Data] = []

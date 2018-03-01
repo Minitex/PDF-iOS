@@ -46,6 +46,35 @@ public final class PDFViewController: PSPDFViewController {
     self.pageIndex = page
   }
 
+  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
+              annotations annotationObjects: [PDFAnnotation] = [],
+              PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
+
+    PSPDFKit.setLicenseKey(PSPDFKitLicense)
+    let document = PSPDFDocument(url: documentURL)
+
+    document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
+    document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
+      documentProvider.annotationManager.annotationProviders =
+        [PDFAnnotationProvider(annotationObjects: annotationObjects,
+                               documentProvider: documentProvider,
+                               pdfModuleDelegate: delegate!)]
+    }
+
+    document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfModuleDelegate: delegate!)]
+
+    let configuration = PSPDFConfiguration { builder in
+      builder.searchResultZoomScale = 1
+      builder.backgroundColor = UIColor.lightGray
+    }
+
+    super.init(document: document, configuration: configuration)
+    self.delegate = self
+
+    self.pdfModuleDelegate = delegate
+    self.pageIndex = page
+  }
+
   @available(*, unavailable)
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
