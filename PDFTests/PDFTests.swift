@@ -236,7 +236,7 @@ class PDFTests: XCTestCase {
                    "should be an annotation on this page")
   }
 
-  // verify that a highlight annotation was created between app "closing" and "re-opening"
+  // verify that an underline annotation was created between app "closing" and "re-opening"
   func testImportUnderlineAnnotation() {
     let mockData = MockData()
     let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
@@ -249,7 +249,7 @@ class PDFTests: XCTestCase {
 
     XCTAssertFalse((pdfViewController?.document?.containsAnnotations)!, "there should be no annotations")
 
-    // Now, create a new highlight annotation
+    // Now, create a new underline annotation
     let annotationPage = 12
     let underlineAnnotation = PSPDFUnderlineAnnotation()
 
@@ -258,7 +258,7 @@ class PDFTests: XCTestCase {
                              width: 323.4547119140625, height: 9.752716064453125)
     underlineAnnotation.boundingBox = boundingBox
 
-    // For highlight annotations you also need to set the rects array accordingly (required)
+    // For underline annotations you also need to set the rects array accordingly (required)
     underlineAnnotation.rects = [NSValue(cgRect: boundingBox)]
     // and which page you want the annotation to appear on (required)
     underlineAnnotation.pageIndex = UInt(annotationPage)
