@@ -154,8 +154,9 @@ class PDFTests: XCTestCase {
 
     XCTAssert((pdfViewController?.document?.bookmarks)! == [], "there should be no bookmarks")
 
+    let bookmarkPage = 10
     // this time, we're adding a bookmark before "closing and reopening" the app
-    pdfViewController?.document?.bookmarkManager?.provider[0].add(PSPDFBookmark(pageIndex: 10))
+    pdfViewController?.document?.bookmarkManager?.provider[0].add(PSPDFBookmark(pageIndex: UInt(bookmarkPage)))
 
     pdfViewController = nil
     pdfViewController = PDFViewController.init(documentURL: mockData.documentURL,
@@ -166,7 +167,7 @@ class PDFTests: XCTestCase {
                                                delegate: pdfViewControllerDelegate)
 
     XCTAssert((pdfViewController?.document?.bookmarks)! != [], "there should be a bookmark here")
-    XCTAssert((pdfViewController?.document?.bookmarkManager?.bookmarkForPage(at: 10)) != nil,
+    XCTAssert((pdfViewController?.document?.bookmarkManager?.bookmarkForPage(at: UInt(bookmarkPage))) != nil,
               "no bookmark exists for that page")
   }
 
@@ -232,8 +233,8 @@ class PDFTests: XCTestCase {
 
     XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
     XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
-                    type: PSPDFAnnotationType.highlight)) != nil),
-                   "should be an annotation on this page")
+                                                                    type: PSPDFAnnotationType.highlight))! != []),
+                                                                    "should be an annotation on this page")
   }
 
   // verify that an underline annotation was created between app "closing" and "re-opening"
@@ -280,8 +281,8 @@ class PDFTests: XCTestCase {
 
     XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
     XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
-                                                                    type: PSPDFAnnotationType.underline)) != nil),
-                  "should be an annotation on this page")
+                                                                    type: PSPDFAnnotationType.underline))! != []),
+                                                                    "should be an annotation on this page")
   }
 /*
   func testPerformanceExample() {
