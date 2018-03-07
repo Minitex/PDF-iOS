@@ -15,6 +15,10 @@ public protocol MockPDFViewControllerDelegateDelegate: class {
 }
 
 class MockPDFViewControllerDelegate: PDFViewControllerDelegate {
+  func saveAnnotations(annotations: [PDFAnnotation]) {
+    // prepare to save off annotations of type PDFAnnotation
+  }
+
 
   weak var mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate?
 

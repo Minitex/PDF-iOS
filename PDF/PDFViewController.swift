@@ -13,6 +13,7 @@ public protocol PDFViewControllerDelegate: class {
   func userDidNavigate(page: Int)
   func saveBookmarks(pageNumbers: [UInt])
   func saveAnnotations(annotationsData: [Data])
+  func saveAnnotations(annotations: [PDFAnnotation])
 }
 
 public final class PDFViewController: PSPDFViewController {
