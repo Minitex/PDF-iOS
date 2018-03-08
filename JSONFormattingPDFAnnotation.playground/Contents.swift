@@ -17,12 +17,12 @@ let json = """
 """.data(using: .utf8)!
 
 // this is the format we expect to get from PSPDFKit
-struct PDFAnnotation: Codable {
-  var bbox: [Float]?
+class PDFAnnotation: Codable {
+  var bbox: [Double]?
   var color: String?
   var opacity: Float?
   var pageIndex: Int?
-  var rects: [[Float]]?
+  var rects: [[Double]]?
   var type: String?
   var v: Int?
 
@@ -35,7 +35,41 @@ let decoder = JSONDecoder()
 var pdfAnnotation = try decoder.decode(PDFAnnotation.self, from: json)
 //print(pdfJSON)
 pdfAnnotation.JSONData = json
-print(pdfAnnotation)
-
+print(pdfAnnotation.bbox ?? "")
+print(pdfAnnotation.color ?? "")
+print(pdfAnnotation.rects ?? "")
+print(String(data: pdfAnnotation.JSONData!, encoding: String.Encoding.utf8) ?? "")
 // Now, can we take this, and without using JSONData, pass enough data back to recreate a
 // PSPDFAnnotation?
+
+func createRectFromDouble(doubleArray: [Double]) -> CGRect {
+  let cgRect: CGRect = CGRect(x: doubleArray[0], y: doubleArray[1], width: doubleArray[2], height: doubleArray[3])
+  return cgRect
+}
+
+func convertPDFAnnotationToDictionary(pdfAnnotation: PDFAnnotation) -> [String: Any] {
+  //print("just printing stuff")
+  var dict: [String: Any] = [:]
+
+  let cgRectBBox = createRectFromDouble(doubleArray: pdfAnnotation.bbox!)
+  let bboxString = NSStringFromCGRect(cgRectBBox)
+
+  var cgRectsRects: [CGRect] = []
+
+  for rect in pdfAnnotation.rects! {
+    cgRectsRects.append(createRectFromDouble(doubleArray: rect))
+  }
+
+  var rectStringsArray = [String]()
+  cgRectsRects.map {
+    let string = NSStringFromCGRect($0)
+    rectStringsArray.append(string)
+  }
+  dict = ["boundingBox": bboxString,
+          "rects": rectStringsArray]
+  print(dict)
+  return dict
+}
+
+convertPDFAnnotationToDictionary(pdfAnnotation: pdfAnnotation)
+
