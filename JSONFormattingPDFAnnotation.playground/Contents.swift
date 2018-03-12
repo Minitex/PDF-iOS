@@ -36,11 +36,9 @@ class PDFAnnotation: Codable {
   var JSONData: Data?
 }
 
-
 print("hi")
 let decoder = JSONDecoder()
 var pdfAnnotation = try decoder.decode(PDFAnnotation.self, from: json)
-//print(pdfJSON)
 pdfAnnotation.JSONData = json
 //print(pdfAnnotation.bbox ?? "")
 //print(pdfAnnotation.color ?? "")
@@ -50,9 +48,6 @@ print("JSON Data is: ")
 print(String(data: pdfAnnotation.JSONData!, encoding: String.Encoding.utf8) ?? "")
 
 //print(String(describing: pdfAnnotation.bbox))
-let bboxString = String(describing: pdfAnnotation.bbox)
-//print(bboxString)
-
 //print(String(describing: pdfAnnotation.rects))
 
 func createRectFromDouble(doubleArray: [Double]) -> CGRect {
@@ -100,7 +95,7 @@ func convertPDFAnnotationToDictionary(pdfAnnotation: PDFAnnotation) -> [String: 
         "rects": rectStringsArray,
         "type": annotationType as String!,
         "v": pdfAnnotation.v as Int!,
-        "jsonData": pdfAnnotation.JSONData as Data!
+        "JSONData": pdfAnnotation.JSONData as Data!
           ]
   return dict
 }
@@ -121,11 +116,13 @@ func convertCGRectToDoubles(cgRect: CGRect) -> [Double] {
 func convertDictionaryToPDFAnnotation(dict: [String: Any]) -> PDFAnnotation {
   let annotation = PDFAnnotation()
 
-  annotation.color = dict["color"] as? String
-
   // convert bbox back to [Double]
   let bboxCGRect = CGRectFromString((dict["bbox"] as? String)!)
   annotation.bbox = convertCGRectToDoubles(cgRect: bboxCGRect)
+
+  annotation.color = dict["color"] as? String
+  annotation.opacity = dict["opacity"] as? Float
+  annotation.pageIndex = dict["pageIndex"] as? Int
 
   // convert rects back to [[Double]]
   let rectsArray = dict["rects"] as! [String]
@@ -138,6 +135,9 @@ func convertDictionaryToPDFAnnotation(dict: [String: Any]) -> PDFAnnotation {
     rectsDoubles.append(convertCGRectToDoubles(cgRect: rectsCGRect))
   }
   annotation.rects = rectsDoubles
+  annotation.type = dict["type"] as? String
+  annotation.v = dict["v"] as? Int
+  annotation.JSONData = dict["JSONData"] as? Data
 
   return annotation
 }
@@ -146,11 +146,27 @@ var annotation = convertDictionaryToPDFAnnotation(dict: dict)
 print(annotation.color ?? "")
 print(annotation.bbox ?? "")
 print(annotation.rects ?? "")
+print(annotation.type ?? "")
 
 // Now, can we take a PDFAnnotation object, and without using JSONData,
 // pass enough data back to recreate a PSPDFAnnotation?
-func convertPDFAnnotationToPSPDFAnnotation() {
+func convertPDFAnnotationToPSPDFAnnotation(annotation: PDFAnnotation) {
   // create CGRects out of [Float]
   // and figure out what type of annotation we have from type to recreate the annotation
+  var bbox: CGRect?
+  var rects: [CGRect]? = []
+  var type: String?
+
+  bbox = createRectFromDouble(doubleArray: annotation.bbox!)
+  print("pspdfAnnotation:bbox is: \(String(describing: bbox))")
+
+  for rect in annotation.rects! {
+    rects?.append(createRectFromDouble(doubleArray: rect))
+  }
+  print("pspdfAnnotation:rects is: \(String(describing: rects))")
+
+  type = parseOutAnnotationType(fullTypeString: annotation.type!)
+  print("pspdfAnnotation:type is: \(String(describing: type))")
 }
 
+convertPDFAnnotationToPSPDFAnnotation(annotation: annotation)

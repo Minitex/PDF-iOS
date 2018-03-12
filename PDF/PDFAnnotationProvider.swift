@@ -66,6 +66,25 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     pdfModuleDelegate?.saveAnnotations(annotationsData: jsonData)
   }
 
+  private func savePDFAnnotationsExternally(annotations: [PSPDFAnnotation]) {
+    var pdfAnnotations: [PDFAnnotation] = []
+    let decoder = JSONDecoder()
+
+    for annotation in annotations {
+      do {
+        let jsonData = try annotation.generateInstantJSON()
+        let pdfAnnotation: PDFAnnotation = try decoder.decode(PDFAnnotation.self, from: jsonData)
+        pdfAnnotation.JSONData = jsonData
+        pdfAnnotations.append(pdfAnnotation)
+      } catch {
+        print("Error generating InstantJSON !!")
+      }
+    }
+
+    // pass PDFAnnotations off to the host app, or delegate
+    pdfModuleDelegate?.saveAnnotations(annotations: pdfAnnotations)
+  }
+
   // will this disable the save to external file? hope so
   override func saveAnnotations(options: [String: Any]? = nil) throws {
     // do nothing
@@ -76,14 +95,18 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     // Do NOT need to update the annotation within the internal annotations
     // (by calling the super function,this causes the app to crash)
     // pass the updated annotations list to the host app / delegate
-    saveAnnotationsExternally(annotations: self.allAnnotations)
+
+    //saveAnnotationsExternally(annotations: self.allAnnotations)
+    savePDFAnnotationsExternally(annotations: self.allAnnotations)
   }
 
   override func remove(_ annotations: [PSPDFAnnotation], options: [String: Any]? = nil) -> [PSPDFAnnotation]? {
     // remove the annotation from the internal annotations
     // and then pass the updated annotations list to the host app / delegate
     super.remove(annotations, options: options)
-    saveAnnotationsExternally(annotations: self.allAnnotations)
+
+    //saveAnnotationsExternally(annotations: self.allAnnotations)
+    savePDFAnnotationsExternally(annotations: self.allAnnotations)
     return annotations
   }
 
@@ -91,7 +114,8 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     // remove all the annotations
     // and then pass the empty annotations list to the host app / delegate
     super.removeAllAnnotations(options: options)
-    saveAnnotationsExternally(annotations: [])
+    //saveAnnotationsExternally(annotations: [])
+    savePDFAnnotationsExternally(annotations: [])
   }
 
   override func add(_ annotations: [PSPDFAnnotation], options: [String: Any]? = nil) -> [PSPDFAnnotation]? {
@@ -99,7 +123,8 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     // pass the updated annotations list to the host app / delegate
     var allCurrentAnnotations: [PSPDFAnnotation] = self.allAnnotations
     allCurrentAnnotations.append(contentsOf: annotations)
-    saveAnnotationsExternally(annotations: allCurrentAnnotations)
+    //saveAnnotationsExternally(annotations: allCurrentAnnotations)
+    savePDFAnnotationsExternally(annotations: allCurrentAnnotations)
 
     // make PSPDFKit add the annotation to the PDF
     super.add(annotations, options: options)

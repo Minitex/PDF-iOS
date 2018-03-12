@@ -9,13 +9,12 @@
 import Foundation
 import PSPDFKit
 
-
-protocol PSPDFAnnotationDelegate {
+public protocol PSPDFAnnotationDelegate: class {
 
   var pspdfAnnotation: PSPDFAnnotation { get }
 }
 
-public struct PDFAnnotation: Codable {
+public class PDFAnnotation: Codable {
   // required
   var bbox: [Float]?
   var color: String?
@@ -41,9 +40,10 @@ public struct PDFAnnotation: Codable {
 // manually because CGRect is NOT a Codable type
 extension PDFAnnotation: PSPDFAnnotationDelegate {
   // convert stuff
-    var pspdfAnnotation: PSPDFAnnotation {
+  public var pspdfAnnotation: PSPDFAnnotation {
       var annotation = PSPDFAnnotation()
 
+      // check what type of annotation we have
       /*
       // Now, create a new highlight annotation
       let annotationPage = 11

@@ -76,10 +76,11 @@ class MockData: MockPDFViewControllerDelegateDelegate {
 
   var annotations: [PDFAnnotation] {
     var annotations: [PDFAnnotation] = []
-    let annotationsData = (book?.annotations)!
-    for data in annotationsData {
-      annotations.append(PDFAnnotation(JSONData: data))
-    }
+    //let annotationsData = (book?.annotations)!
+    //for data in annotationsData {
+    //  annotations.append(PDFAnnotation(JSONData: data))
+    //}
+    annotations = (book?.PDFAnnotations)!
     return annotations
   }
 
@@ -123,9 +124,9 @@ class MockData: MockPDFViewControllerDelegateDelegate {
 
   func persistAnnotations(annotationsData: [Data]) {
     for annotation in annotationsData {
-      print("in MockData: persistAnnotations called: Data is: \(annotation)")
+      print("in MockData: persistAnnotations[Data] called: Data is: \(annotation)")
       // swiftlint:disable line_length
-      print("persistAnnotations called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
+      print("persistAnnotations[Data] called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
     }
     print("\n")
 
@@ -141,6 +142,34 @@ class MockData: MockPDFViewControllerDelegateDelegate {
     } catch {
       print(error)
     }
+  }
+
+  // this is where we parse the PDFAnnotation objects into the array of dictionaries that will be stored in
+  // the plist
+  func persistAnnotations(annotations: [PDFAnnotation]) {
+    var annotationsData: [Data] = []
+    for annotation in annotations {
+      print("in MockData: persistAnnotations[PDFAnnotation] called: Data is: \(String(describing: annotation.JSONData))")
+      // swiftlint:disable line_length
+      print("persistAnnotations[PDFAnnotation] called: String of Data is: \(String(data: annotation.JSONData!, encoding: String.Encoding.utf8) ?? "no string value here")")
+      annotationsData.append(annotation.JSONData!)
+    }
+    print("\n")
+
+    //book?.annotations = annotationsData
+    book?.PDFAnnotations = annotations
+
+    let encoder = PropertyListEncoder()
+    encoder.outputFormat = .xml
+
+    // save changes to books array to the Books.plist file
+    do {
+      let data = try encoder.encode(books)
+      try data.write(to: booksPlistURL, options: .atomic)
+    } catch {
+      print(error)
+    }
+
   }
 
 }

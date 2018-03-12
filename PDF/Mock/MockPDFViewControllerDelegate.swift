@@ -12,14 +12,10 @@ public protocol MockPDFViewControllerDelegateDelegate: class {
   func persistLastPageRead(page: Int)
   func persistBookmarks(pageNumbers: [UInt])
   func persistAnnotations(annotationsData: [Data])
+  func persistAnnotations(annotations: [PDFAnnotation])
 }
 
 class MockPDFViewControllerDelegate: PDFViewControllerDelegate {
-  func saveAnnotations(annotations: [PDFAnnotation]) {
-    // prepare to save off annotations of type PDFAnnotation
-  }
-
-
   weak var mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate?
 
   init(mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate) {
@@ -37,7 +33,12 @@ class MockPDFViewControllerDelegate: PDFViewControllerDelegate {
   }
 
   func saveAnnotations(annotationsData: [Data]) {
-    print("in MockPDFViewControllerDelegate: saveAnnotations")
+    print("in MockPDFViewControllerDelegate: saveAnnotations(annotationsData)")
     mockPDFViewControllerDelegateDelegate?.persistAnnotations(annotationsData: annotationsData)
+  }
+
+  func saveAnnotations(annotations: [PDFAnnotation]) {
+    print("in MockPDFViewControllerDelegate: saveAnnotations(annotations)")
+    mockPDFViewControllerDelegateDelegate?.persistAnnotations(annotations: annotations)
   }
 }
