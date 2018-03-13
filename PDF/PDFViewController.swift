@@ -20,6 +20,8 @@ public final class PDFViewController: PSPDFViewController {
 
   weak var pdfModuleDelegate: PDFViewControllerDelegate?
 
+  // This initializer is now deprecated with passing annotations as PDFAnnotation objects
+  /*
   public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
               annotations annotationsData: [Data] = [], PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
 
@@ -28,7 +30,7 @@ public final class PDFViewController: PSPDFViewController {
 
     document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
     document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
-      documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(annotationsData: annotationsData,
+    documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(annotationObjects: annotationsData,
                                                                                     documentProvider: documentProvider,
                                                                                     pdfModuleDelegate: delegate!)]
     }
@@ -46,6 +48,7 @@ public final class PDFViewController: PSPDFViewController {
     self.pdfModuleDelegate = delegate
     self.pageIndex = page
   }
+ */
 
   public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
               annotations annotationObjects: [PDFAnnotation] = [],
