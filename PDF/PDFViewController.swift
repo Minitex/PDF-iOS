@@ -93,22 +93,19 @@ public final class PDFViewController: PSPDFViewController {
     // remove edit icon while in thumbnail view
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
 
-    // add only the highlight, underline, and ink to the annotations toolbar
+    // add only highlight and underline to the annotations toolbar
     let highlight = PSPDFAnnotationGroupItem(type: PSPDFAnnotationString.highlight)
     let underline = PSPDFAnnotationGroupItem(type: PSPDFAnnotationString.underline)
-    let ink       = PSPDFAnnotationGroupItem(type: PSPDFAnnotationString.ink)
 
     // for iphone
     let annotationCompactGroup: [PSPDFAnnotationGroup] = [PSPDFAnnotationGroup(items: [highlight]),
-                                                          PSPDFAnnotationGroup(items: [underline]),
-                                                          PSPDFAnnotationGroup(items: [ink])]
+                                                          PSPDFAnnotationGroup(items: [underline])]
     let annotationCompactToolbarConfiguration =
       PSPDFAnnotationToolbarConfiguration(annotationGroups: annotationCompactGroup)
 
     // for ipad
     let annotationRegularGroup: [PSPDFAnnotationGroup] = [PSPDFAnnotationGroup(items: [highlight]),
-                                                          PSPDFAnnotationGroup(items: [underline]),
-                                                          PSPDFAnnotationGroup(items: [ink])]
+                                                          PSPDFAnnotationGroup(items: [underline])]
     let annotationRegularToolbarConfiguration =
       PSPDFAnnotationToolbarConfiguration(annotationGroups: annotationRegularGroup)
 

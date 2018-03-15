@@ -11,6 +11,8 @@
 		<array/>
 		<key>annotations</key>
 		<array/>
+		<key>PDFAnnotations</key>
+		<array/>
 	</dict>
 	<dict>
 		<key>title</key>
@@ -20,6 +22,8 @@
 		<key>bookmarks</key>
 		<array/>
 		<key>annotations</key>
+		<array/>
+		<key>PDFAnnotations</key>
 		<array/>
 	</dict>
 </array>

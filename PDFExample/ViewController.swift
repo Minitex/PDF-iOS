@@ -65,14 +65,37 @@ class ViewController: UIViewController {
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
     let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead,
-                                                   bookmarks: book.bookmarks, annotations: book.annotations,
+                                                   bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
                                                    PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
 
 extension ViewController: PDFViewControllerDelegate {
+  func saveAnnotations(annotations: [PDFAnnotation]) {
+    for annotation in annotations {
+      // swiftlint:disable line_length
+      print("in ViewController: saveAnnotations[PDFAnnotation] called: Data is: \(String(describing: annotation.JSONData))")
+      print("saveAnnotations[PDFAnnotation] called: String of Data is: \(String(data: annotation.JSONData!, encoding: String.Encoding.utf8) ?? "no string value here")")
+    }
+    print("\n")
 
+    for (index, book) in (books?.enumerated())! where book.title == self.currentBook {
+      books![index].PDFAnnotations = annotations
+
+      let encoder = PropertyListEncoder()
+      encoder.outputFormat = .xml
+
+      // save changes to books array to the Books.plist file
+      do {
+        let data = try encoder.encode(books)
+        try data.write(to: booksPlistURL, options: .atomic)
+      } catch {
+        print(error)
+      }
+    }
+
+  }
   func saveAnnotations(annotationsData: [Data]) {
 
     print("saveAnnotations called!")

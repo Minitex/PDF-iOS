@@ -28,13 +28,13 @@ public class PDFAnnotation: Codable {
   var v: Int?
 
   // optional
-  var JSONData: Data?
+  public var JSONData: Data?
 
-  init(JSONData: Data) {
+  public init(JSONData: Data) {
     self.JSONData = JSONData
   }
 
-  init() {
+  public init() {
 
   }
 }

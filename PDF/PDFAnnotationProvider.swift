@@ -12,6 +12,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
   weak var pdfModuleDelegate: PDFViewControllerDelegate?
 
+  // The function below is now deprecated, but we're not ready to remove it yet
   /*
   init(annotationsData: [Data] = [], documentProvider: PSPDFDocumentProvider,
        pdfModuleDelegate: PDFViewControllerDelegate) {
@@ -40,25 +41,29 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
     // reload annotations into the document
     var annotation: PSPDFAnnotation?
-    //var annotation = PSPDFAnnotation()
     var annotationArray: [PSPDFAnnotation] = []
     for annotationObject in annotationObjects {
       // the logic is:
       // create an annotation directly using attributes from PDFAnnotation, and if
       // that fails, fall back on using the JSON data, and if that fails,
       // return no annotation
-      annotation = buildPSPDFAnnotation(from: annotationObject)
-      if annotation != nil {
-        annotationArray.append(annotation!)
-      } else {
+      //         Paul: the lines below parses PDFAnnotation -> PSPDFAnnnotation
+      //         but they are currently commented out so we are now parsing
+      //         JSON -> PSPDFAnnotation like before
+      // annotation = buildPSPDFAnnotation(from: annotationObject)
+      //if annotation != nil {
+      //  annotationArray.append(annotation!)
+      //  print("PDFAnnotationProvider: rebuild from PDFAnnotation")
+     // } else {
         do {
           annotation = try PSPDFAnnotation(fromInstantJSON: annotationObject.JSONData!,
                                          documentProvider: documentProvider)
           annotationArray.append(annotation!)
+          print("PDFAnnotationProvider: rebuild from JSON")
         } catch {
           print("Error reloading annotation: \(error)")
         }
-      }
+     // }
     }
 
     self.setAnnotations(annotationArray, append: false)
@@ -77,17 +82,29 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     pspdfAnnotation?.boundingBox = createRectFromDouble(doubleArray: pdfAnnotation.bbox!)
     pspdfAnnotation?.pageIndex = pdfAnnotation.pageIndex!
 
+    // here are we parsing the PDFAnnotation rects array -> PSPDFAnnotation rects array
+    // but it doesn't seem to be working
+    /*
     var NSValues: [NSValue] = []
     for rect in (pdfAnnotation.rects)! {
       NSValues.append(createNSValueFromDouble(doubleArray: rect))
     }
     pspdfAnnotation?.rects = NSValues
+  */
+
+    // here were are setting the PSPDFAnnotation rects to the same value as its
+    // bounding box, but this doesn't seem to work very well either
+    // look at this: https://pspdfkit.com/guides/ios/current/annotations/programmatically-creating-annotations/
+    pspdfAnnotation?.rects = [NSValue(cgRect: (pspdfAnnotation?.boundingBox)!)]
 
     // set the optional attributes, if they exist
     // Note: cannot set type or v in PSPDFAnnotation
-    if let color = pdfAnnotation.color {
-      pspdfAnnotation?.color = UIColor(named: color)
-    }
+    // for now, we're letting the default color get set
+    // to rule out the possibility that parsing the color is part of the problem
+    // with reloading annotations
+    //if let color = pdfAnnotation.color {
+    //  pspdfAnnotation?.color = hexStringToUIColor(hex: color)
+    //}
     if let opacity = pdfAnnotation.opacity {
       pspdfAnnotation?.alpha = CGFloat(floatLiteral: opacity)
     }
@@ -95,9 +112,44 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     return pspdfAnnotation!
   }
 
+  private func hexStringToUIColor (hex: String) -> UIColor {
+    var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+    if cString.hasPrefix("#") {
+      cString.remove(at: cString.startIndex)
+    }
+
+    if cString.count != 6 {
+      return UIColor.gray
+    }
+
+    var rgbValue: UInt32 = 0
+    Scanner(string: cString).scanHexInt32(&rgbValue)
+
+    return UIColor(
+      red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+      green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+      blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+      alpha: CGFloat(1.0)
+    )
+  }
+
+  // So, fun fact:
+  // We can build a CGRect only from a Double or a CGFloat array, it cannot be done from a Float array
+  // that's why I was playing around with these data types specifically
+  private func createRectFromFloat(floatArray: [CGFloat]) -> CGRect {
+    let cgRect: CGRect = CGRect(x: floatArray[0], y: floatArray[1], width: floatArray[2], height: floatArray[3])
+    return cgRect
+  }
+
   private func createRectFromDouble(doubleArray: [Double]) -> CGRect {
     let cgRect: CGRect = CGRect(x: doubleArray[0], y: doubleArray[1], width: doubleArray[2], height: doubleArray[3])
     return cgRect
+  }
+
+  private func createNSValueFromFloat(floatArray: [CGFloat]) -> NSValue {
+    let rect = createRectFromFloat(floatArray: floatArray)
+    return NSValue(cgRect: rect)
   }
 
   private func createNSValueFromDouble(doubleArray: [Double]) -> NSValue {
@@ -105,7 +157,8 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     return NSValue(cgRect: rect)
   }
 
-  // TODO: This method is now deprecated, remove eventually
+  // This method is now deprecated, remove eventually
+  /*
   private func saveAnnotationsExternally(annotations: [PSPDFAnnotation]) {
     // generate JSON for the annotations
     var jsonData: [Data] = []
@@ -120,6 +173,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     // pass JSON data off to the host app, or delegate
     pdfModuleDelegate?.saveAnnotations(annotationsData: jsonData)
   }
+ */
 
   private func savePDFAnnotationsExternally(annotations: [PSPDFAnnotation]) {
     var pdfAnnotations: [PDFAnnotation] = []
