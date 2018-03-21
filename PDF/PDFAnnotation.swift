@@ -17,7 +17,7 @@ public class PDFAnnotation: Codable {
   // optional
   var color: String?
   // optional
-  var opacity: Double?
+  var opacity: Float?
   // required
   var pageIndex: UInt?
   // required
@@ -25,7 +25,8 @@ public class PDFAnnotation: Codable {
   // required
   var type: String?
   // optional
-  var v: Int?
+  // this value cannot be set from PSPDFKit
+  //var v: Int?
 
   // optional
   public var JSONData: Data?
