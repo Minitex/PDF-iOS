@@ -12,93 +12,56 @@ class MyViewController: UIViewController {
     label.text = "Hello World!"
     label.textColor = .black
 
-    //let textColorHex = UIColor.blue
-    //let textColorHex = UIColor.yellow
-    let textColorHex = UIColor.black
-    //let textColorString = textColorHex.toRGBAString()
-    //let textColorString = textColorHex.toHexString()
-    //let reloadedColor = UIColor(rgbaString: textColorString)
-    //let reloadedColor = UIColor(hexaDecimalString: textColorString)
-    //print(textColorString)
-    //print(reloadedColor ?? "no color here")
-   // print(UIColor(rgbaString: textColorString) ?? "no color here")
+    //let textColor = UIColor.black
+    let textColor = UIColor.orange
+    //let textColor = UIColor.blue
+    let textColorString = UIColorToHexString(uicolor: textColor)
+    let reloadedColor = hexStringToUIColor(hex: textColorString)
+    print(textColorString)
+    print(reloadedColor)
 
-   // label.textColor = reloadedColor
+    label.textColor = reloadedColor
     view.addSubview(label)
     self.view = view
   }
 
 }
 
+func hexStringToUIColor (hex: String) -> UIColor {
+  var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
-/*
-extension UIColor {
-  //Convert RGBA String to UIColor object
-  //"rgbaString" must be separated by space "0.5 0.6 0.7 1.0" 50% of Red 60% of Green 70% of Blue Alpha 100%
-  public convenience init?(rgbaString: String) {
-    self.init(ciColor: CIColor(string: rgbaString))
+  if cString.hasPrefix("#") {
+    cString.remove(at: cString.startIndex)
   }
 
-  //Convert UIColor to RGBA String
-  func toRGBAString() -> String {
-
-    var r: CGFloat = 0
-    var g: CGFloat = 0
-    var b: CGFloat = 0
-    var a: CGFloat = 0
-    self.getRed(&r, green: &g, blue: &b, alpha: &a)
-    return "\(r) \(g) \(b) \(a)"
-
+  if cString.count != 6 {
+    return UIColor.gray
   }
-  //return UIColor from Hexadecimal Color string
-  public convenience init?(hexaDecimalString: String) {
 
-    let r, g, b, a: CGFloat
+  var rgbValue: UInt32 = 0
+  Scanner(string: cString).scanHexInt32(&rgbValue)
 
-    var start: String.Index?
-    if hexaDecimalString.hasPrefix("#") {
-      start = hexaDecimalString.index(hexaDecimalString.startIndex, offsetBy: 1)
-    } else {
-      start = hexaDecimalString.index(hexaDecimalString.startIndex, offsetBy: 0)
-    }
-
-      //let hexColor = hexaDecimalString.substring(from: start)
-    let hexColor = String(hexaDecimalString.suffix(from: start!))
-
-      //if hexColor.count == 8 {
-        let scanner = Scanner(string: hexColor)
-        var hexNumber: UInt64 = 0
-
-    if scanner.scanHexInt64(&hexNumber) {
-      r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-      g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-      b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-      //a = CGFloat(hexNumber & 0x000000ff) / 255
-      a = 1.0
-      self.init(red: r, green: g, blue: b, alpha: a)
-      return
-    }
-     // }
-
-
-    return nil
-  }
-  // Convert UIColor to Hexadecimal String
-  func toHexString() -> String {
-    var r: CGFloat = 0
-    var g: CGFloat = 0
-    var b: CGFloat = 0
-    var a: CGFloat = 1
-    self.getRed(&r, green: &g, blue: &b, alpha: &a)
-    return String(
-      format: "%02X%02X%02X",
-      Int(r * 0xff),
-      Int(g * 0xff),
-      Int(b * 0xff)
-    )
-  }
+  return UIColor(
+    red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+    green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+    blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+    alpha: CGFloat(1.0)
+  )
 }
-*/
 
-  // Present the view controller in the Live View window
+func UIColorToHexString (uicolor: UIColor) -> String {
+  var r: CGFloat = 0
+  var g: CGFloat = 0
+  var b: CGFloat = 0
+  var a: CGFloat = 1
+  uicolor.getRed(&r, green: &g, blue: &b, alpha: &a)
+  return String(
+    format: "%02X%02X%02X",
+    Int(r * 0xff),
+    Int(g * 0xff),
+    Int(b * 0xff)
+  )
+}
+
+// Present the view controller in the Live View window
 PlaygroundPage.current.liveView = MyViewController()
