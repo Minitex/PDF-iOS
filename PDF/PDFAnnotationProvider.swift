@@ -101,7 +101,6 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
       }
       //pspdfAnnotation?.color = .red
     }
-    
     return pspdfAnnotation!
   }
 
@@ -123,8 +122,6 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
       //pspdfAnnotation?.color = .red
     }
 
-   // var pspdfAnnotationDirectionary: [String: Any] = [:]
-   // PSPDFAnnotation(dictionary: <#T##[String : Any]?#>)
 
     // set the required attributes
     pspdfAnnotation?.boundingBox = createRectFromDouble(doubleArray: pdfAnnotation.bbox!)
@@ -149,9 +146,9 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     // to rule out the possibility that parsing the color is part of the problem
     // with reloading annotations
 
-    //if let color = pdfAnnotation.color {
+    if let color = pdfAnnotation.color {
     //  pspdfAnnotation?.color = UIColor(hexaDecimalString: pdfAnnotation.color!)
-      //pspdfAnnotation?.color = hexStringToUIColor(hex: color)
+      pspdfAnnotation?.color = hexStringToUIColor(hex: color)
       //let colorValues = color.components(separatedBy: " ")
       //pspdfAnnotation?.color = UIColor(red:
        // colorValues[1].CGFloatValue()!, green: colorValues[2].CGFloatValue()!,
@@ -173,13 +170,13 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   //    }
     //  print(pspdfAnnotation?.color ?? "no color here")
 
- //  }
+    }
 
-/*
+
     if let opacity = pdfAnnotation.opacity {
       pspdfAnnotation?.alpha = CGFloat(floatLiteral: CGFloat.NativeType(opacity))
     }
- */
+
 
     return pspdfAnnotation!
   }

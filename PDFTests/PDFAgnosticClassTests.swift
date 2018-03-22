@@ -80,7 +80,7 @@ class PDFAgnosticClassTests: XCTestCase {
 
     XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
     XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
-                                                                    type: PSPDFAnnotationType.highlight))! != []),
+                                                                    type: AnnotationType.highlight))! != []),
                   "should be an annotation on this page")
   }
 
@@ -127,7 +127,7 @@ class PDFAgnosticClassTests: XCTestCase {
 
     XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
     XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
-                                                                    type: PSPDFAnnotationType.underline))! != []),
+                                                                    type: AnnotationType.underline))! != []),
                   "should be an annotation on this page")
   }
 
@@ -171,7 +171,7 @@ class PDFAgnosticClassTests: XCTestCase {
     // grab the JSON before we persist it?
     // I need to be able to grab the PSPDFAnnotation from this page, and get its JSON
     var pspdfAnnotation: [PSPDFAnnotation] = (pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
-                                                                                type: PSPDFAnnotationType.underline))!
+                                                                                      type:AnnotationType.underline))!
     var pspdfAnnotationJSON: Data = Data()
 
     do {
@@ -193,7 +193,7 @@ class PDFAgnosticClassTests: XCTestCase {
 
     // I need to be able to grab the PSPDFAnnotation from this page, and get its JSON
     pspdfAnnotation = (pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
-                                                                      type: PSPDFAnnotationType.underline))!
+                                                                       type: AnnotationType.underline))!
 
     do {
       try pspdfAnnotationJSON = pspdfAnnotation[0].generateInstantJSON()
@@ -206,7 +206,7 @@ class PDFAgnosticClassTests: XCTestCase {
 
     XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
     XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(annotationPage),
-                                                                    type: PSPDFAnnotationType.underline))! != []),
+                                                                    type: AnnotationType.underline))! != []),
                   "should be an annotation on this page")
     XCTAssert(pspdfAnnotationJSON == mockData.annotations[0].JSONData, "the JSON should be the same")
   }
@@ -232,7 +232,7 @@ class PDFAgnosticClassTests: XCTestCase {
     let annotationPage = 12
     //let underlineAnnotation = PSPDFUnderlineAnnotation()
     
-    let typeString: PSPDFAnnotationString = PSPDFAnnotationString.underline
+    let typeString: AnnotationString = AnnotationString.underline
     // Define where you want to place the annotation in the document (required)
     let boundingBox = CGRect(x: 60.316310882568359, y: 355.39178466796875,
                              width: 323.4547119140625, height: 9.752716064453125)
@@ -265,7 +265,7 @@ class PDFAgnosticClassTests: XCTestCase {
     // grab the JSON before we persist it?
     // I need to be able to grab the PSPDFAnnotation from this page, and get its JSON
     var pspdfAnnotation: [PSPDFAnnotation] = (pdfViewController?.document?.annotationsForPage(at: UInt(pageIndex),
-                                                                                              type: PSPDFAnnotationType.underline))!
+                                                                                              type: AnnotationType.underline))!
     var pspdfAnnotationJSON: Data = Data()
 
     do {
@@ -287,7 +287,7 @@ class PDFAgnosticClassTests: XCTestCase {
 
     // I need to be able to grab the PSPDFAnnotation from this page, and get its JSON
     pspdfAnnotation = (pdfViewController?.document?.annotationsForPage(at: UInt(pageIndex),
-                                                                       type: PSPDFAnnotationType.underline))!
+                                                                       type: AnnotationType.underline))!
 
     do {
       try pspdfAnnotationJSON = pspdfAnnotation[0].generateInstantJSON()
@@ -300,7 +300,7 @@ class PDFAgnosticClassTests: XCTestCase {
 
     XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
     XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(pageIndex),
-                                                                    type: PSPDFAnnotationType.underline))! != []),
+                                                                    type: AnnotationType.underline))! != []),
                   "should be an annotation on this page")
     XCTAssert(pspdfAnnotationJSON == mockData.annotations[0].JSONData, "the JSON should be the same")
 
