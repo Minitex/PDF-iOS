@@ -37,7 +37,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   init(annotationObjects: [PDFAnnotation] = [], documentProvider: PSPDFDocumentProvider,
        pdfModuleDelegate: PDFViewControllerDelegate) {
     self.pdfModuleDelegate = pdfModuleDelegate
-
+    super.init(documentProvider: documentProvider)
     // reload annotations into the document
     var annotation: PSPDFAnnotation?
     var annotationArray: [PSPDFAnnotation] = []
@@ -64,10 +64,45 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
         }
       }
     }
-    super.init(documentProvider: documentProvider)
+
     self.setAnnotations(annotationArray, append: false)
     //self.setAnnotationCacheDirect([NSNumber(annotationArray.count): annotationArray])
     //self.setAnnotationCacheDirect(annotationCache as! [NSNumber: [PSPDFAnnotation]])
+  }
+
+  private static func buildPSPDFAnnotation2(from pdfAnnotation: PDFAnnotation) -> PSPDFAnnotation {
+    var pspdfAnnotation: PSPDFAnnotation?
+
+    let pageIndex = pdfAnnotation.pageIndex
+    let boundingBox = createRectFromDouble(doubleArray: pdfAnnotation.bbox!)
+
+    var NSValues: [NSValue] = []
+    for rect in (pdfAnnotation.rects)! {
+      NSValues.append(createNSValueFromDouble(doubleArray: rect))
+    }
+    let rects = NSValues
+    let color = hexStringToUIColor(hex: pdfAnnotation.color!)
+
+    let alpha = CGFloat(floatLiteral: CGFloat.NativeType(pdfAnnotation.opacity!))
+    let dictionary: [String: Any] = ["pageIndex": pageIndex!, "rects": rects, "boundingBox": boundingBox,
+                                     "color": color, "alpha": alpha]
+
+    if (pdfAnnotation.type?.lowercased().hasSuffix("highlight"))! {
+      do {
+        pspdfAnnotation = try PSPDFHighlightAnnotation(dictionary: dictionary)
+      } catch {
+        print("unable to create highlight annotation")
+      }
+    } else if (pdfAnnotation.type?.lowercased().hasSuffix("underline"))! {
+      do {
+        pspdfAnnotation = try PSPDFUnderlineAnnotation(dictionary: dictionary)
+      } catch {
+        print("unable to create underline annotation")
+      }
+      //pspdfAnnotation?.color = .red
+    }
+    
+    return pspdfAnnotation!
   }
 
   private static func buildPSPDFAnnotation(from pdfAnnotation: PDFAnnotation) -> PSPDFAnnotation {
@@ -85,9 +120,11 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
       pspdfAnnotation = PSPDFHighlightAnnotation()
     } else if (pdfAnnotation.type?.lowercased().hasSuffix("underline"))! {
       pspdfAnnotation = PSPDFUnderlineAnnotation()
-      pspdfAnnotation?.color = .red
+      //pspdfAnnotation?.color = .red
     }
 
+   // var pspdfAnnotationDirectionary: [String: Any] = [:]
+   // PSPDFAnnotation(dictionary: <#T##[String : Any]?#>)
 
     // set the required attributes
     pspdfAnnotation?.boundingBox = createRectFromDouble(doubleArray: pdfAnnotation.bbox!)
@@ -112,8 +149,8 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     // to rule out the possibility that parsing the color is part of the problem
     // with reloading annotations
 
-    if let color = pdfAnnotation.color {
-      pspdfAnnotation?.color = UIColor(hexaDecimalString: pdfAnnotation.color!)
+    //if let color = pdfAnnotation.color {
+    //  pspdfAnnotation?.color = UIColor(hexaDecimalString: pdfAnnotation.color!)
       //pspdfAnnotation?.color = hexStringToUIColor(hex: color)
       //let colorValues = color.components(separatedBy: " ")
       //pspdfAnnotation?.color = UIColor(red:
@@ -136,13 +173,13 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   //    }
     //  print(pspdfAnnotation?.color ?? "no color here")
 
-   }
+ //  }
 
 /*
     if let opacity = pdfAnnotation.opacity {
       pspdfAnnotation?.alpha = CGFloat(floatLiteral: CGFloat.NativeType(opacity))
     }
-*/
+ */
 
     return pspdfAnnotation!
   }
@@ -271,7 +308,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
       }
       pdfAnnotation?.type = pspdfAnnotation.typeString.rawValue
     } catch {
-      print("Error generating InstantJSON !!")
+      print("Error building PDFAnnotation !!")
     }
     return pdfAnnotation!
   }

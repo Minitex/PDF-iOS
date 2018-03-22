@@ -211,6 +211,100 @@ class PDFAgnosticClassTests: XCTestCase {
     XCTAssert(pspdfAnnotationJSON == mockData.annotations[0].JSONData, "the JSON should be the same")
   }
 
+  // creating a new dictionary in this way does NOT work!
+  func testDictionaryAnnotationReloading() {
+    // recreate annotation based on PDFAnnotation attributes
+    // rectrieve the annotation back from the page through a PSPDFKitAnnotation object
+    // convert that to JSON
+    // compare that JSON to the JSON from the PDFAnnotation class
+    let mockData = MockData()
+    let pdfViewControllerDelegate = MockPDFViewControllerDelegate(mockPDFViewControllerDelegateDelegate: mockData)
+    var pdfViewController: PDFViewController? = PDFViewController.init(documentURL: mockData.documentURL,
+                                                                       openToPage: mockData.lastPageRead,
+                                                                       bookmarks: mockData.bookmarkPages,
+                                                                       annotations: mockData.annotations,
+                                                                       PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                                                       delegate: pdfViewControllerDelegate)
+
+    XCTAssertFalse((pdfViewController?.document?.containsAnnotations)!, "there should be no annotations")
+
+    // Now, create a new underline annotation
+    let annotationPage = 12
+    //let underlineAnnotation = PSPDFUnderlineAnnotation()
+    
+    let typeString: PSPDFAnnotationString = PSPDFAnnotationString.underline
+    // Define where you want to place the annotation in the document (required)
+    let boundingBox = CGRect(x: 60.316310882568359, y: 355.39178466796875,
+                             width: 323.4547119140625, height: 9.752716064453125)
+    //underlineAnnotation.boundingBox = boundingBox
+
+    // For underline annotations you also need to set the rects array accordingly (required)
+    let rects = [NSValue(cgRect: boundingBox)]
+    // and which page you want the annotation to appear on (required)
+    let pageIndex = UInt(annotationPage)
+
+    // color and alpha are optional, alpha is opacity
+    let color = UIColor.black
+    let alpha = 1.0
+
+    // Add the newly created annotation to the document
+    /*
+    let dictionary: [String: Any] = ["pageIndex": pageIndex, "typeString": typeString, "rects": rects, "boundingBox": boundingBox,
+                                     "color": color, "alpha": alpha]
+ */
+    let dictionary: [String: Any] = ["pageIndex": pageIndex, "rects": rects, "boundingBox": boundingBox,
+                                   "color": color, "alpha": alpha]
+    var underlineAnnotation: PSPDFAnnotation?
+    do {
+      underlineAnnotation = try PSPDFUnderlineAnnotation(dictionary: dictionary)
+    } catch {
+      print("unable to create underline annotation")
+    }
+    pdfViewController?.document?.add([underlineAnnotation!], options: nil)
+
+    // grab the JSON before we persist it?
+    // I need to be able to grab the PSPDFAnnotation from this page, and get its JSON
+    var pspdfAnnotation: [PSPDFAnnotation] = (pdfViewController?.document?.annotationsForPage(at: UInt(pageIndex),
+                                                                                              type: PSPDFAnnotationType.underline))!
+    var pspdfAnnotationJSON: Data = Data()
+
+    do {
+      try pspdfAnnotationJSON = pspdfAnnotation[0].generateInstantJSON()
+    } catch {
+      print("cannot get the instant JSON")
+    }
+
+    // swiftlint:disable line_length
+    print("Right after ADDING, pspdfAnnotationJSON is: \(String(data: pspdfAnnotationJSON, encoding: String.Encoding.utf8) ?? "no JSON value here")")
+
+    pdfViewController = nil
+    pdfViewController = PDFViewController.init(documentURL: mockData.documentURL,
+                                               openToPage: mockData.lastPageRead,
+                                               bookmarks: mockData.bookmarkPages,
+                                               annotations: mockData.annotations,
+                                               PSPDFKitLicense: MockAPIKeys.PDFLicenseKey,
+                                               delegate: pdfViewControllerDelegate)
+
+    // I need to be able to grab the PSPDFAnnotation from this page, and get its JSON
+    pspdfAnnotation = (pdfViewController?.document?.annotationsForPage(at: UInt(pageIndex),
+                                                                       type: PSPDFAnnotationType.underline))!
+
+    do {
+      try pspdfAnnotationJSON = pspdfAnnotation[0].generateInstantJSON()
+    } catch {
+      print("cannot get the instant JSON")
+    }
+
+    print("Right after RE-LOADING, pspdfAnnotationJSON is: \(String(data: pspdfAnnotationJSON, encoding: String.Encoding.utf8) ?? "no JSON value here")")
+    print("mockData AnnotationJSON is: \(String(data: mockData.annotations[0].JSONData!, encoding: String.Encoding.utf8) ?? "no JSON value here")")
+
+    XCTAssertTrue((pdfViewController?.document?.containsAnnotations)!, "there should an annotation")
+    XCTAssertTrue(((pdfViewController?.document?.annotationsForPage(at: UInt(pageIndex),
+                                                                    type: PSPDFAnnotationType.underline))! != []),
+                  "should be an annotation on this page")
+    XCTAssert(pspdfAnnotationJSON == mockData.annotations[0].JSONData, "the JSON should be the same")
+
+  }
   /*
   func testPerformanceExample() {
   // This is an example of a performance test case.

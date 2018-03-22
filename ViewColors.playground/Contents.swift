@@ -31,7 +31,6 @@ class MyViewController: UIViewController {
 }
 
 
-
 /*
 extension UIColor {
   //Convert RGBA String to UIColor object
