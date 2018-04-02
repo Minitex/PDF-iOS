@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SWIFTLINT_VERSION=0.23.1
+SWIFTLINT_VERSION=0.25.0
 
 set -euf -o pipefail
 
