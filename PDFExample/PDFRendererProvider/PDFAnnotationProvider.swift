@@ -11,6 +11,7 @@ import PSPDFKit
 class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
   weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  weak var pdfRendererDelegate: PDFRendererProviderDelegate?
 
   // The function below is now deprecated, but we're not ready to remove it yet
   /*
@@ -54,6 +55,37 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
         do {
           annotation = try PSPDFAnnotation(fromInstantJSON: annotationObject.JSONData!,
                                          documentProvider: documentProvider)
+          annotationArray.append(annotation!)
+          print("PDFAnnotationProvider: rebuild from JSON")
+        } catch {
+          print("Error reloading annotation: \(error)")
+        }
+      }
+    }
+
+    self.setAnnotations(annotationArray, append: false)
+  }
+
+  init(annotationObjects: [PDFAnnotation] = [], documentProvider: PSPDFDocumentProvider,
+       pdfRendererDelegate: PDFRendererProviderDelegate) {
+    self.pdfRendererDelegate = pdfRendererDelegate
+    super.init(documentProvider: documentProvider)
+    // reload annotations into the document
+    var annotation: PSPDFAnnotation?
+    var annotationArray: [PSPDFAnnotation] = []
+    for annotationObject in annotationObjects {
+      // the logic is:
+      // create an annotation directly using attributes from PDFAnnotation, and if
+      // that fails, fall back on using the JSON data, and if that fails,
+      // return no annotation
+      annotation = PDFAnnotationProvider.buildPSPDFAnnotation(from: annotationObject)
+      if annotation != nil {
+        annotationArray.append(annotation!)
+        print("PDFAnnotationProvider: rebuild from PDFAnnotation")
+      } else {
+        do {
+          annotation = try PSPDFAnnotation(fromInstantJSON: annotationObject.JSONData!,
+                                           documentProvider: documentProvider)
           annotationArray.append(annotation!)
           print("PDFAnnotationProvider: rebuild from JSON")
         } catch {
@@ -180,6 +212,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   }
  */
 
+  /*
   private func savePDFAnnotationsExternally(annotations: [PSPDFAnnotation]) {
     var pdfAnnotations: [PDFAnnotation] = []
     //let decoder = JSONDecoder()
@@ -191,6 +224,20 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
     // pass PDFAnnotations off to the host app, or delegate
     pdfModuleDelegate?.saveAnnotations(annotations: pdfAnnotations)
+  }
+ */
+
+  private func savePDFAnnotationsExternally(annotations: [PSPDFAnnotation]) {
+    var pdfAnnotations: [PDFAnnotation] = []
+    //let decoder = JSONDecoder()
+
+    for annotation in annotations {
+      let pdfAnnotation: PDFAnnotation = buildPDFAnnotation(from: annotation)
+      pdfAnnotations.append(pdfAnnotation)
+    }
+
+    // pass PDFAnnotations off to the host app, or delegate
+    pdfRendererDelegate?.saveAnnotations(annotations: pdfAnnotations)
   }
 
   private func buildPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> PDFAnnotation {

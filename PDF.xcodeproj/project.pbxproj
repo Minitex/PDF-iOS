@@ -27,7 +27,7 @@
 		527546381FBBA24800395A1F /* PDF.h in Headers */ = {isa = PBXBuildFile; fileRef = 5275462A1FBBA24800395A1F /* PDF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		527546481FBBA38500395A1F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546471FBBA38500395A1F /* AppDelegate.swift */; };
 		5275464A1FBBA38500395A1F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546491FBBA38500395A1F /* ViewController.swift */; };
-		5275464D1FBBA38500395A1F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5275464B1FBBA38500395A1F /* Main.storyboard */; };
+		5275464D1FBBA38500395A1F /* PDFExample.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5275464B1FBBA38500395A1F /* PDFExample.storyboard */; };
 		5275464F1FBBA38500395A1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5275464E1FBBA38500395A1F /* Assets.xcassets */; };
 		527546521FBBA38500395A1F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527546501FBBA38500395A1F /* LaunchScreen.storyboard */; };
 		5275465D1FBBA38600395A1F /* PDFExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5275465C1FBBA38600395A1F /* PDFExampleTests.swift */; };
@@ -55,6 +55,9 @@
 		52E456B3206DA1E80069B696 /* PDFBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E456AE206DA1E80069B696 /* PDFBookmark.swift */; };
 		52E456B4206DA1E80069B696 /* PDFBookmarkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E456AF206DA1E80069B696 /* PDFBookmarkProvider.swift */; };
 		52E456B5206DA1E80069B696 /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E456B0206DA1E80069B696 /* PDFViewController.swift */; };
+		52E6F3692073E67C007E0246 /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
+		52E6F36A2073E680007E0246 /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
+		52E6F36C2073EEDB007E0246 /* PDFRendererProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E6F36B2073EEDB007E0246 /* PDFRendererProvider.swift */; };
 		52F8C79D20504FEE00B0C804 /* PDFBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */; };
 		52FBB1752048A8170032007F /* PDFAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBB1742048A8170032007F /* PDFAnnotation.swift */; };
 		52FBB1772048B2C60032007F /* PDFAgnosticClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBB1762048B2C60032007F /* PDFAgnosticClassTests.swift */; };
@@ -162,7 +165,7 @@
 		527546451FBBA38500395A1F /* PDFExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDFExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		527546471FBBA38500395A1F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		527546491FBBA38500395A1F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5275464C1FBBA38500395A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5275464C1FBBA38500395A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/PDFExample.storyboard; sourceTree = "<group>"; };
 		5275464E1FBBA38500395A1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		527546511FBBA38500395A1F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		527546531FBBA38500395A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -191,6 +194,7 @@
 		52E456AE206DA1E80069B696 /* PDFBookmark.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFBookmark.swift; sourceTree = "<group>"; };
 		52E456AF206DA1E80069B696 /* PDFBookmarkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFBookmarkProvider.swift; sourceTree = "<group>"; };
 		52E456B0206DA1E80069B696 /* PDFViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
+		52E6F36B2073EEDB007E0246 /* PDFRendererProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFRendererProvider.swift; sourceTree = "<group>"; };
 		52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFBookmark.swift; sourceTree = "<group>"; };
 		52FBB1742048A8170032007F /* PDFAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFAnnotation.swift; sourceTree = "<group>"; };
 		52FBB1762048B2C60032007F /* PDFAgnosticClassTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFAgnosticClassTests.swift; sourceTree = "<group>"; };
@@ -229,6 +233,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52E6F3692073E67C007E0246 /* PSPDFKitUI.framework in Frameworks */,
+				52E6F36A2073E680007E0246 /* PSPDFKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +340,7 @@
 				52D4AD5F1FD6155D006DC698 /* Books */,
 				527546471FBBA38500395A1F /* AppDelegate.swift */,
 				527546491FBBA38500395A1F /* ViewController.swift */,
-				5275464B1FBBA38500395A1F /* Main.storyboard */,
+				5275464B1FBBA38500395A1F /* PDFExample.storyboard */,
 				5275464E1FBBA38500395A1F /* Assets.xcassets */,
 				527546501FBBA38500395A1F /* LaunchScreen.storyboard */,
 				527546531FBBA38500395A1F /* Info.plist */,
@@ -403,6 +409,7 @@
 		52E456AB206DA0060069B696 /* PDFRendererProvider */ = {
 			isa = PBXGroup;
 			children = (
+				52E6F36B2073EEDB007E0246 /* PDFRendererProvider.swift */,
 				52E456AD206DA1E80069B696 /* PDFAnnotation.swift */,
 				52E456AC206DA1E80069B696 /* PDFAnnotationProvider.swift */,
 				52E456AE206DA1E80069B696 /* PDFBookmark.swift */,
@@ -658,7 +665,7 @@
 			files = (
 				527546521FBBA38500395A1F /* LaunchScreen.storyboard in Resources */,
 				5275464F1FBBA38500395A1F /* Assets.xcassets in Resources */,
-				5275464D1FBBA38500395A1F /* Main.storyboard in Resources */,
+				5275464D1FBBA38500395A1F /* PDFExample.storyboard in Resources */,
 				52B6B1231FD7303300AFA35B /* Books.plist in Resources */,
 				5282D3961FCF306500A392C5 /* FinancialAccounting.pdf in Resources */,
 				52690F0E1FD07F3B004CDD6C /* DataModeling.pdf in Resources */,
@@ -778,6 +785,7 @@
 				52B47AD81FC4C1CD00D7EA12 /* APIKeys.swift in Sources */,
 				52E456B3206DA1E80069B696 /* PDFBookmark.swift in Sources */,
 				52E456B5206DA1E80069B696 /* PDFViewController.swift in Sources */,
+				52E6F36C2073EEDB007E0246 /* PDFRendererProvider.swift in Sources */,
 				52E456B4206DA1E80069B696 /* PDFBookmarkProvider.swift in Sources */,
 				5275464A1FBBA38500395A1F /* ViewController.swift in Sources */,
 				527546481FBBA38500395A1F /* AppDelegate.swift in Sources */,
@@ -852,12 +860,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5275464B1FBBA38500395A1F /* Main.storyboard */ = {
+		5275464B1FBBA38500395A1F /* PDFExample.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				5275464C1FBBA38500395A1F /* Base */,
 			);
-			name = Main.storyboard;
+			name = PDFExample.storyboard;
 			sourceTree = "<group>";
 		};
 		527546501FBBA38500395A1F /* LaunchScreen.storyboard */ = {
@@ -1133,6 +1141,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K97KHP3ZWG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PDFExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umn.minitex.simplye.PDFExampleTests;
@@ -1150,6 +1162,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = K97KHP3ZWG;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = PDFExampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.umn.minitex.simplye.PDFExampleTests;

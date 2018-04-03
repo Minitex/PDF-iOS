@@ -12,6 +12,7 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
 
   var bookmarks: [PSPDFBookmark]
   weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  weak var pdfRendererDelegate: PDFRendererProviderDelegate?
 
   var pageNumbers: [UInt] {
     var pageNumbers: [UInt] = []
@@ -34,6 +35,20 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     }
   }
 
+  init(pages: [UInt] = [], pdfRendererDelegate: PDFRendererProviderDelegate) {
+    self.bookmarks = []
+    self.pdfRendererDelegate = pdfRendererDelegate
+    if pages.count > 0 {
+      for page in pages {
+        self.bookmarks.append(PSPDFBookmark(pageIndex: page))
+      }
+    }
+  }
+
+  func saveBookmarksExternally(pageNumbers: [UInt]) {
+    pdfRendererDelegate?.saveBookmarks(pageNumbers: pageNumbers)
+  }
+
   func add(_ bookmark: PSPDFBookmark) -> Bool {
     let index = bookmarks.index(of: bookmark)
     if index == nil {
@@ -41,7 +56,8 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     } else {
       bookmarks[index!] = bookmark
     }
-    pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
+    //pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
+    saveBookmarksExternally(pageNumbers: pageNumbers)
     return true
   }
 
@@ -50,11 +66,13 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     if bookmarks.contains(bookmark) {
       bookmarks.remove(at: index!)
     }
-    pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
+    //pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
+    saveBookmarksExternally(pageNumbers: pageNumbers)
     return true
   }
 
   func save() {
-    pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
+   // pdfModuleDelegate?.saveBookmarks(pageNumbers: pageNumbers)
+    saveBookmarksExternally(pageNumbers: pageNumbers)
   }
 }

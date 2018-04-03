@@ -5,7 +5,7 @@
 //  Created by Vui Nguyen on 11/14/17.
 //  Copyright © 2017 Minitex. All rights reserved.
 //
-import PDF
+//import PDF
 import UIKit
 
 class ViewController: UIViewController {
@@ -64,14 +64,22 @@ class ViewController: UIViewController {
     let documentName = book.title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
+    /*
     let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead,
                                                    bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
                                                    PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+ */
+    let pdfViewController = PDFRendererProvider.init(documentURL: fileURL,
+                                                     openToPage: book.lastPageRead,
+                                                     bookmarks: book.bookmarks,
+                                                     annotations: book.PDFAnnotations,
+                                                     PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
 
-extension ViewController: PDFViewControllerDelegate {
+//extension ViewController: PDFViewControllerDelegate {
+extension ViewController: PDFRendererProviderDelegate {
   func saveAnnotations(annotations: [PDFAnnotation]) {
     for annotation in annotations {
       // swiftlint:disable line_length

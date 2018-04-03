@@ -19,13 +19,28 @@ class PDFExampleTests: XCTestCase {
         super.tearDown()
     }
     func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+      let bundle = Bundle(identifier: "edu.umn.minitex.simplye.pdfexample")
+      let sb = UIStoryboard(name: "PDFExample", bundle: bundle)
+      let pdfExampleController = sb.instantiateViewController(withIdentifier: "PDFExample") as! ViewController
+      XCTAssertNotNil(pdfExampleController, "example view controller doesn't exist")
+
+      let book: Book = pdfExampleController.books![0]
+      let documentName = book.title
+      pdfExampleController.currentBook = documentName
+      let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
+      /*
+      let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead,
+                                                     bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
+                                                     PSPDFKitLicense: APIKeys.PDFLicenseKey,
+                                                     delegate: pdfExampleController)
+      XCTAssertNotNil(pdfViewController, "pdf view controller doesn't exist")
+ */
+
+      let pdfRendererController = PDFRendererProvider.init(documentURL: fileURL, openToPage: book.lastPageRead,
+                                                           bookmarks: book.bookmarks,
+                                                           annotations: book.PDFAnnotations,
+                                                           PSPDFKitLicense: APIKeys.PDFLicenseKey,
+                                                        delegate: pdfExampleController)
+      XCTAssertNotNil(pdfRendererController, "pdf renderer controller doesn't exist")
+  }
 }
