@@ -64,10 +64,29 @@ class ViewController: UIViewController {
     let documentName = book.title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead,
+    let writeableURL = copyToWriteableLocation(url: fileURL, documentName: documentName)
+    let pdfViewController = PDFViewController.init(documentURL: writeableURL, openToPage: book.lastPageRead,
                                                    bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
                                                    PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
+  }
+
+  // as of PSPDFKit SDK 7.4.x, the PDF document must be located in a writeable directory
+  // in order for bookmarks to be enabled
+  private func copyToWriteableLocation(url: URL, documentName: String) -> URL {
+    let writeableURL: URL = URL(fileURLWithPath: documentName,
+                                relativeTo: ViewController.documentDirectoryURL).appendingPathExtension("pdf")
+    if !FileManager.default.fileExists(atPath: writeableURL.path) {
+      do {
+        try FileManager.default.copyItem(at: url, to: writeableURL)
+        print("PDF document copied over successfully!")
+      } catch {
+        print(error)
+      }
+    } else {
+      print("PDF file already exists there!")
+    }
+    return writeableURL
   }
 }
 

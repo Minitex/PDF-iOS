@@ -55,9 +55,10 @@ public final class PDFViewController: PSPDFViewController {
               PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
+
     let document = PSPDFDocument(url: documentURL)
 
-    document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
+    //document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
     document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
       documentProvider.annotationManager.annotationProviders =
         [PDFAnnotationProvider(annotationObjects: annotationObjects,
