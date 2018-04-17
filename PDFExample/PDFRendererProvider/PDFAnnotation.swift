@@ -7,7 +7,16 @@
 //
 
 import Foundation
-import PSPDFKit
+import PSPDFKitRendererProvider
+//import PSPDFKit
+
+/*
+public protocol PDFAnnotationDelegate: class {
+  //func buildPDFAnnotation() -> PDFAnnotation
+  func buildStuff() -> Int
+}
+ */
+
 
 // the items that are marked required are needed to
 // recreate an annotation in PSPDFKit later

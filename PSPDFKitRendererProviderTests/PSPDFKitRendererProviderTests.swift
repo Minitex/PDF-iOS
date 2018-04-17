@@ -1,15 +1,15 @@
 //
-//  PSPDFKitProviderTests.swift
-//  PSPDFKitProviderTests
+//  PSPDFKitRendererProviderTests.swift
+//  PSPDFKitRendererProviderTests
 //
-//  Created by Vui Nguyen on 3/28/18.
+//  Created by Vui Nguyen on 4/12/18.
 //  Copyright © 2018 Minitex. All rights reserved.
 //
 
 import XCTest
-@testable import PSPDFKitProvider
+@testable import PSPDFKitRendererProvider
 
-class PSPDFKitProviderTests: XCTestCase {
+class PSPDFKitRendererProviderTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.

@@ -8,12 +8,18 @@
 import UIKit
 import PSPDFKit
 import PSPDFKitUI
+import PSPDFKitRendererProvider
 
 public protocol PDFRendererProviderDelegate: class {
   func userDidNavigate(page: Int)
   func saveBookmarks(pageNumbers: [UInt])
   func saveAnnotations(annotationsData: [Data])
   func saveAnnotations(annotations: [PDFAnnotation])
+}
+
+public protocol PDFAnnotationDelegate: class {
+  //func buildPDFAnnotation() -> PDFAnnotation
+  func buildStuff() -> Int
 }
 
 public final class PDFRendererProvider: PSPDFViewController {
