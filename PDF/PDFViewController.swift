@@ -94,8 +94,8 @@ public final class PDFViewController: PSPDFViewController {
     navigationItem.setRightBarButtonItems([thumbnailsButtonItem], for: .thumbnails, animated: false)
 
     // add only highlight and underline to the annotations toolbar
-    let highlight = PSPDFAnnotationGroupItem(type: AnnotationString.highlight)
-    let underline = PSPDFAnnotationGroupItem(type: AnnotationString.underline)
+    let highlight = PSPDFAnnotationGroupItem(type: .highlight)
+    let underline = PSPDFAnnotationGroupItem(type: .underline)
 
     // for iphone
     let annotationCompactGroup: [PSPDFAnnotationGroup] = [PSPDFAnnotationGroup(items: [highlight]),
