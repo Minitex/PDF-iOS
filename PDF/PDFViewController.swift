@@ -9,16 +9,25 @@ import UIKit
 import PSPDFKit
 import PSPDFKitUI
 
+/*
 public protocol PDFViewControllerDelegate: class {
   func userDidNavigate(page: Int)
   func saveBookmarks(pageNumbers: [UInt])
   func saveAnnotations(annotationsData: [Data])
   func saveAnnotations(annotations: [PDFAnnotation])
 }
+ */
+
+/*
+public protocol PDFViewControllerDelegate: MinitexPDFViewControllerDelegate {
+
+}
+ */
 
 public final class PDFViewController: PSPDFViewController {
 
-  weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  //weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  weak var pdfModuleDelegate: MinitexPDFViewControllerDelegate?
 
   // This initializer is now deprecated with passing annotations as PDFAnnotation objects
   /*
@@ -52,7 +61,8 @@ public final class PDFViewController: PSPDFViewController {
 
   public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
               annotations annotationObjects: [PDFAnnotation] = [],
-              PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
+              //PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
+              PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate?) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
     let document = PSPDFDocument(url: documentURL)

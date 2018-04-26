@@ -11,7 +11,8 @@ import PSPDFKit
 class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
 
   var bookmarks: [PSPDFBookmark]
-  weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  //weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  weak var pdfModuleDelegate: MinitexPDFViewControllerDelegate?
 
   var pageNumbers: [UInt] {
     var pageNumbers: [UInt] = []
@@ -24,7 +25,8 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     return pageNumbers
   }
 
-  init(pages: [UInt] = [], pdfModuleDelegate: PDFViewControllerDelegate) {
+  //init(pages: [UInt] = [], pdfModuleDelegate: PDFViewControllerDelegate) {
+  init(pages: [UInt] = [], pdfModuleDelegate: MinitexPDFViewControllerDelegate) {
     self.bookmarks = []
     self.pdfModuleDelegate = pdfModuleDelegate
     if pages.count > 0 {

@@ -67,25 +67,28 @@ class ViewController: UIViewController {
 
     let pdfViewController = Factory().createViewController(documentURL: fileURL, openToPage: book.lastPageRead,
                                                            bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
-                                                           PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+                                                           PSPDFKitLicense: APIKeys.PDFLicenseKey,
+                                                           delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
 }
 
-class Factory: MinitexViewControllerFactory  {
-  func createViewController(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt], annotations annotationObjects: [MinitexPDFAnnotation], PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate) -> UIViewController {
-
+class Factory: MinitexViewControllerFactory {
+  // swiftlint:disable function_parameter_count
+  func createViewController(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt],
+                            annotations annotationObjects: [PDFAnnotation], PSPDFKitLicense: String,
+                            delegate: MinitexPDFViewControllerDelegate) -> UIViewController {
 
     let pdfViewController = PDFViewController.init(documentURL: documentURL, openToPage: page,
                                                    bookmarks: pages, annotations: annotationObjects,
-                                                   PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+                                                   PSPDFKitLicense: APIKeys.PDFLicenseKey,
+                                                  delegate: delegate)
     return pdfViewController
   }
 
-
 }
 
-extension ViewController: PDFViewControllerDelegate {
+extension ViewController: MinitexPDFViewControllerDelegate {
   func saveAnnotations(annotations: [PDFAnnotation]) {
     for annotation in annotations {
       // swiftlint:disable line_length

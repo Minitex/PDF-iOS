@@ -15,7 +15,7 @@ public protocol MockPDFViewControllerDelegateDelegate: class {
   func persistAnnotations(annotations: [PDFAnnotation])
 }
 
-class MockPDFViewControllerDelegate: PDFViewControllerDelegate {
+class MockPDFViewControllerDelegate: MinitexPDFViewControllerDelegate {
   weak var mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate?
 
   init(mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate) {
