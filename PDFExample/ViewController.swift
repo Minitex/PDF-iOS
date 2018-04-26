@@ -64,11 +64,25 @@ class ViewController: UIViewController {
     let documentName = book.title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead,
-                                                   bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
-                                                   PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+
+    let pdfViewController = Factory().createViewController(documentURL: fileURL, openToPage: book.lastPageRead,
+                                                           bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
+                                                           PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
     self.navigationController?.pushViewController(pdfViewController, animated: true)
   }
+}
+
+class Factory: MinitexViewControllerFactory  {
+  func createViewController(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt], annotations annotationObjects: [MinitexPDFAnnotation], PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate) -> UIViewController {
+
+
+    let pdfViewController = PDFViewController.init(documentURL: documentURL, openToPage: page,
+                                                   bookmarks: pages, annotations: annotationObjects,
+                                                   PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
+    return pdfViewController
+  }
+
+
 }
 
 extension ViewController: PDFViewControllerDelegate {
