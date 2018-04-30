@@ -11,7 +11,7 @@ import PSPDFKit
 
 // the items that are marked required are needed to
 // recreate an annotation in PSPDFKit later
-public class MinitexPDFAnnotation: Codable {
+public class OBEPDFAnnotation: Codable {
   // required
   var bbox: [Double]?
   // optional

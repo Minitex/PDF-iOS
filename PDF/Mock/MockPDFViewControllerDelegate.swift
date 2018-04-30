@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MinitexPDFProtocols
 
 public protocol MockPDFViewControllerDelegateDelegate: class {
   func persistLastPageRead(page: Int)

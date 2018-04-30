@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MinitexPDFProtocols
 
 public struct Book: Codable {
   public var title: String

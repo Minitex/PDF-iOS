@@ -32,11 +32,12 @@
 		527546681FBBA38600395A1F /* PDFExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546671FBBA38600395A1F /* PDFExampleUITests.swift */; };
 		527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527546731FBBB3B700395A1F /* PDFViewController.swift */; };
 		5282D3961FCF306500A392C5 /* FinancialAccounting.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */; };
-		52A90D062092714000EFB9F6 /* MinitexProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A90D052092714000EFB9F6 /* MinitexProtocols.swift */; };
 		52B47AD81FC4C1CD00D7EA12 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */; };
 		52B6B1211FD719CB00AFA35B /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6B1201FD719CB00AFA35B /* Book.swift */; };
 		52B6B1231FD7303300AFA35B /* Books.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B6B1221FD7303300AFA35B /* Books.plist */; };
 		52B872012007FA100054F920 /* PDFAnnotationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B872002007FA100054F920 /* PDFAnnotationProvider.swift */; };
+		52D502662097CD590067B60B /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D502652097CD590067B60B /* MinitexPDFProtocols.framework */; };
+		52D502672097CD590067B60B /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D502652097CD590067B60B /* MinitexPDFProtocols.framework */; };
 		52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
 		52F8C79D20504FEE00B0C804 /* PDFBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */; };
 		52FBB1752048A8170032007F /* PDFAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBB1742048A8170032007F /* PDFAnnotation.swift */; };
@@ -133,11 +134,11 @@
 		527546691FBBA38600395A1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		527546731FBBB3B700395A1F /* PDFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewController.swift; sourceTree = "<group>"; };
 		5282D3951FCF306500A392C5 /* FinancialAccounting.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = FinancialAccounting.pdf; sourceTree = "<group>"; };
-		52A90D052092714000EFB9F6 /* MinitexProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinitexProtocols.swift; sourceTree = "<group>"; };
 		52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		52B6B1201FD719CB00AFA35B /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		52B6B1221FD7303300AFA35B /* Books.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Books.plist; sourceTree = "<group>"; };
 		52B872002007FA100054F920 /* PDFAnnotationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFAnnotationProvider.swift; sourceTree = "<group>"; };
+		52D502652097CD590067B60B /* MinitexPDFProtocols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MinitexPDFProtocols.framework; sourceTree = "<group>"; };
 		52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKit.framework; path = Carthage/Build/iOS/PSPDFKit.framework; sourceTree = "<group>"; };
 		52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKitUI.framework; path = Carthage/Build/iOS/PSPDFKitUI.framework; sourceTree = "<group>"; };
 		52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFBookmark.swift; sourceTree = "<group>"; };
@@ -150,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52D502662097CD590067B60B /* MinitexPDFProtocols.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52D502672097CD590067B60B /* MinitexPDFProtocols.framework in Frameworks */,
 				52D5AD6C1FBCD74800A8C000 /* PDF.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -236,7 +239,6 @@
 				52B872002007FA100054F920 /* PDFAnnotationProvider.swift */,
 				52FBB1742048A8170032007F /* PDFAnnotation.swift */,
 				52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */,
-				52A90D052092714000EFB9F6 /* MinitexProtocols.swift */,
 			);
 			path = PDF;
 			sourceTree = "<group>";
@@ -299,6 +301,7 @@
 		52D5AD671FBCCA4400A8C000 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				52D502652097CD590067B60B /* MinitexPDFProtocols.framework */,
 				52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */,
 				52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */,
 			);
@@ -564,7 +567,6 @@
 				526769941FE1CC2200FFF668 /* PDFBookmarkProvider.swift in Sources */,
 				52F8C79D20504FEE00B0C804 /* PDFBookmark.swift in Sources */,
 				520C84F420408C6100E1F660 /* MockData.swift in Sources */,
-				52A90D062092714000EFB9F6 /* MinitexProtocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,6 +776,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PDF/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -801,6 +804,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PDF/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -862,6 +866,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PDFExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @executable_path/Frameworks";
@@ -885,6 +890,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PDFExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @loader_path/Frameworks @executable_path/Frameworks";

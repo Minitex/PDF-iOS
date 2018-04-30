@@ -7,6 +7,7 @@
 //
 import PDF
 import UIKit
+import MinitexPDFProtocols
 
 class ViewController: UIViewController {
   var books: [Book]?
@@ -73,7 +74,7 @@ class ViewController: UIViewController {
   }
 }
 
-class Factory: MinitexViewControllerFactory {
+class Factory: MinitexPDFViewControllerFactory {
   // swiftlint:disable function_parameter_count
   func createViewController(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt],
                             annotations annotationObjects: [PDFAnnotation], PSPDFKitLicense: String,

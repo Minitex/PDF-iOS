@@ -7,6 +7,7 @@
 //
 
 import PSPDFKit
+import MinitexPDFProtocols
 
 class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 

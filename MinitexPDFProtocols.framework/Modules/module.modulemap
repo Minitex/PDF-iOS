@@ -1,0 +1,11 @@
+framework module MinitexPDFProtocols {
+  umbrella header "MinitexPDFProtocols.h"
+
+  export *
+  module * { export * }
+}
+
+module MinitexPDFProtocols.Swift {
+    header "MinitexPDFProtocols-Swift.h"
+    requires objc
+}

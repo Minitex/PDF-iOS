@@ -46,7 +46,7 @@ public protocol MinitexPDFViewControllerDelegate: class {
   func saveAnnotations(annotations: [PDFAnnotation])
 }
 
-public protocol MinitexViewControllerFactory {
+public protocol MinitexPDFViewControllerFactory {
   // swiftlint:disable function_parameter_count
   func createViewController(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt],
                             annotations annotationObjects: [PDFAnnotation],

@@ -8,6 +8,7 @@
 import UIKit
 import PSPDFKit
 import PSPDFKitUI
+import MinitexPDFProtocols
 
 /*
 public protocol PDFViewControllerDelegate: class {
