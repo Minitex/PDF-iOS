@@ -34,7 +34,6 @@
 		52899BC7209A4F56008F91B6 /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
 		52899BC8209A4F56008F91B6 /* PDF.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52899BCC209A6502008F91B6 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52899BCB209A6502008F91B6 /* MinitexPDFProtocols.framework */; };
-		52899BCD209A6502008F91B6 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52899BCB209A6502008F91B6 /* MinitexPDFProtocols.framework */; };
 		52899BCE209A6510008F91B6 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52899BCB209A6502008F91B6 /* MinitexPDFProtocols.framework */; };
 		52899BCF209A6510008F91B6 /* MinitexPDFProtocols.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52899BCB209A6502008F91B6 /* MinitexPDFProtocols.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		52B47AD81FC4C1CD00D7EA12 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B47AD71FC4C1CD00D7EA12 /* APIKeys.swift */; };
@@ -178,7 +177,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				52899BCE209A6510008F91B6 /* MinitexPDFProtocols.framework in Frameworks */,
-				52899BCD209A6502008F91B6 /* MinitexPDFProtocols.framework in Frameworks */,
 				52899BC7209A4F56008F91B6 /* PDF.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
