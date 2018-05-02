@@ -11,6 +11,7 @@ To pull in every PSPDFKit framework update after that, run
 1. Run ./swiftlint-setup.sh to install a local copy of 
 [SwiftLint](https://github.com/realm/SwiftLint)
 2. Open `PDF.xcodeproj`.
+3. Ensure that [MinitexPDFProtocols.framework](https://github.com/Minitex/MinitexPDFProtocols) is linked in the `PDF` target, and embedded and linked in the `PDFExample` target.
 3. Ensure the `PDFExample` target is selected.
 4. Build and run as normal.
 5. If PDFExample was installed previously and you get a .plist error while trying to run it, you may have to uninstall the PDFExample app and reinstall it, to get the updated .plist file.
@@ -36,11 +37,15 @@ In the openPDF function, you will:
 
 `let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!`
 
-5. Instantiate the ViewController from the PDF module to render the PDF.
+5. Build a dictionary of the attributes to pass into the PDFViewController / renderer.
 
-`let pdfViewController = PDFViewController.init(...)`
+`let pdfDictionary: [String: Any] =  ...`
 
-6. Push the ViewController onto the NavigationController stack so that it can be displayed.
+6. Use the MinitexPDFViewControllerFactory to create a PDFViewController and pass the dictionary you built earlier into it.
+
+`let pdfViewController = MinitexPDFViewControllerFactory.createPDFViewController(dictionary: pdfDictionary)`
+
+7. Push the ViewController onto the NavigationController stack so that it can be displayed.
 
 `self.navigationController?.pushViewController(pdfViewController, animated: true)`
 

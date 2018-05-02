@@ -5,9 +5,6 @@
 //  Created by Vui Nguyen on 12/5/17.
 //  Copyright © 2017 Minitex. All rights reserved.
 //
-
-import Foundation
-import PDF
 import MinitexPDFProtocols
 
 public struct Book: Codable {

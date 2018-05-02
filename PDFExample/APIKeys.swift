@@ -5,7 +5,6 @@
 //  Created by Vui Nguyen on 11/21/17.
 //  Copyright © 2017 Minitex. All rights reserved.
 //
-
 import Foundation
 
 // swiftlint:disable line_length

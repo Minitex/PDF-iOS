@@ -5,7 +5,6 @@
 //  Created by Vui Nguyen on 2/23/18.
 //  Copyright © 2018 Minitex. All rights reserved.
 //
-
 import Foundation
 
 // Instructions: Add the actual API string below, uncomment the class,
