@@ -9,6 +9,17 @@ import PDF
 import UIKit
 import MinitexPDFProtocols
 
+/*
+@objc public protocol PDFViewController: class {
+  /*
+  init(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt],
+       annotations annotationObjects: [PDFAnnotation],
+       PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate?)
+ */
+  init(dictionary: [String: Any])
+}
+ */
+
 class ViewController: UIViewController {
   var books: [Book]?
   var currentBook: String?
@@ -66,28 +77,67 @@ class ViewController: UIViewController {
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
 
-    let pdfViewController = Factory().createViewController(documentURL: fileURL, openToPage: book.lastPageRead,
+    // if we get nil, don't add it to the navigation, and instead print a message
+    // if it's not nil, add it to the navigation controller
+    let pdfViewController = Factory().createPDFViewController(documentURL: fileURL, openToPage: book.lastPageRead,
                                                            bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
                                                            PSPDFKitLicense: APIKeys.PDFLicenseKey,
                                                            delegate: self)
-    self.navigationController?.pushViewController(pdfViewController, animated: true)
+    if pdfViewController != nil {
+      self.navigationController?.pushViewController(pdfViewController!, animated: true)
+    } else {
+      print("PDF module does not exist")
+    }
   }
 }
 
 class Factory: MinitexPDFViewControllerFactory {
-  // swiftlint:disable function_parameter_count
-  func createViewController(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt],
-                            annotations annotationObjects: [PDFAnnotation], PSPDFKitLicense: String,
-                            delegate: MinitexPDFViewControllerDelegate) -> UIViewController {
 
-    let pdfViewController = PDFViewController.init(documentURL: documentURL, openToPage: page,
+  // swiftlint:disable function_parameter_count
+  func createPDFViewController(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt],
+                               annotations annotationObjects: [PDFAnnotation], PSPDFKitLicense: String,
+                               delegate: MinitexPDFViewControllerDelegate) -> UIViewController? {
+
+    // if we can find the PDFViewController class, let's return it, else return nil
+    /*
+    guard let pdfViewControllerClass = NSClassFromString("PDF.PDFViewController") else {
+      return nil
+    }
+    let pdfViewController = pdfViewControllerClass.init(documentURL: documentURL, openToPage: page,
                                                    bookmarks: pages, annotations: annotationObjects,
                                                    PSPDFKitLicense: APIKeys.PDFLicenseKey,
                                                   delegate: delegate)
+ */
+    let pdfViewController = PDFViewController.init(documentURL: documentURL, openToPage: page,
+                                                        bookmarks: pages, annotations: annotationObjects,
+                                                        PSPDFKitLicense: APIKeys.PDFLicenseKey,
+                                                        delegate: delegate)
     return pdfViewController
   }
-
 }
+
+/*
+extension ViewController: MinitexPDFViewControllerFactory {
+  func createPDFViewController(documentURL: URL, openToPage page: UInt, bookmarks pages: [UInt],
+                               annotations annotationObjects: [PDFAnnotation],
+                               PSPDFKitLicense: String,
+                               delegate: MinitexPDFViewControllerDelegate) -> PDFViewController? {
+
+    // the NSClassFromString isn't working, use NSBundle?
+   // let className = Bundle(identifier: "edu.umn.minitex.simplye.PDF")?.classNamed("PDFViewController") as String
+    //print(className)
+    guard let pdfViewControllerClass = NSClassFromString("edu.umn.simplye.PDF.PDFViewController")
+    //  guard let pdfViewControllerClass = Bundle(identifier: "edu.umn.minitex.simplye.PDF")?.classNamed("PDFViewController")
+        as? PDFViewController.Type else {
+      return nil
+    }
+    let dictionary = ["documentURL": documentURL, "page": page, "pages": pages, "annotationObjects": annotationObjects,
+                      "PSPDFKitLicense": PSPDFKitLicense, "delegate": delegate] as [String: Any]
+    let pdfViewController = pdfViewControllerClass.init(dictionary: dictionary)
+    return pdfViewController
+  }
+}
+ */
 
 extension ViewController: MinitexPDFViewControllerDelegate {
   func saveAnnotations(annotations: [PDFAnnotation]) {
