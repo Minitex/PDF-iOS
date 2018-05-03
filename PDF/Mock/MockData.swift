@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MinitexPDFProtocols
 
 class MockData: MockPDFViewControllerDelegateDelegate {
   var books: [Book]?

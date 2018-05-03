@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MinitexPDFProtocols
 
 public protocol MockPDFViewControllerDelegateDelegate: class {
   func persistLastPageRead(page: Int)
@@ -15,7 +16,7 @@ public protocol MockPDFViewControllerDelegateDelegate: class {
   func persistAnnotations(annotations: [PDFAnnotation])
 }
 
-class MockPDFViewControllerDelegate: PDFViewControllerDelegate {
+class MockPDFViewControllerDelegate: MinitexPDFViewControllerDelegate {
   weak var mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate?
 
   init(mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate) {

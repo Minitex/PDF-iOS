@@ -5,8 +5,8 @@
 //  Created by Vui Nguyen on 11/14/17.
 //  Copyright © 2017 Minitex. All rights reserved.
 //
-import PDF
 import UIKit
+import MinitexPDFProtocols
 
 class ViewController: UIViewController {
   var books: [Book]?
@@ -64,14 +64,23 @@ class ViewController: UIViewController {
     let documentName = book.title
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
-    let pdfViewController = PDFViewController.init(documentURL: fileURL, openToPage: book.lastPageRead,
-                                                   bookmarks: book.bookmarks, annotations: book.PDFAnnotations,
-                                                   PSPDFKitLicense: APIKeys.PDFLicenseKey, delegate: self)
-    self.navigationController?.pushViewController(pdfViewController, animated: true)
+
+    let pdfDictionary: [String: Any] = ["documentURL": fileURL, "openToPage": book.lastPageRead,
+                         "bookmarks": book.bookmarks, "annotations": book.PDFAnnotations,
+                         "PSPDFKitLicense": APIKeys.PDFLicenseKey,
+                         "delegate": self]
+
+    let pdfViewController = MinitexPDFViewControllerFactory.createPDFViewController(dictionary: pdfDictionary)
+
+    if pdfViewController != nil {
+      self.navigationController?.pushViewController(pdfViewController! as! UIViewController, animated: true)
+    } else {
+      print("PDF module does not exist")
+    }
   }
 }
 
-extension ViewController: PDFViewControllerDelegate {
+extension ViewController: MinitexPDFViewControllerDelegate {
   func saveAnnotations(annotations: [PDFAnnotation]) {
     for annotation in annotations {
       // swiftlint:disable line_length

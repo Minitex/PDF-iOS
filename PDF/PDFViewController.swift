@@ -8,17 +8,12 @@
 import UIKit
 import PSPDFKit
 import PSPDFKitUI
-
-public protocol PDFViewControllerDelegate: class {
-  func userDidNavigate(page: Int)
-  func saveBookmarks(pageNumbers: [UInt])
-  func saveAnnotations(annotationsData: [Data])
-  func saveAnnotations(annotations: [PDFAnnotation])
-}
+import MinitexPDFProtocols
 
 public final class PDFViewController: PSPDFViewController {
 
-  weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  //weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  weak var pdfModuleDelegate: MinitexPDFViewControllerDelegate?
 
   // This initializer is now deprecated with passing annotations as PDFAnnotation objects
   /*
@@ -52,7 +47,7 @@ public final class PDFViewController: PSPDFViewController {
 
   public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
               annotations annotationObjects: [PDFAnnotation] = [],
-              PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
+              PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate?) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
     let document = PSPDFDocument(url: documentURL)
@@ -111,6 +106,24 @@ public final class PDFViewController: PSPDFViewController {
 
     self.annotationToolbarController?.annotationToolbar.configurations = [annotationCompactToolbarConfiguration,
                                                                           annotationRegularToolbarConfiguration]
+  }
+}
+
+extension PDFViewController: MinitexPDFViewController {
+  public convenience init(dictionary: [String: Any]) {
+    let documentURL: URL = (dictionary["documentURL"] as? URL)!
+    let page: UInt = dictionary["openToPage"] == nil ? 0 : dictionary["openToPage"] as! UInt
+    let pages: [UInt] = dictionary["bookmarks"] == nil ? [] : dictionary["bookmarks"] as! [UInt]
+    let annotationObjects: [PDFAnnotation] = dictionary["annotations"] == nil ? [] :
+                                            dictionary["annotations"] as! [PDFAnnotation]
+    let PSPDFKitLicense: String = dictionary["PSPDFKitLicense"] as! String
+    let delegate: MinitexPDFViewControllerDelegate = dictionary["delegate"] as! MinitexPDFViewControllerDelegate
+
+    self.init(documentURL: documentURL, openToPage: page,
+              bookmarks: pages,
+              annotations: annotationObjects,
+              PSPDFKitLicense: PSPDFKitLicense,
+              delegate: delegate)
   }
 }
 

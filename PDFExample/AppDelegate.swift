@@ -5,7 +5,6 @@
 //  Created by Vui Nguyen on 11/14/17.
 //  Copyright © 2017 Minitex. All rights reserved.
 //
-import PDF
 import UIKit
 
 @UIApplicationMain

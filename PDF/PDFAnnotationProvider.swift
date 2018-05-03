@@ -7,10 +7,12 @@
 //
 
 import PSPDFKit
+import MinitexPDFProtocols
 
 class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
-  weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  //weak var pdfModuleDelegate: PDFViewControllerDelegate?
+  weak var pdfModuleDelegate: MinitexPDFViewControllerDelegate?
 
   // The function below is now deprecated, but we're not ready to remove it yet
   /*
@@ -35,7 +37,8 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
  */
 
   init(annotationObjects: [PDFAnnotation] = [], documentProvider: PSPDFDocumentProvider,
-       pdfModuleDelegate: PDFViewControllerDelegate) {
+       //pdfModuleDelegate: PDFViewControllerDelegate) {
+       pdfModuleDelegate: MinitexPDFViewControllerDelegate) {
     self.pdfModuleDelegate = pdfModuleDelegate
     super.init(documentProvider: documentProvider)
     // reload annotations into the document
