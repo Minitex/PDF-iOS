@@ -11,7 +11,7 @@
 		<array/>
 		<key>annotations</key>
 		<array/>
-		<key>PDFAnnotations</key>
+		<key>MinitexPDFAnnotations</key>
 		<array/>
 	</dict>
 	<dict>
@@ -23,7 +23,7 @@
 		<array/>
 		<key>annotations</key>
 		<array/>
-		<key>PDFAnnotations</key>
+		<key>MinitexPDFAnnotations</key>
 		<array/>
 	</dict>
 </array>

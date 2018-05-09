@@ -15,7 +15,7 @@ public final class PDFViewController: PSPDFViewController {
   //weak var pdfModuleDelegate: PDFViewControllerDelegate?
   weak var pdfModuleDelegate: MinitexPDFViewControllerDelegate?
 
-  // This initializer is now deprecated with passing annotations as PDFAnnotation objects
+  // This initializer is now deprecated with passing annotations as MinitexPDFAnnotation objects
   /*
   public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
               annotations annotationsData: [Data] = [], PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
@@ -46,7 +46,7 @@ public final class PDFViewController: PSPDFViewController {
  */
 
   public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
-              annotations annotationObjects: [PDFAnnotation] = [],
+              annotations annotationObjects: [MinitexPDFAnnotation] = [],
               PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate?) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
@@ -114,8 +114,8 @@ extension PDFViewController: MinitexPDFViewController {
     let documentURL: URL = (dictionary["documentURL"] as? URL)!
     let page: UInt = dictionary["openToPage"] == nil ? 0 : dictionary["openToPage"] as! UInt
     let pages: [UInt] = dictionary["bookmarks"] == nil ? [] : dictionary["bookmarks"] as! [UInt]
-    let annotationObjects: [PDFAnnotation] = dictionary["annotations"] == nil ? [] :
-                                            dictionary["annotations"] as! [PDFAnnotation]
+    let annotationObjects: [MinitexPDFAnnotation] = dictionary["annotations"] == nil ? [] :
+                                            dictionary["annotations"] as! [MinitexPDFAnnotation]
     let PSPDFKitLicense: String = dictionary["PSPDFKitLicense"] as! String
     let delegate: MinitexPDFViewControllerDelegate = dictionary["delegate"] as! MinitexPDFViewControllerDelegate
 

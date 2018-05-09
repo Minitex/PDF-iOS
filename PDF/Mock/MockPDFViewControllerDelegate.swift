@@ -13,7 +13,7 @@ public protocol MockPDFViewControllerDelegateDelegate: class {
   func persistLastPageRead(page: Int)
   func persistBookmarks(pageNumbers: [UInt])
   func persistAnnotations(annotationsData: [Data])
-  func persistAnnotations(annotations: [PDFAnnotation])
+  func persistAnnotations(annotations: [MinitexPDFAnnotation])
 }
 
 class MockPDFViewControllerDelegate: MinitexPDFViewControllerDelegate {
@@ -38,7 +38,7 @@ class MockPDFViewControllerDelegate: MinitexPDFViewControllerDelegate {
     mockPDFViewControllerDelegateDelegate?.persistAnnotations(annotationsData: annotationsData)
   }
 
-  func saveAnnotations(annotations: [PDFAnnotation]) {
+  func saveAnnotations(annotations: [MinitexPDFAnnotation]) {
     print("in MockPDFViewControllerDelegate: saveAnnotations(annotations)")
     mockPDFViewControllerDelegateDelegate?.persistAnnotations(annotations: annotations)
   }

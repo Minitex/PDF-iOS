@@ -75,13 +75,13 @@ class MockData: MockPDFViewControllerDelegateDelegate {
     return annotationsData
   }
 
-  var annotations: [PDFAnnotation] {
-    var annotations: [PDFAnnotation] = []
+  var annotations: [MinitexPDFAnnotation] {
+    var annotations: [MinitexPDFAnnotation] = []
     //let annotationsData = (book?.annotations)!
     //for data in annotationsData {
-    //  annotations.append(PDFAnnotation(JSONData: data))
+    //  annotations.append(MinitexPDFAnnotation(JSONData: data))
     //}
-    annotations = (book?.PDFAnnotations)!
+    annotations = (book?.MinitexPDFAnnotations)!
     return annotations
   }
 
@@ -145,20 +145,20 @@ class MockData: MockPDFViewControllerDelegateDelegate {
     }
   }
 
-  // this is where we parse the PDFAnnotation objects into the array of dictionaries that will be stored in
+  // this is where we parse the MinitexPDFAnnotation objects into the array of dictionaries that will be stored in
   // the plist
-  func persistAnnotations(annotations: [PDFAnnotation]) {
+  func persistAnnotations(annotations: [MinitexPDFAnnotation]) {
     var annotationsData: [Data] = []
     for annotation in annotations {
-      print("in MockData: persistAnnotations[PDFAnnotation] called: Data is: \(String(describing: annotation.JSONData))")
+      print("in MockData: persistAnnotations[MinitexPDFAnnotation] called: Data is: \(String(describing: annotation.JSONData))")
       // swiftlint:disable line_length
-      print("persistAnnotations[PDFAnnotation] called: String of Data is: \(String(data: annotation.JSONData!, encoding: String.Encoding.utf8) ?? "no string value here")")
+      print("persistAnnotations[MinitexPDFAnnotation] called: String of Data is: \(String(data: annotation.JSONData!, encoding: String.Encoding.utf8) ?? "no string value here")")
       annotationsData.append(annotation.JSONData!)
     }
     print("\n")
 
     //book?.annotations = annotationsData
-    book?.PDFAnnotations = annotations
+    book?.MinitexPDFAnnotations = annotations
 
     let encoder = PropertyListEncoder()
     encoder.outputFormat = .xml

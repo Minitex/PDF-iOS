@@ -36,7 +36,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   }
  */
 
-  init(annotationObjects: [PDFAnnotation] = [], documentProvider: PSPDFDocumentProvider,
+  init(annotationObjects: [MinitexPDFAnnotation] = [], documentProvider: PSPDFDocumentProvider,
        //pdfModuleDelegate: PDFViewControllerDelegate) {
        pdfModuleDelegate: MinitexPDFViewControllerDelegate) {
     self.pdfModuleDelegate = pdfModuleDelegate
@@ -52,7 +52,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
       annotation = PDFAnnotationProvider.buildPSPDFAnnotation(from: annotationObject)
       if annotation != nil {
         annotationArray.append(annotation!)
-        print("PDFAnnotationProvider: rebuild from PDFAnnotation")
+        print("PDFAnnotationProvider: rebuild from MinitexPDFAnnotation")
       } else {
         do {
           annotation = try PSPDFAnnotation(fromInstantJSON: annotationObject.JSONData!,
@@ -68,7 +68,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     self.setAnnotations(annotationArray, append: false)
   }
 
-  private static func buildPSPDFAnnotation(from pdfAnnotation: PDFAnnotation) -> PSPDFAnnotation {
+  private static func buildPSPDFAnnotation(from pdfAnnotation: MinitexPDFAnnotation) -> PSPDFAnnotation {
     var pspdfAnnotation: PSPDFAnnotation?
 
     if (pdfAnnotation.type?.lowercased().hasSuffix("highlight"))! {
@@ -139,7 +139,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
   // Fun fact:
   // We can build a CGRect only from a Double or a CGFloat array, it cannot be done from a Float array
-  // We're going with Double because that's what's defined in PDFAnnotation
+  // We're going with Double because that's what's defined in MinitexPDFAnnotation
   // class for the rect and boundingBox attributes
   private static func createRectFromDouble(doubleArray: [Double]) -> CGRect {
     let cgRect: CGRect = CGRect(x: doubleArray[0], y: doubleArray[1], width: doubleArray[2], height: doubleArray[3])
@@ -184,11 +184,11 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
  */
 
   private func savePDFAnnotationsExternally(annotations: [PSPDFAnnotation]) {
-    var pdfAnnotations: [PDFAnnotation] = []
+    var pdfAnnotations: [MinitexPDFAnnotation] = []
     //let decoder = JSONDecoder()
 
     for annotation in annotations {
-      let pdfAnnotation: PDFAnnotation = buildPDFAnnotation(from: annotation)
+      let pdfAnnotation: MinitexPDFAnnotation = buildPDFAnnotation(from: annotation)
       pdfAnnotations.append(pdfAnnotation)
     }
 
@@ -196,10 +196,10 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     pdfModuleDelegate?.saveAnnotations(annotations: pdfAnnotations)
   }
 
-  private func buildPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> PDFAnnotation {
-    var pdfAnnotation: PDFAnnotation?
+  private func buildPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexPDFAnnotation {
+    var pdfAnnotation: MinitexPDFAnnotation?
     do {
-      try pdfAnnotation = PDFAnnotation(JSONData: pspdfAnnotation.generateInstantJSON())
+      try pdfAnnotation = MinitexPDFAnnotation(JSONData: pspdfAnnotation.generateInstantJSON())
       pdfAnnotation?.bbox = createDoubleFromRect(cgRect: pspdfAnnotation.boundingBox)
       pdfAnnotation?.color = PDFAnnotationProvider.UIColorToHexString(uicolor: pspdfAnnotation.color!)
       pdfAnnotation?.opacity = Float(pspdfAnnotation.alpha)
