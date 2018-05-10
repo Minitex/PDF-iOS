@@ -80,14 +80,9 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     }
 
     // set the required attributes
-    pspdfAnnotation?.boundingBox = createRectFromDouble(doubleArray: pdfAnnotation.bbox!)
+    pspdfAnnotation?.boundingBox = CGRectFromString(pdfAnnotation.bbox!)
     pspdfAnnotation?.pageIndex = pdfAnnotation.pageIndex!
-
-    var NSValues: [NSValue] = []
-    for rect in (pdfAnnotation.rects)! {
-      NSValues.append(createNSValueFromDouble(doubleArray: rect))
-    }
-    pspdfAnnotation?.rects = NSValues
+    pspdfAnnotation?.rects = createNSValueArrayFromStringArray(stringValues: pdfAnnotation.rects!)
 
     // since color and opacity are optional attributes, we will set them only if they exist
     if let color = pdfAnnotation.color {
@@ -137,32 +132,20 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     )
   }
 
-  // Fun fact:
-  // We can build a CGRect only from a Double or a CGFloat array, it cannot be done from a Float array
-  // We're going with Double because that's what's defined in MinitexPDFAnnotation
-  // class for the rect and boundingBox attributes
-  private static func createRectFromDouble(doubleArray: [Double]) -> CGRect {
-    let cgRect: CGRect = CGRect(x: doubleArray[0], y: doubleArray[1], width: doubleArray[2], height: doubleArray[3])
-    return cgRect
+  private static func createStringArrayFromNSValueArray(nsValues: [NSValue]) -> [String] {
+    var stringArray: [String] = []
+    stringArray = nsValues.map { (nsValue: NSValue) -> String in
+      return NSStringFromCGRect(nsValue.cgRectValue)
+    }
+    return stringArray
   }
 
-  private static func createNSValueFromDouble(doubleArray: [Double]) -> NSValue {
-    let rect = createRectFromDouble(doubleArray: doubleArray)
-    return NSValue(cgRect: rect)
-  }
-
-  private func createDoubleFromRect(cgRect: CGRect) -> [Double] {
-    var doubleArray: [Double] = [0, 0, 0, 0]
-    doubleArray[0] = Double(cgRect.origin.x)
-    doubleArray[1] = Double(cgRect.origin.y)
-    doubleArray[2] = Double(cgRect.width)
-    doubleArray[3] = Double(cgRect.height)
-    return doubleArray
-  }
-
-  private func createDoubleFromNSValue(nsValue: NSValue) -> [Double] {
-    let cgRect = nsValue.cgRectValue
-    return createDoubleFromRect(cgRect: cgRect)
+  private static func createNSValueArrayFromStringArray(stringValues: [String]) -> [NSValue] {
+    var nsArray: [NSValue] = []
+    nsArray = stringValues.map { (stringValue: String) -> NSValue in
+      return NSValue.init(cgRect: CGRectFromString(stringValue))
+    }
+    return nsArray
   }
 
   // This method is now deprecated, remove eventually
@@ -188,7 +171,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     //let decoder = JSONDecoder()
 
     for annotation in annotations {
-      let pdfAnnotation: MinitexPDFAnnotation = buildPDFAnnotation(from: annotation)
+      let pdfAnnotation: MinitexPDFAnnotation = buildMinitexPDFAnnotation(from: annotation)
       pdfAnnotations.append(pdfAnnotation)
     }
 
@@ -196,18 +179,15 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     pdfModuleDelegate?.saveAnnotations(annotations: pdfAnnotations)
   }
 
-  private func buildPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexPDFAnnotation {
+  private func buildMinitexPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexPDFAnnotation {
     var pdfAnnotation: MinitexPDFAnnotation?
     do {
       try pdfAnnotation = MinitexPDFAnnotation(JSONData: pspdfAnnotation.generateInstantJSON())
-      pdfAnnotation?.bbox = createDoubleFromRect(cgRect: pspdfAnnotation.boundingBox)
+      pdfAnnotation?.bbox = NSStringFromCGRect(pspdfAnnotation.boundingBox)
       pdfAnnotation?.color = PDFAnnotationProvider.UIColorToHexString(uicolor: pspdfAnnotation.color!)
       pdfAnnotation?.opacity = Float(pspdfAnnotation.alpha)
       pdfAnnotation?.pageIndex = pspdfAnnotation.pageIndex
-      pdfAnnotation?.rects = []
-      for rect in pspdfAnnotation.rects! {
-        pdfAnnotation?.rects?.append(createDoubleFromNSValue(nsValue: rect))
-      }
+      pdfAnnotation?.rects = PDFAnnotationProvider.createStringArrayFromNSValueArray(nsValues: pspdfAnnotation.rects!)
       pdfAnnotation?.type = pspdfAnnotation.typeString.rawValue
     } catch {
       print("Error building PDFAnnotation !!")
