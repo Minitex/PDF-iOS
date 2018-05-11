@@ -171,7 +171,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     //let decoder = JSONDecoder()
 
     for annotation in annotations {
-      let pdfAnnotation: MinitexPDFAnnotation = buildMinitexPDFAnnotation(from: annotation)
+      let pdfAnnotation: MinitexPDFAnnotation = buildMinitexPDFAnnotation(from: annotation)!
       pdfAnnotations.append(pdfAnnotation)
     }
 
@@ -179,19 +179,24 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     pdfModuleDelegate?.saveAnnotations(annotations: pdfAnnotations)
   }
 
-  private func buildMinitexPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexPDFAnnotation {
+  private func buildMinitexPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexPDFAnnotation? {
+    let pageIndex = pspdfAnnotation.pageIndex
+    let type = pspdfAnnotation.typeString.rawValue
+    let bbox = NSStringFromCGRect(pspdfAnnotation.boundingBox)
+    let rects = PDFAnnotationProvider.createStringArrayFromNSValueArray(nsValues: pspdfAnnotation.rects!)
+    let color = PDFAnnotationProvider.UIColorToHexString(uicolor: pspdfAnnotation.color!)
+    let opacity = Float(pspdfAnnotation.alpha)
     var pdfAnnotation: MinitexPDFAnnotation?
+    var JSONData: Data?
     do {
-      try pdfAnnotation = MinitexPDFAnnotation(JSONData: pspdfAnnotation.generateInstantJSON())
-      pdfAnnotation?.bbox = NSStringFromCGRect(pspdfAnnotation.boundingBox)
-      pdfAnnotation?.color = PDFAnnotationProvider.UIColorToHexString(uicolor: pspdfAnnotation.color!)
-      pdfAnnotation?.opacity = Float(pspdfAnnotation.alpha)
-      pdfAnnotation?.pageIndex = pspdfAnnotation.pageIndex
-      pdfAnnotation?.rects = PDFAnnotationProvider.createStringArrayFromNSValueArray(nsValues: pspdfAnnotation.rects!)
-      pdfAnnotation?.type = pspdfAnnotation.typeString.rawValue
+      JSONData = try pspdfAnnotation.generateInstantJSON()
+
     } catch {
-      print("Error building PDFAnnotation !!")
+      print("Error building PDFAnnotations!")
     }
+
+    pdfAnnotation = MinitexPDFAnnotation(pageIndex: pageIndex, type: type, bbox: bbox, rects: rects,
+                                         color: color, opacity: opacity, JSONData: JSONData)
     return pdfAnnotation!
   }
 
