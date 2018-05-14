@@ -65,10 +65,14 @@ class ViewController: UIViewController {
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
 
-    let pdfDictionary: [String: Any] = ["documentURL": fileURL, "openToPage": book.lastPageRead,
-                         "bookmarks": book.bookmarks, "annotations": book.MinitexPDFAnnotations,
-                         "PSPDFKitLicense": APIKeys.PDFLicenseKey,
-                         "delegate": self]
+    let pdfDictionary: [String: Any] = [
+                        "PSPDFKitLicense": APIKeys.PDFLicenseKey,
+                        "delegate": self,
+                        "documentURL": fileURL,
+                        "openToPage": book.lastPageRead,
+                        "bookmarks": book.bookmarks,
+                        "annotations": book.MinitexPDFAnnotations
+                      ]
 
     let pdfViewController = MinitexPDFViewControllerFactory.createPDFViewController(dictionary: pdfDictionary)
 

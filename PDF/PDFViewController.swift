@@ -14,9 +14,9 @@ public final class PDFViewController: PSPDFViewController {
 
   weak var pdfModuleDelegate: MinitexPDFViewControllerDelegate?
 
-  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
-              annotations annotationObjects: [MinitexPDFAnnotation] = [],
-              PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate?) {
+  public init(PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate?, documentURL: URL,
+              openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
+              annotations annotationObjects: [MinitexPDFAnnotation] = []) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
     let document = PSPDFDocument(url: documentURL)
@@ -80,19 +80,16 @@ public final class PDFViewController: PSPDFViewController {
 
 extension PDFViewController: MinitexPDFViewController {
   public convenience init(dictionary: [String: Any]) {
+    let PSPDFKitLicense: String = dictionary["PSPDFKitLicense"] as! String
+    let delegate: MinitexPDFViewControllerDelegate = dictionary["delegate"] as! MinitexPDFViewControllerDelegate
     let documentURL: URL = (dictionary["documentURL"] as? URL)!
     let page: UInt = dictionary["openToPage"] == nil ? 0 : dictionary["openToPage"] as! UInt
     let pages: [UInt] = dictionary["bookmarks"] == nil ? [] : dictionary["bookmarks"] as! [UInt]
     let annotationObjects: [MinitexPDFAnnotation] = dictionary["annotations"] == nil ? [] :
                                             dictionary["annotations"] as! [MinitexPDFAnnotation]
-    let PSPDFKitLicense: String = dictionary["PSPDFKitLicense"] as! String
-    let delegate: MinitexPDFViewControllerDelegate = dictionary["delegate"] as! MinitexPDFViewControllerDelegate
 
-    self.init(documentURL: documentURL, openToPage: page,
-              bookmarks: pages,
-              annotations: annotationObjects,
-              PSPDFKitLicense: PSPDFKitLicense,
-              delegate: delegate)
+    self.init(PSPDFKitLicense: PSPDFKitLicense, delegate: delegate, documentURL: documentURL,
+              openToPage: page, bookmarks: pages, annotations: annotationObjects)
   }
 }
 
