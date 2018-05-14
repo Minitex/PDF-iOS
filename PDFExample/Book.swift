@@ -11,6 +11,5 @@ public struct Book: Codable {
   public var title: String
   public var lastPageRead: UInt
   public var bookmarks: [UInt]
-  public var annotations: [Data]
-  public var PDFAnnotations: [PDFAnnotation]
+  public var MinitexPDFAnnotations: [MinitexPDFAnnotation]
 }

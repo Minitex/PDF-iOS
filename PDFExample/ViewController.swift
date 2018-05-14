@@ -65,10 +65,14 @@ class ViewController: UIViewController {
     currentBook = documentName
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
 
-    let pdfDictionary: [String: Any] = ["documentURL": fileURL, "openToPage": book.lastPageRead,
-                         "bookmarks": book.bookmarks, "annotations": book.PDFAnnotations,
-                         "PSPDFKitLicense": APIKeys.PDFLicenseKey,
-                         "delegate": self]
+    let pdfDictionary: [String: Any] = [
+                        "PSPDFKitLicense": APIKeys.PDFLicenseKey,
+                        "delegate": self,
+                        "documentURL": fileURL,
+                        "openToPage": book.lastPageRead,
+                        "bookmarks": book.bookmarks,
+                        "annotations": book.MinitexPDFAnnotations
+                      ]
 
     let pdfViewController = MinitexPDFViewControllerFactory.createPDFViewController(dictionary: pdfDictionary)
 
@@ -81,43 +85,16 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: MinitexPDFViewControllerDelegate {
-  func saveAnnotations(annotations: [PDFAnnotation]) {
+  func saveAnnotations(annotations: [MinitexPDFAnnotation]) {
     for annotation in annotations {
       // swiftlint:disable line_length
-      print("in ViewController: saveAnnotations[PDFAnnotation] called: Data is: \(String(describing: annotation.JSONData))")
-      print("saveAnnotations[PDFAnnotation] called: String of Data is: \(String(data: annotation.JSONData!, encoding: String.Encoding.utf8) ?? "no string value here")")
+      print("in ViewController: saveAnnotations[MinitexPDFAnnotation] called: Data is: \(String(describing: annotation.JSONData))")
+      print("saveAnnotations[MinitexPDFAnnotation] called: String of Data is: \(String(data: annotation.JSONData!, encoding: String.Encoding.utf8) ?? "no string value here")")
     }
     print("\n")
 
     for (index, book) in (books?.enumerated())! where book.title == self.currentBook {
-      books![index].PDFAnnotations = annotations
-
-      let encoder = PropertyListEncoder()
-      encoder.outputFormat = .xml
-
-      // save changes to books array to the Books.plist file
-      do {
-        let data = try encoder.encode(books)
-        try data.write(to: booksPlistURL, options: .atomic)
-      } catch {
-        print(error)
-      }
-    }
-
-  }
-  func saveAnnotations(annotationsData: [Data]) {
-
-    print("saveAnnotations called!")
-    for annotation in annotationsData {
-      print("saveAnnotations called: Data is: \(annotation)")
-      // swiftlint:disable line_length
-      print("saveAnnotations called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
-    }
-    print("\n")
-
-    for (index, book) in (books?.enumerated())! where book.title == self.currentBook {
-      // save annotations for a specific book to internal array
-      books![index].annotations = annotationsData
+      books![index].MinitexPDFAnnotations = annotations
 
       let encoder = PropertyListEncoder()
       encoder.outputFormat = .xml

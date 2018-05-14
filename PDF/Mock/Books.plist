@@ -9,9 +9,7 @@
 		<integer>0</integer>
 		<key>bookmarks</key>
 		<array/>
-		<key>annotations</key>
-		<array/>
-		<key>PDFAnnotations</key>
+		<key>MinitexPDFAnnotations</key>
 		<array/>
 	</dict>
 </array>

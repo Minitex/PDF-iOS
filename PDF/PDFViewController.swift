@@ -12,42 +12,11 @@ import MinitexPDFProtocols
 
 public final class PDFViewController: PSPDFViewController {
 
-  //weak var pdfModuleDelegate: PDFViewControllerDelegate?
   weak var pdfModuleDelegate: MinitexPDFViewControllerDelegate?
 
-  // This initializer is now deprecated with passing annotations as PDFAnnotation objects
-  /*
-  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
-              annotations annotationsData: [Data] = [], PSPDFKitLicense: String, delegate: PDFViewControllerDelegate?) {
-
-    PSPDFKit.setLicenseKey(PSPDFKitLicense)
-    let document = PSPDFDocument(url: documentURL)
-
-    document.annotationSaveMode = PSPDFAnnotationSaveMode.externalFile
-    document.didCreateDocumentProviderBlock = { (documentProvider: PSPDFDocumentProvider) -> Void in
-    documentProvider.annotationManager.annotationProviders = [PDFAnnotationProvider(annotationObjects: annotationsData,
-                                                                                    documentProvider: documentProvider,
-                                                                                    pdfModuleDelegate: delegate!)]
-    }
-
-    document.bookmarkManager?.provider = [PDFBookmarkProvider(pages: pages, pdfModuleDelegate: delegate!)]
-
-    let configuration = PSPDFConfiguration { builder in
-      builder.searchResultZoomScale = 1
-      builder.backgroundColor = UIColor.lightGray
-    }
-
-    super.init(document: document, configuration: configuration)
-    self.delegate = self
-
-    self.pdfModuleDelegate = delegate
-    self.pageIndex = page
-  }
- */
-
-  public init(documentURL: URL, openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
-              annotations annotationObjects: [PDFAnnotation] = [],
-              PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate?) {
+  public init(PSPDFKitLicense: String, delegate: MinitexPDFViewControllerDelegate?, documentURL: URL,
+              openToPage page: UInt = 0, bookmarks pages: [UInt] = [],
+              annotations annotationObjects: [MinitexPDFAnnotation] = []) {
 
     PSPDFKit.setLicenseKey(PSPDFKitLicense)
     let document = PSPDFDocument(url: documentURL)
@@ -111,19 +80,16 @@ public final class PDFViewController: PSPDFViewController {
 
 extension PDFViewController: MinitexPDFViewController {
   public convenience init(dictionary: [String: Any]) {
+    let PSPDFKitLicense: String = dictionary["PSPDFKitLicense"] as! String
+    let delegate: MinitexPDFViewControllerDelegate = dictionary["delegate"] as! MinitexPDFViewControllerDelegate
     let documentURL: URL = (dictionary["documentURL"] as? URL)!
     let page: UInt = dictionary["openToPage"] == nil ? 0 : dictionary["openToPage"] as! UInt
     let pages: [UInt] = dictionary["bookmarks"] == nil ? [] : dictionary["bookmarks"] as! [UInt]
-    let annotationObjects: [PDFAnnotation] = dictionary["annotations"] == nil ? [] :
-                                            dictionary["annotations"] as! [PDFAnnotation]
-    let PSPDFKitLicense: String = dictionary["PSPDFKitLicense"] as! String
-    let delegate: MinitexPDFViewControllerDelegate = dictionary["delegate"] as! MinitexPDFViewControllerDelegate
+    let annotationObjects: [MinitexPDFAnnotation] = dictionary["annotations"] == nil ? [] :
+                                            dictionary["annotations"] as! [MinitexPDFAnnotation]
 
-    self.init(documentURL: documentURL, openToPage: page,
-              bookmarks: pages,
-              annotations: annotationObjects,
-              PSPDFKitLicense: PSPDFKitLicense,
-              delegate: delegate)
+    self.init(PSPDFKitLicense: PSPDFKitLicense, delegate: delegate, documentURL: documentURL,
+              openToPage: page, bookmarks: pages, annotations: annotationObjects)
   }
 }
 

@@ -17,9 +17,9 @@
 		520C85012040D32A00E1F660 /* PSPDFKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		524441192044A14300DFBDF0 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524441172044A14300DFBDF0 /* Book.swift */; };
 		5244411A2044A14300DFBDF0 /* Books.plist in Resources */ = {isa = PBXBuildFile; fileRef = 524441182044A14300DFBDF0 /* Books.plist */; };
-		525D4D0B209B8A6A00E2E816 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525D4D0A209B8A6A00E2E816 /* MinitexPDFProtocols.framework */; };
-		525D4D0C209B8A6A00E2E816 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 525D4D0A209B8A6A00E2E816 /* MinitexPDFProtocols.framework */; };
-		525D4D0D209B8AA400E2E816 /* MinitexPDFProtocols.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 525D4D0A209B8A6A00E2E816 /* MinitexPDFProtocols.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5266B6E720AA1CB100093245 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5266B6E620AA1CB100093245 /* MinitexPDFProtocols.framework */; };
+		5266B6E820AA1CB100093245 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5266B6E620AA1CB100093245 /* MinitexPDFProtocols.framework */; };
+		5266B6EA20AA1CBC00093245 /* MinitexPDFProtocols.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5266B6E620AA1CB100093245 /* MinitexPDFProtocols.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		526769941FE1CC2200FFF668 /* PDFBookmarkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */; };
 		52690F0E1FD07F3B004CDD6C /* DataModeling.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */; };
 		527546311FBBA24800395A1F /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
@@ -41,7 +41,6 @@
 		52B6B1231FD7303300AFA35B /* Books.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B6B1221FD7303300AFA35B /* Books.plist */; };
 		52B872012007FA100054F920 /* PDFAnnotationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B872002007FA100054F920 /* PDFAnnotationProvider.swift */; };
 		52F8C79D20504FEE00B0C804 /* PDFBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */; };
-		52FBB1752048A8170032007F /* PDFAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBB1742048A8170032007F /* PDFAnnotation.swift */; };
 		52FBB1772048B2C60032007F /* PDFAgnosticClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBB1762048B2C60032007F /* PDFAgnosticClassTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,7 +102,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				525D4D0D209B8AA400E2E816 /* MinitexPDFProtocols.framework in Embed Frameworks */,
+				5266B6EA20AA1CBC00093245 /* MinitexPDFProtocols.framework in Embed Frameworks */,
 				52899BC8209A4F56008F91B6 /* PDF.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -120,7 +119,7 @@
 		520C84FB2040C79D00E1F660 /* DataModeling.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = DataModeling.pdf; sourceTree = "<group>"; };
 		524441172044A14300DFBDF0 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		524441182044A14300DFBDF0 /* Books.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Books.plist; sourceTree = "<group>"; };
-		525D4D0A209B8A6A00E2E816 /* MinitexPDFProtocols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MinitexPDFProtocols.framework; sourceTree = "<group>"; };
+		5266B6E620AA1CB100093245 /* MinitexPDFProtocols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MinitexPDFProtocols.framework; sourceTree = "<group>"; };
 		526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFBookmarkProvider.swift; sourceTree = "<group>"; };
 		52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = DataModeling.pdf; sourceTree = "<group>"; };
 		527546271FBBA24800395A1F /* PDF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PDF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,7 +150,6 @@
 		52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKit.framework; path = Carthage/Build/iOS/PSPDFKit.framework; sourceTree = "<group>"; };
 		52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PSPDFKitUI.framework; path = Carthage/Build/iOS/PSPDFKitUI.framework; sourceTree = "<group>"; };
 		52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFBookmark.swift; sourceTree = "<group>"; };
-		52FBB1742048A8170032007F /* PDFAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFAnnotation.swift; sourceTree = "<group>"; };
 		52FBB1762048B2C60032007F /* PDFAgnosticClassTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFAgnosticClassTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				525D4D0B209B8A6A00E2E816 /* MinitexPDFProtocols.framework in Frameworks */,
+				5266B6E720AA1CB100093245 /* MinitexPDFProtocols.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				525D4D0C209B8A6A00E2E816 /* MinitexPDFProtocols.framework in Frameworks */,
+				5266B6E820AA1CB100093245 /* MinitexPDFProtocols.framework in Frameworks */,
 				52899BC7209A4F56008F91B6 /* PDF.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,7 +244,6 @@
 				527546731FBBB3B700395A1F /* PDFViewController.swift */,
 				526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */,
 				52B872002007FA100054F920 /* PDFAnnotationProvider.swift */,
-				52FBB1742048A8170032007F /* PDFAnnotation.swift */,
 				52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */,
 			);
 			path = PDF;
@@ -310,7 +307,7 @@
 		52D5AD671FBCCA4400A8C000 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				525D4D0A209B8A6A00E2E816 /* MinitexPDFProtocols.framework */,
+				5266B6E620AA1CB100093245 /* MinitexPDFProtocols.framework */,
 				52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */,
 				52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */,
 			);
@@ -570,7 +567,6 @@
 				524441192044A14300DFBDF0 /* Book.swift in Sources */,
 				520C84F620408CF600E1F660 /* MockAPIKeysTemplate.swift in Sources */,
 				520C84F2204086A700E1F660 /* MockPDFViewControllerDelegate.swift in Sources */,
-				52FBB1752048A8170032007F /* PDFAnnotation.swift in Sources */,
 				520C84FA2040926800E1F660 /* MockAPIKeys.swift in Sources */,
 				52B872012007FA100054F920 /* PDFAnnotationProvider.swift in Sources */,
 				527546741FBBB3B700395A1F /* PDFViewController.swift in Sources */,
