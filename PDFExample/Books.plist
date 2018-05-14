@@ -9,8 +9,6 @@
 		<integer>0</integer>
 		<key>bookmarks</key>
 		<array/>
-		<key>annotations</key>
-		<array/>
 		<key>MinitexPDFAnnotations</key>
 		<array/>
 	</dict>
@@ -20,8 +18,6 @@
 		<key>lastPageRead</key>
 		<integer>0</integer>
 		<key>bookmarks</key>
-		<array/>
-		<key>annotations</key>
 		<array/>
 		<key>MinitexPDFAnnotations</key>
 		<array/>

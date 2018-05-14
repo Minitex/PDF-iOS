@@ -105,33 +105,6 @@ extension ViewController: MinitexPDFViewControllerDelegate {
     }
 
   }
-  func saveAnnotations(annotationsData: [Data]) {
-
-    print("saveAnnotations called!")
-    for annotation in annotationsData {
-      print("saveAnnotations called: Data is: \(annotation)")
-      // swiftlint:disable line_length
-      print("saveAnnotations called: String of Data is: \(String(data: annotation, encoding: String.Encoding.utf8) ?? "no string value here")")
-    }
-    print("\n")
-
-    for (index, book) in (books?.enumerated())! where book.title == self.currentBook {
-      // save annotations for a specific book to internal array
-      books![index].annotations = annotationsData
-
-      let encoder = PropertyListEncoder()
-      encoder.outputFormat = .xml
-
-      // save changes to books array to the Books.plist file
-      do {
-        let data = try encoder.encode(books)
-        try data.write(to: booksPlistURL, options: .atomic)
-      } catch {
-        print(error)
-      }
-    }
-
-  }
 
   func userDidNavigate(page: Int) {
 

@@ -11,33 +11,9 @@ import MinitexPDFProtocols
 
 class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
-  //weak var pdfModuleDelegate: PDFViewControllerDelegate?
   weak var pdfModuleDelegate: MinitexPDFViewControllerDelegate?
 
-  // The function below is now deprecated, but we're not ready to remove it yet
-  /*
-  init(annotationsData: [Data] = [], documentProvider: PSPDFDocumentProvider,
-       pdfModuleDelegate: PDFViewControllerDelegate) {
-    self.pdfModuleDelegate = pdfModuleDelegate
-
-    // reload annotations into the document
-    var annotation = PSPDFAnnotation()
-    var annotationArray: [PSPDFAnnotation] = []
-    for data in annotationsData {
-      do {
-        annotation = try PSPDFAnnotation(fromInstantJSON: data, documentProvider: documentProvider)
-        annotationArray.append(annotation)
-      } catch {
-        print("Error reloading annotation: \(error)")
-      }
-    }
-    super.init(documentProvider: documentProvider)
-    self.setAnnotations(annotationArray, append: false)
-  }
- */
-
   init(annotationObjects: [MinitexPDFAnnotation] = [], documentProvider: PSPDFDocumentProvider,
-       //pdfModuleDelegate: PDFViewControllerDelegate) {
        pdfModuleDelegate: MinitexPDFViewControllerDelegate) {
     self.pdfModuleDelegate = pdfModuleDelegate
     super.init(documentProvider: documentProvider)
@@ -68,21 +44,21 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     self.setAnnotations(annotationArray, append: false)
   }
 
-  private static func buildPSPDFAnnotation(from pdfAnnotation: MinitexPDFAnnotation) -> PSPDFAnnotation {
+  private static func buildPSPDFAnnotation(from pdfAnnotation: MinitexPDFAnnotation) -> PSPDFAnnotation? {
     var pspdfAnnotation: PSPDFAnnotation?
 
-    if (pdfAnnotation.type?.lowercased().hasSuffix("highlight"))! {
+    if pdfAnnotation.type.lowercased().hasSuffix("highlight") {
       pspdfAnnotation = PSPDFHighlightAnnotation()
-    } else if (pdfAnnotation.type?.lowercased().hasSuffix("underline"))! {
+    } else if pdfAnnotation.type.lowercased().hasSuffix("underline") {
       pspdfAnnotation = PSPDFUnderlineAnnotation()
     } else {
       return pspdfAnnotation!
     }
 
     // set the required attributes
-    pspdfAnnotation?.boundingBox = CGRectFromString(pdfAnnotation.bbox!)
-    pspdfAnnotation?.pageIndex = pdfAnnotation.pageIndex!
-    pspdfAnnotation?.rects = createNSValueArrayFromStringArray(stringValues: pdfAnnotation.rects!)
+    pspdfAnnotation?.boundingBox = CGRectFromString(pdfAnnotation.bbox)
+    pspdfAnnotation?.pageIndex = pdfAnnotation.pageIndex
+    pspdfAnnotation?.rects = createNSValueArrayFromStringArray(stringValues: pdfAnnotation.rects)
 
     // since color and opacity are optional attributes, we will set them only if they exist
     if let color = pdfAnnotation.color {
@@ -94,6 +70,27 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     }
 
     return pspdfAnnotation!
+  }
+
+  private func buildMinitexPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexPDFAnnotation? {
+    let pageIndex = pspdfAnnotation.pageIndex
+    let type = pspdfAnnotation.typeString.rawValue
+    let bbox = NSStringFromCGRect(pspdfAnnotation.boundingBox)
+    let rects = PDFAnnotationProvider.createStringArrayFromNSValueArray(nsValues: pspdfAnnotation.rects!)
+    let color = PDFAnnotationProvider.UIColorToHexString(uicolor: pspdfAnnotation.color!)
+    let opacity = Float(pspdfAnnotation.alpha)
+    var pdfAnnotation: MinitexPDFAnnotation?
+    var JSONData: Data?
+    do {
+      JSONData = try pspdfAnnotation.generateInstantJSON()
+
+    } catch {
+      print("Error building PDFAnnotations!")
+    }
+
+    pdfAnnotation = MinitexPDFAnnotation(pageIndex: pageIndex, type: type, bbox: bbox, rects: rects,
+                                         color: color, opacity: opacity, JSONData: JSONData)
+    return pdfAnnotation!
   }
 
   private static func hexStringToUIColor (hex: String) -> UIColor {
@@ -148,24 +145,6 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     return nsArray
   }
 
-  // This method is now deprecated, remove eventually
-  /*
-  private func saveAnnotationsExternally(annotations: [PSPDFAnnotation]) {
-    // generate JSON for the annotations
-    var jsonData: [Data] = []
-    for annotation in annotations {
-      do {
-        jsonData.append(try annotation.generateInstantJSON())
-      } catch {
-        print("Error generating InstantJSON !!")
-      }
-    }
-
-    // pass JSON data off to the host app, or delegate
-    pdfModuleDelegate?.saveAnnotations(annotationsData: jsonData)
-  }
- */
-
   private func savePDFAnnotationsExternally(annotations: [PSPDFAnnotation]) {
     var pdfAnnotations: [MinitexPDFAnnotation] = []
     //let decoder = JSONDecoder()
@@ -177,27 +156,6 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
     // pass PDFAnnotations off to the host app, or delegate
     pdfModuleDelegate?.saveAnnotations(annotations: pdfAnnotations)
-  }
-
-  private func buildMinitexPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexPDFAnnotation? {
-    let pageIndex = pspdfAnnotation.pageIndex
-    let type = pspdfAnnotation.typeString.rawValue
-    let bbox = NSStringFromCGRect(pspdfAnnotation.boundingBox)
-    let rects = PDFAnnotationProvider.createStringArrayFromNSValueArray(nsValues: pspdfAnnotation.rects!)
-    let color = PDFAnnotationProvider.UIColorToHexString(uicolor: pspdfAnnotation.color!)
-    let opacity = Float(pspdfAnnotation.alpha)
-    var pdfAnnotation: MinitexPDFAnnotation?
-    var JSONData: Data?
-    do {
-      JSONData = try pspdfAnnotation.generateInstantJSON()
-
-    } catch {
-      print("Error building PDFAnnotations!")
-    }
-
-    pdfAnnotation = MinitexPDFAnnotation(pageIndex: pageIndex, type: type, bbox: bbox, rects: rects,
-                                         color: color, opacity: opacity, JSONData: JSONData)
-    return pdfAnnotation!
   }
 
   // will this disable the save to external file? hope so
