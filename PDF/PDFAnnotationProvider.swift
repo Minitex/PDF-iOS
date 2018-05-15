@@ -18,25 +18,21 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     self.pdfModuleDelegate = pdfModuleDelegate
     super.init(documentProvider: documentProvider)
     // reload annotations into the document
-    var annotation: PSPDFAnnotation?
     var annotationArray: [PSPDFAnnotation] = []
     for annotationObject in annotationObjects {
       // the logic is:
       // create an annotation directly using attributes from PDFAnnotation, and if
       // that fails, fall back on using the JSON data, and if that fails,
       // return no annotation
-      annotation = PDFAnnotationProvider.buildPSPDFAnnotation(from: annotationObject)
-      if annotation != nil {
-        annotationArray.append(annotation!)
+      if let annotation = PDFAnnotationProvider.buildPSPDFAnnotation(from: annotationObject) {
+        annotationArray.append(annotation)
         print("PDFAnnotationProvider: rebuild from MinitexPDFAnnotation")
       } else {
-        do {
-          annotation = try PSPDFAnnotation(fromInstantJSON: annotationObject.JSONData!,
-                                         documentProvider: documentProvider)
-          annotationArray.append(annotation!)
+        let possibleAnnotation = try? PSPDFAnnotation(fromInstantJSON: annotationObject.JSONData!,
+                                       documentProvider: documentProvider)
+        if let annotation = possibleAnnotation {
+          annotationArray.append(annotation)
           print("PDFAnnotationProvider: rebuild from JSON")
-        } catch {
-          print("Error reloading annotation: \(error)")
         }
       }
     }
@@ -73,17 +69,21 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   }
 
   private func buildMinitexPDFAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexPDFAnnotation? {
+    guard let pspdfrects = pspdfAnnotation.rects else {
+      return nil
+    }
+
+  
     let pageIndex = pspdfAnnotation.pageIndex
     let type = pspdfAnnotation.typeString.rawValue
     let bbox = NSStringFromCGRect(pspdfAnnotation.boundingBox)
-    let rects = PDFAnnotationProvider.createStringArrayFromNSValueArray(nsValues: pspdfAnnotation.rects!)
+    let rects = PDFAnnotationProvider.createStringArrayFromNSValueArray(nsValues: pspdfrects)
     let color = PDFAnnotationProvider.UIColorToHexString(uicolor: pspdfAnnotation.color!)
     let opacity = Float(pspdfAnnotation.alpha)
     var pdfAnnotation: MinitexPDFAnnotation?
     var JSONData: Data?
     do {
       JSONData = try pspdfAnnotation.generateInstantJSON()
-
     } catch {
       print("Error building PDFAnnotations!")
     }
@@ -150,8 +150,10 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
     //let decoder = JSONDecoder()
 
     for annotation in annotations {
-      let pdfAnnotation: MinitexPDFAnnotation = buildMinitexPDFAnnotation(from: annotation)!
-      pdfAnnotations.append(pdfAnnotation)
+      // if let  {} optional binding
+      if let pdfAnnotation = buildMinitexPDFAnnotation(from: annotation) {
+        pdfAnnotations.append(pdfAnnotation)
+      }
     }
 
     // pass PDFAnnotations off to the host app, or delegate
