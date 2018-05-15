@@ -14,15 +14,23 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		k+7Kn28Uy93lubqmWhEN54JIalo=
+		ekoyFhYISmccwRlADXNDRVyks+8=
+		</data>
+		<key>Modules/MinitexPDFProtocols.swiftmodule/i386.swiftdoc</key>
+		<data>
+		tOA6vM6iHJyFKEAmbPw3zRPSZ5Q=
+		</data>
+		<key>Modules/MinitexPDFProtocols.swiftmodule/i386.swiftmodule</key>
+		<data>
+		dyoqst4niydXD5XoFxjQivuPf50=
 		</data>
 		<key>Modules/MinitexPDFProtocols.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		7vThMyJRgSylzDzGYmOwOLV/TOw=
+		w/51/N2bz1Hp3603vOVNhBt+i68=
 		</data>
 		<key>Modules/MinitexPDFProtocols.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		kntvBXmDAwQiGcSCmZLcngoDjic=
+		lWvx5VLHLc8NpNKuEJ9dzEpZ7c0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -53,26 +61,48 @@
 			hkxYrA9JIuJXB/xJcln5G34LCVbgHxV+tu0B1H3Jtwc=
 			</data>
 		</dict>
+		<key>Modules/MinitexPDFProtocols.swiftmodule/i386.swiftdoc</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			tOA6vM6iHJyFKEAmbPw3zRPSZ5Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			VVA/QxED5bPkw+yDIy2rtCkQdbKxra4DCc0Jn+xwolU=
+			</data>
+		</dict>
+		<key>Modules/MinitexPDFProtocols.swiftmodule/i386.swiftmodule</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			dyoqst4niydXD5XoFxjQivuPf50=
+			</data>
+			<key>hash2</key>
+			<data>
+			F7VUvJXQBhatt5JcjDpRcqA1sK4EcwkfdAzl+QGIPIw=
+			</data>
+		</dict>
 		<key>Modules/MinitexPDFProtocols.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7vThMyJRgSylzDzGYmOwOLV/TOw=
+			w/51/N2bz1Hp3603vOVNhBt+i68=
 			</data>
 			<key>hash2</key>
 			<data>
-			opLmaD99xwRQwiVD54b+BrQXabUmyDvDR6noGoNdbIs=
+			fzoAo9vFNQhQET9zERjn1qA0iNMVXD+9FLBjEqXqDnE=
 			</data>
 		</dict>
 		<key>Modules/MinitexPDFProtocols.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kntvBXmDAwQiGcSCmZLcngoDjic=
+			lWvx5VLHLc8NpNKuEJ9dzEpZ7c0=
 			</data>
 			<key>hash2</key>
 			<data>
-			0zcBhtKM/Abxex5AxBNiRZ31Hu3aqlRd1cjfRC3E0Fg=
+			cqUmKmpzffrNgA7VYutVNW66xC0AL3jFYav3a/ljMwY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

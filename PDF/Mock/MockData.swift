@@ -9,6 +9,7 @@
 import Foundation
 import MinitexPDFProtocols
 
+@available(iOS 9.0, *)
 class MockData: MockPDFViewControllerDelegateDelegate {
   var books: [Book]?
 
