@@ -11,32 +11,7 @@ import MinitexPDFProtocols
 class ViewController: UIViewController {
   var books: [Book]?
   var currentBook: String?
-
-  /*
-  static var documentDirectoryURL: URL {
-    return try! FileManager.default.url(
-      for: .documentDirectory,
-      in: .userDomainMask,
-      appropriateFor: nil,
-      create: false
-    )
-  }
- */
-
-  //let booksPlistURL: URL = URL(fileURLWithPath: "Books",
-  //                             relativeTo: documentDirectoryURL).appendingPathExtension("plist")
-
   let booksPlistURL: URL = URLFor(plistFile: "Books")
-
-  /*
-  private func pathFor(plistFile: String) -> String? {
-    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
-                                                    FileManager.SearchPathDomainMask.userDomainMask, true)
-    let documentsURL = NSURL(fileURLWithPath: paths.first!, isDirectory: true)
-    let fullURL = documentsURL.appendingPathComponent("\(plistFile).plist")
-    return (fullURL?.path)
-  }
- */
 
   private static func URLFor(plistFile: String) -> URL {
     let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
@@ -51,7 +26,6 @@ class ViewController: UIViewController {
     // copy the plist from the bundle to the user's documents directory,
     // so that it can be edited
     let booksPlistPathInBundle: URL = Bundle.main.url(forResource: "Books", withExtension: "plist")!
-    //if !FileManager.default.fileExists(atPath: booksPlistURL.path) {
     if !FileManager.default.fileExists(atPath: booksPlistURL.path) {
       do {
         try FileManager.default.copyItem(at: booksPlistPathInBundle, to: booksPlistURL)
