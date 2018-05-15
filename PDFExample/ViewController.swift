@@ -11,18 +11,15 @@ import MinitexPDFProtocols
 class ViewController: UIViewController {
   var books: [Book]?
   var currentBook: String?
+  let booksPlistURL: URL = URLFor(plistFile: "Books")
 
-  static var documentDirectoryURL: URL {
-    return try! FileManager.default.url(
-      for: .documentDirectory,
-      in: .userDomainMask,
-      appropriateFor: nil,
-      create: false
-    )
+  private static func URLFor(plistFile: String) -> URL {
+    let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
+                                                    FileManager.SearchPathDomainMask.userDomainMask, true)
+    let documentsURL = NSURL(fileURLWithPath: paths.first!, isDirectory: true)
+    let fullURL = documentsURL.appendingPathComponent("\(plistFile).plist")
+    return fullURL!
   }
-
-  let booksPlistURL: URL = URL(fileURLWithPath: "Books",
-                               relativeTo: documentDirectoryURL).appendingPathExtension("plist")
 
   required init?(coder aDecoder: NSCoder) {
 
