@@ -17,12 +17,6 @@
 		520C85012040D32A00E1F660 /* PSPDFKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		524441192044A14300DFBDF0 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524441172044A14300DFBDF0 /* Book.swift */; };
 		5244411A2044A14300DFBDF0 /* Books.plist in Resources */ = {isa = PBXBuildFile; fileRef = 524441182044A14300DFBDF0 /* Books.plist */; };
-<<<<<<< HEAD
-=======
-		5266B6EC20AA471600093245 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5266B6EB20AA471600093245 /* MinitexPDFProtocols.framework */; };
-		5266B6ED20AA471600093245 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5266B6EB20AA471600093245 /* MinitexPDFProtocols.framework */; };
-		5266B6EF20AA474700093245 /* MinitexPDFProtocols.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5266B6EB20AA471600093245 /* MinitexPDFProtocols.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
->>>>>>> master
 		526769941FE1CC2200FFF668 /* PDFBookmarkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */; };
 		52690F0E1FD07F3B004CDD6C /* DataModeling.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */; };
 		527546311FBBA24800395A1F /* PDF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527546271FBBA24800395A1F /* PDF.framework */; };
@@ -105,10 +99,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-<<<<<<< HEAD
-=======
-				5266B6EF20AA474700093245 /* MinitexPDFProtocols.framework in Embed Frameworks */,
->>>>>>> master
 				52899BC8209A4F56008F91B6 /* PDF.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -125,10 +115,6 @@
 		520C84FB2040C79D00E1F660 /* DataModeling.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = DataModeling.pdf; sourceTree = "<group>"; };
 		524441172044A14300DFBDF0 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		524441182044A14300DFBDF0 /* Books.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Books.plist; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
-		5266B6EB20AA471600093245 /* MinitexPDFProtocols.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MinitexPDFProtocols.framework; sourceTree = "<group>"; };
->>>>>>> master
 		526769931FE1CC2200FFF668 /* PDFBookmarkProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFBookmarkProvider.swift; sourceTree = "<group>"; };
 		52690F0D1FD07F3B004CDD6C /* DataModeling.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = DataModeling.pdf; sourceTree = "<group>"; };
 		527546271FBBA24800395A1F /* PDF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PDF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,10 +153,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-=======
-				5266B6EC20AA471600093245 /* MinitexPDFProtocols.framework in Frameworks */,
->>>>>>> master
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,10 +168,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-=======
-				5266B6ED20AA471600093245 /* MinitexPDFProtocols.framework in Frameworks */,
->>>>>>> master
 				52899BC7209A4F56008F91B6 /* PDF.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,10 +300,6 @@
 		52D5AD671FBCCA4400A8C000 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-=======
-				5266B6EB20AA471600093245 /* MinitexPDFProtocols.framework */,
->>>>>>> master
 				52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */,
 				52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */,
 			);
