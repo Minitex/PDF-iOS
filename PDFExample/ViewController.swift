@@ -63,7 +63,7 @@ class ViewController: UIViewController {
     let fileURL = Bundle.main.url(forResource: documentName, withExtension: "pdf")!
 
     let pdfDictionary: [String: Any] = [
-                        "PSPDFKitLicense": APIKeys.PDFLicenseKey,
+                        "PSPDFKitLicense": "",// APIKeys.PDFLicenseKey
                         "delegate": self,
                         "documentURL": fileURL,
                         "openToPage": book.lastPageRead,
