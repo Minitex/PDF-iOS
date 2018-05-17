@@ -1,2 +1,2 @@
-github "Minitex/MinitexPDFProtocols" ~> 0.0.2
+github "Minitex/MinitexPDFProtocols" ~> 0.0.3
 binary "PSPDFKit.json" >= 6.4
