@@ -39,6 +39,10 @@
 		52F8C79D20504FEE00B0C804 /* PDFBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8C79C20504FEE00B0C804 /* PDFBookmark.swift */; };
 		52FBB1772048B2C60032007F /* PDFAgnosticClassTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBB1762048B2C60032007F /* PDFAgnosticClassTests.swift */; };
 		7B094EE120ADFDCD0020DC6A /* MockAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520C84F92040926800E1F660 /* MockAPIKeys.swift */; };
+		7B094EE220AE03190020DC6A /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
+		7B094EE320AE031C0020DC6A /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
+		7B094EE420AE03400020DC6A /* PSPDFKitUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7B094EE520AE03450020DC6A /* PSPDFKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7B53B92B20AB653200D2E953 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B53B92A20AB652B00D2E953 /* MinitexPDFProtocols.framework */; };
 		7B53B92C20AB653200D2E953 /* MinitexPDFProtocols.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7B53B92A20AB652B00D2E953 /* MinitexPDFProtocols.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7B53B92D20AB655200D2E953 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B53B92A20AB652B00D2E953 /* MinitexPDFProtocols.framework */; };
@@ -94,6 +98,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7B094EE520AE03450020DC6A /* PSPDFKit.framework in CopyFiles */,
+				7B094EE420AE03400020DC6A /* PSPDFKitUI.framework in CopyFiles */,
 				7B53B92E20AB656000D2E953 /* MinitexPDFProtocols.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -161,6 +167,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B53B92D20AB655200D2E953 /* MinitexPDFProtocols.framework in Frameworks */,
+				7B094EE220AE03190020DC6A /* PSPDFKit.framework in Frameworks */,
+				7B094EE320AE031C0020DC6A /* PSPDFKitUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,8 +558,6 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKitUI.framework",
 			);
 			outputPaths = (
 			);
