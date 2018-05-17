@@ -19,7 +19,7 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     if bookmarks.count > 0 {
       for index in 0..<bookmarks.count {
         let pageNumber = bookmarks[index].pageIndex
-        pageNumbers.append(pageNumber)
+        pageNumbers.append(UInt(pageNumber))
       }
     }
     return pageNumbers
@@ -30,7 +30,7 @@ class PDFBookmarkProvider: NSObject, PSPDFBookmarkProvider {
     self.pdfModuleDelegate = pdfModuleDelegate
     if pages.count > 0 {
       for page in pages {
-        self.bookmarks.append(PSPDFBookmark(pageIndex: page))
+        self.bookmarks.append(PSPDFBookmark(pageIndex: PageIndex(page)))
       }
     }
   }

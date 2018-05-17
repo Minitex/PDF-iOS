@@ -40,7 +40,7 @@ public final class PDFViewController: PSPDFViewController {
     self.delegate = self
 
     self.pdfModuleDelegate = delegate
-    self.pageIndex = page
+    self.pageIndex = PageIndex(page)
   }
 
   @available(*, unavailable)

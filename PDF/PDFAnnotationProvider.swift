@@ -57,7 +57,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
 
     // set the required attributes
     pspdfAnnotation?.boundingBox = CGRectFromString(pdfAnnotation.bbox)
-    pspdfAnnotation?.pageIndex = pdfAnnotation.pageIndex
+    pspdfAnnotation?.pageIndex = PageIndex(pdfAnnotation.pageIndex)
     pspdfAnnotation?.rects = createNSValueArrayFromStringArray(stringValues: pdfAnnotation.rects)
 
     // since color and opacity are optional attributes, we will set them only if they exist
@@ -88,7 +88,7 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
       print("Error building PDFAnnotations!")
     }
 
-    pdfAnnotation = MinitexPDFAnnotation(pageIndex: pageIndex, type: type, bbox: bbox, rects: rects,
+    pdfAnnotation = MinitexPDFAnnotation(pageIndex: UInt(pageIndex), type: type, bbox: bbox, rects: rects,
                                          color: color, opacity: opacity, JSONData: JSONData)
     return pdfAnnotation!
   }
