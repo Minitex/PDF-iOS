@@ -10,9 +10,8 @@ import XCTest
 @testable import PSPDFKit
 @testable import PSPDFKitUI
 
+/*
 class PDFTests: XCTestCase {
-  // swiftlint:disable trailing_whitespace
-
   override func setUp() {
     super.setUp()
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -306,3 +305,4 @@ extension Array where Element: Comparable {
     return self.count == other.count && self.sorted() == other.sorted()
   }
 }
+ */
