@@ -1,1 +1,2 @@
-binary "https://customers.pspdfkit.com/carthage/TRIAL-Av96o5MwcoVq3T0YFN01_ctb6GJznDXTNyITB594YiF5BGqI5tRIeNZneq-g6rkajlae1qYbggtfy_IyPi6GVQ/PSPDFKit.json" >= 6.4
+github "Minitex/MinitexPDFProtocols" ~> 0.0.3
+binary "PSPDFKit.json" >= 6.4

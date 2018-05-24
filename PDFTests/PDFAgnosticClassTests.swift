@@ -11,8 +11,8 @@ import XCTest
 @testable import PSPDFKit
 @testable import PSPDFKitUI
 
+/*
 class PDFAgnosticClassTests: XCTestCase {
-  // swiftlint:disable trailing_whitespace
   override func setUp() {
     super.setUp()
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -211,3 +211,4 @@ class PDFAgnosticClassTests: XCTestCase {
     XCTAssert(pspdfAnnotationJSON == mockData.annotations[0].JSONData, "the JSON should be the same")
   }
 }
+ */
