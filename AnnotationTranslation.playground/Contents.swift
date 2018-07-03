@@ -63,11 +63,52 @@ class PSPDFAnnotation {
     self.alpha = alpha
     self.JSONData = JSONData
   }
+
+  // Comparison function
+  public func isEqualToPSPDFAnnotation(compareTo: PSPDFAnnotation) -> Bool {
+    var isSame = false
+
+    guard self.pageIndex == compareTo.pageIndex else {
+      print("pageIndex is not the same")
+      return isSame
+    }
+
+    guard self.type == compareTo.type else {
+      print("type is not the same")
+      return isSame
+    }
+
+    guard self.bbox.equalTo(compareTo.bbox) else {
+      print("bbox is not the same")
+      return isSame
+    }
+
+    guard self.rects.elementsEqual(compareTo.rects) else {
+      print("rects are not the same")
+      return isSame
+    }
+
+    guard (self.color?.isEqual(compareTo.color))! else {
+      print("color is not the same")
+      print("self.color is \(String(describing: self.color))")
+      print("compareTo.color is \(String(describing: compareTo.color))")
+      return isSame
+    }
+
+    guard (self.alpha == compareTo.alpha) else {
+      print("alpha is not the same")
+      return isSame
+    }
+
+    isSame = true
+    return isSame
+  }
 }
 
 // Translation Helper Functions:
 
 // Apple documentation:
+// for NSStringFromCGRect:
 // https://developer.apple.com/documentation/uikit/1624474-nsstringfromcgrect?language=objc
 func createStringArrayFromNSValueArray(nsValues: [NSValue]) -> [String] {
   var stringArray: [String] = []
@@ -77,6 +118,9 @@ func createStringArrayFromNSValueArray(nsValues: [NSValue]) -> [String] {
   return stringArray
 }
 
+// Apple documentation:
+// for NSValue: https://developer.apple.com/documentation/foundation/nsvalue
+// for CGRectFromString: https://developer.apple.com/documentation/foundation/nscoder/1624508-cgrect
 func createNSValueArrayFromStringArray(stringValues: [String]) -> [NSValue] {
   var nsArray: [NSValue] = []
   nsArray = stringValues.map { (stringValue: String) -> NSValue in
@@ -85,6 +129,9 @@ func createNSValueArrayFromStringArray(stringValues: [String]) -> [NSValue] {
   return nsArray
 }
 
+// Apple documentation:
+// for UIColor: https://developer.apple.com/documentation/uikit/uicolor
+// for CGFloat: https://developer.apple.com/documentation/coregraphics/cgfloat
 func UIColorToHexString (uicolor: UIColor) -> String {
   var r: CGFloat = 0
   var g: CGFloat = 0
@@ -100,6 +147,11 @@ func UIColorToHexString (uicolor: UIColor) -> String {
 }
 
 func hexStringToUIColor (hex: String) -> UIColor {
+  // If hex is all 0's, we should return UIColor is black, otherwise weird things happen!
+  if Int(hex) == 0 {
+    return UIColor.black
+  }
+
   var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
   if cString.hasPrefix("#") {
@@ -173,7 +225,6 @@ func buildPSPDFAnnotation(from minitexAnnotation: MinitexAnnotation) -> PSPDFAnn
   return pspdfAnnotation
 }
 
-
 let pspdfAnnotationBBox = CGRect(x: 57.174537658691406, y: 320.7777099609375, width: 323.847412109375, height: 23.301727294921875)
 let pspdfAnnotationRects = [
   NSValue(cgRect: CGRect(x: 56.199268341064453, y: 319.80242919921875, width: 325.79794311523438, height: 11.7032470703125)),
@@ -188,7 +239,8 @@ let pspdfAnnotation = PSPDFAnnotation(pageIndex: 1, type: pspdfAnnotationType, b
 let minitexAnnotation = buildMinitexAnnotation(from: pspdfAnnotation)
 let originalPSPDFAnnotation = buildPSPDFAnnotation(from: minitexAnnotation!)
 
-// TODO: we should do a check here to make the pspdfAnnotion has the same attributes as originalPSPDFAnnotation
+// do a check here to make sure the pspdfAnnotion has the same attributes as originalPSPDFAnnotation
 // so we know the translation was done correctly
+print(pspdfAnnotation.isEqualToPSPDFAnnotation(compareTo: originalPSPDFAnnotation!))
 
 print("success!")
