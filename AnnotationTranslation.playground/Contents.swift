@@ -207,7 +207,9 @@ func buildPSPDFAnnotation(from minitexAnnotation: MinitexAnnotation) -> PSPDFAnn
   }
 
   // set the required attributes
+  print("minitexAnnotation.box value is \(minitexAnnotation.bbox)")
   let boundingBox = CGRectFromString(minitexAnnotation.bbox)
+  print("boundingBox is \(boundingBox)")
   let pageIndex = minitexAnnotation.pageIndex
   let rects = createNSValueArrayFromStringArray(stringValues: minitexAnnotation.rects)
   let JSONData = minitexAnnotation.JSONData

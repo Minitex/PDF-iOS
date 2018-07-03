@@ -94,6 +94,11 @@ class PDFAnnotationProvider: PSPDFContainerAnnotationProvider {
   }
 
   private static func hexStringToUIColor (hex: String) -> UIColor {
+    // If hex is all 0's, we should return UIColor is black, otherwise weird things happen!
+    if Int(hex) == 0 {
+      return UIColor.black
+    }
+
     var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
     if cString.hasPrefix("#") {
