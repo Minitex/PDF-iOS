@@ -5,7 +5,6 @@ import UIKit
 var str = "Hello, playground"
 print(str)
 
-/*
 class MinitexAnnotation {
   // required
   public let pageIndex: UInt
@@ -66,22 +65,24 @@ class PSPDFAnnotation {
   }
 }
 
-let pspdfAnnotationBBox = CGRect(x: 57.174537658691406, y: 320.7777099609375, width: 323.847412109375, height: 23.301727294921875)
-let pspdfAnnotationRects = [
-  NSValue(cgRect: CGRect(x: 56.199268341064453, y: 319.80242919921875, width: 325.79794311523438, height: 11.7032470703125)),
-  NSValue(cgRect: CGRect(x: 381.0001220703125, y: 328.174072265625, width: 0, height: 0)),
-  NSValue(cgRect: CGRect(x: 56.297451019287109, y: 333.3514404296875, width: 0168.49978637695312, height: 11.7032470703125)),
-]
-let pspdfAnnotationType = "pspdfkit/markup/highlight"
-let pspdfAnnotation = PSPDFAnnotation(pageIndex: 1, type: pspdfAnnotationType, bbox: pspdfAnnotationBBox, rects: pspdfAnnotationRects,
-                                      color: .black, alpha: 1.0, JSONData: nil)
+// Translation Helper Functions:
 
+// Apple documentation:
+// https://developer.apple.com/documentation/uikit/1624474-nsstringfromcgrect?language=objc
 func createStringArrayFromNSValueArray(nsValues: [NSValue]) -> [String] {
   var stringArray: [String] = []
   stringArray = nsValues.map { (nsValue: NSValue) -> String in
     return NSStringFromCGRect(nsValue.cgRectValue)  // this is a built-in iOS function
   }
   return stringArray
+}
+
+func createNSValueArrayFromStringArray(stringValues: [String]) -> [NSValue] {
+  var nsArray: [NSValue] = []
+  nsArray = stringValues.map { (stringValue: String) -> NSValue in
+    return NSValue.init(cgRect: CGRectFromString(stringValue))
+  }
+  return nsArray
 }
 
 func UIColorToHexString (uicolor: UIColor) -> String {
@@ -98,6 +99,29 @@ func UIColorToHexString (uicolor: UIColor) -> String {
   )
 }
 
+func hexStringToUIColor (hex: String) -> UIColor {
+  var cString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+
+  if cString.hasPrefix("#") {
+    cString.remove(at: cString.startIndex)
+  }
+
+  if cString.count != 6 {
+    return UIColor.gray
+  }
+
+  var rgbValue: UInt32 = 0
+  Scanner(string: cString).scanHexInt32(&rgbValue)
+
+  return UIColor(
+    red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+    green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+    blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+    alpha: CGFloat(1.0)
+  )
+}
+
+// Builder Functions:
 func buildMinitexAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexAnnotation? {
   var minitexAnnotation: MinitexAnnotation? = nil
 
@@ -114,13 +138,57 @@ func buildMinitexAnnotation(from pspdfAnnotation: PSPDFAnnotation) -> MinitexAnn
   return minitexAnnotation
 }
 
-buildMinitexAnnotation(from: pspdfAnnotation)
-
 func buildPSPDFAnnotation(from minitexAnnotation: MinitexAnnotation) -> PSPDFAnnotation? {
   var pspdfAnnotation: PSPDFAnnotation? = nil
+  var type: String = ""
+  var UIcolor: UIColor = .black
+  var alpha: CGFloat = CGFloat(1.0)
 
+  if minitexAnnotation.type.lowercased().hasSuffix("highlight") {
+    //pspdfAnnotation = PSPDFHighlightAnnotation()  // this does not work here, only in PDF-iOS module
+    type = minitexAnnotation.type
+  } else if minitexAnnotation.type.lowercased().hasSuffix("underline") {
+   // pspdfAnnotation = PSPDFUnderlineAnnotation()  // this does not work here, only in PDF-iOS module
+    type = minitexAnnotation.type
+  } else {
+    return pspdfAnnotation!
+  }
+
+  // set the required attributes
+  let boundingBox = CGRectFromString(minitexAnnotation.bbox)
+  let pageIndex = minitexAnnotation.pageIndex
+  let rects = createNSValueArrayFromStringArray(stringValues: minitexAnnotation.rects)
+  let JSONData = minitexAnnotation.JSONData
+
+  // since color and opacity are optional attributes, we will set them only if they exist
+  if let color = minitexAnnotation.color {
+    UIcolor = hexStringToUIColor(hex: color)
+  }
+
+  if let opacity = minitexAnnotation.opacity {
+   alpha = CGFloat(floatLiteral: CGFloat.NativeType(opacity))
+  }
+
+  pspdfAnnotation = PSPDFAnnotation(pageIndex: pageIndex, type: type, bbox: boundingBox, rects: rects, color: UIcolor, alpha: alpha, JSONData: JSONData)
   return pspdfAnnotation
 }
 
+
+let pspdfAnnotationBBox = CGRect(x: 57.174537658691406, y: 320.7777099609375, width: 323.847412109375, height: 23.301727294921875)
+let pspdfAnnotationRects = [
+  NSValue(cgRect: CGRect(x: 56.199268341064453, y: 319.80242919921875, width: 325.79794311523438, height: 11.7032470703125)),
+  NSValue(cgRect: CGRect(x: 381.0001220703125, y: 328.174072265625, width: 0, height: 0)),
+  NSValue(cgRect: CGRect(x: 56.297451019287109, y: 333.3514404296875, width: 0168.49978637695312, height: 11.7032470703125)),
+]
+let pspdfAnnotationType = "pspdfkit/markup/highlight"
+let pspdfAnnotation = PSPDFAnnotation(pageIndex: 1, type: pspdfAnnotationType, bbox: pspdfAnnotationBBox,
+                                      rects: pspdfAnnotationRects,
+                                      color: .black, alpha: 1.0, JSONData: nil)
+
+let minitexAnnotation = buildMinitexAnnotation(from: pspdfAnnotation)
+let originalPSPDFAnnotation = buildPSPDFAnnotation(from: minitexAnnotation!)
+
+// TODO: we should do a check here to make the pspdfAnnotion has the same attributes as originalPSPDFAnnotation
+// so we know the translation was done correctly
+
 print("success!")
-*/
