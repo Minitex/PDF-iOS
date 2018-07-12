@@ -16,6 +16,10 @@ public protocol MockPDFViewControllerDelegateDelegate: class {
 }
 
 class MockPDFViewControllerDelegate: MinitexPDFViewControllerDelegate {
+  func willMoveToMinitexParentController(parent: UIViewController?) {
+    print("in MockPDFViewControllerDelegate: willMoveToMinitexParentController")
+  }
+
   weak var mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate?
 
   init(mockPDFViewControllerDelegateDelegate: MockPDFViewControllerDelegateDelegate) {

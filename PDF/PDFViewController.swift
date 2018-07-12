@@ -34,6 +34,7 @@ public final class PDFViewController: PSPDFViewController {
     let configuration = PSPDFConfiguration { builder in
       builder.searchResultZoomScale = 1
       builder.backgroundColor = UIColor.lightGray
+      builder.useParentNavigationBar = true
     }
 
     super.init(document: document, configuration: configuration)
@@ -75,6 +76,10 @@ public final class PDFViewController: PSPDFViewController {
 
     self.annotationToolbarController?.annotationToolbar.configurations = [annotationCompactToolbarConfiguration,
                                                                           annotationRegularToolbarConfiguration]
+  }
+
+  override public func willMove(toParentViewController parent: UIViewController?) {
+    pdfModuleDelegate?.willMoveToMinitexParentController(parent: parent)
   }
 }
 
