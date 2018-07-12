@@ -82,6 +82,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: MinitexPDFViewControllerDelegate {
+  func willMoveToMinitexParentController(parent: UIViewController?) {
+    print("in ViewController: willMoveToMinitexParentController called")
+  }
+
   func saveAnnotations(annotations: [MinitexPDFAnnotation]) {
     for annotation in annotations {
       // swiftlint:disable line_length
