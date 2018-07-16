@@ -41,12 +41,9 @@
 		7B094EE120ADFDCD0020DC6A /* MockAPIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520C84F92040926800E1F660 /* MockAPIKeys.swift */; };
 		7B094EE220AE03190020DC6A /* PSPDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; };
 		7B094EE320AE031C0020DC6A /* PSPDFKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; };
-		7B094EE420AE03400020DC6A /* PSPDFKitUI.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD721FBCF3C400A8C000 /* PSPDFKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7B094EE520AE03450020DC6A /* PSPDFKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 52D5AD701FBCF3C000A8C000 /* PSPDFKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7B53B92B20AB653200D2E953 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B53B92A20AB652B00D2E953 /* MinitexPDFProtocols.framework */; };
 		7B53B92C20AB653200D2E953 /* MinitexPDFProtocols.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7B53B92A20AB652B00D2E953 /* MinitexPDFProtocols.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7B53B92D20AB655200D2E953 /* MinitexPDFProtocols.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B53B92A20AB652B00D2E953 /* MinitexPDFProtocols.framework */; };
-		7B53B92E20AB656000D2E953 /* MinitexPDFProtocols.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7B53B92A20AB652B00D2E953 /* MinitexPDFProtocols.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,18 +86,6 @@
 			files = (
 				520C85002040D32A00E1F660 /* PSPDFKitUI.framework in CopyFiles */,
 				520C85012040D32A00E1F660 /* PSPDFKit.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		529958E81FD8613000995B39 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				7B094EE520AE03450020DC6A /* PSPDFKit.framework in CopyFiles */,
-				7B094EE420AE03400020DC6A /* PSPDFKitUI.framework in CopyFiles */,
-				7B53B92E20AB656000D2E953 /* MinitexPDFProtocols.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +332,6 @@
 				527546241FBBA24800395A1F /* Headers */,
 				527546251FBBA24800395A1F /* Resources */,
 				52802F1A1FC33D6900339477 /* ShellScript */,
-				529958E81FD8613000995B39 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -543,14 +527,12 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/PSPDFKitUI.framework",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#/usr/local/bin/carthage copy-frameworks\n\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://gitub.com/realm/SwiftLint\"\nfi";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://gitub.com/realm/SwiftLint\"\nfi";
 		};
 		529958F11FD8716700995B39 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
