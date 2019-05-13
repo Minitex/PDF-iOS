@@ -1,2 +1,3 @@
-github "Minitex/MinitexPDFProtocols" ~> 0.0.5
+#github "Minitex/MinitexPDFProtocols" ~> 0.0.5
+github "NYPL-Simplified/PDFRendererProvider-iOS"
 binary "PSPDFKit.json" ~> 7.6.2
